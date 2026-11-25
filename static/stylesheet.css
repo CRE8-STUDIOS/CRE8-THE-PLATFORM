@@ -433,3 +433,155 @@ ol:not([class]) {
 	--rough-edge-background: var(--color-button-secondary);
 	background-color: var(--color-button-secondary);
 }
+
+/* --------------------------------------------------------------------------
+	5.2 Status tags
+	Small uppercase pills that show the state of a project. The colors come
+	in pairs, so each modifier sets both the background and the text.
+   -------------------------------------------------------------------------- */
+
+.status-tag {
+	display: inline-block;
+	padding-block: 0.35em;
+	padding-inline: 0.9em;
+	border-radius: var(--radius-pill);
+	font-family: var(--font-family-display);
+	font-size: var(--font-size-tag);
+	line-height: var(--line-height-tight);
+	letter-spacing: var(--letter-spacing-display);
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.status-tag-progress {
+	background-color: var(--color-status-progress);
+	color: var(--color-status-progress-text);
+}
+
+.status-tag-editing {
+	background-color: var(--color-status-editing);
+	color: var(--color-status-editing-text);
+}
+
+.status-tag-pending {
+	background-color: var(--color-status-pending);
+	color: var(--color-status-pending-text);
+}
+
+/* --------------------------------------------------------------------------
+	5.3 Cards and text styles
+	Cards are pieces of paper on the page. Add .rough-edge in the markup to
+	give them the torn edge. The text classes cover the roles from the
+	design that are not headings, so the HTML can stay semantic.
+   -------------------------------------------------------------------------- */
+
+.card {
+	--rough-edge-background: var(--color-surface);
+	--rough-edge-shadow: var(--shadow-card);
+	padding: var(--space-m);
+	border-radius: var(--radius-card);
+	background-color: var(--color-surface);
+	box-shadow: var(--shadow-card);
+}
+
+/* TODAY, DEADLINES, ACTIVE PROJECTS */
+.card-title {
+	font-family: var(--font-family-display);
+	font-size: var(--font-size-card-title);
+	line-height: var(--line-height-heading);
+	letter-spacing: var(--letter-spacing-display);
+	text-transform: uppercase;
+}
+
+/* Items inside a card sit close together */
+.card-list {
+	display: grid;
+	gap: var(--space-xs);
+}
+
+/* Cards sit next to each other on wide screens and stack on mobile */
+.card-grid {
+	display: grid;
+	gap: var(--space-l);
+}
+
+@media (min-width: 48em) {
+	.card-grid {
+		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+	}
+}
+
+/* MAANDAG 23 NOV, UP NEXT, FACTUUR, CONTRACT */
+.label {
+	font-family: var(--font-family-display);
+	font-size: var(--font-size-label);
+	line-height: var(--line-height-heading);
+	letter-spacing: var(--letter-spacing-display);
+	text-transform: uppercase;
+}
+
+/* Handwritten accent lines such as "ready to clock in?" */
+.text-script {
+	font-family: var(--font-family-script);
+	font-size: var(--font-size-script);
+	line-height: var(--line-height-heading);
+}
+
+.text-small {
+	font-size: var(--font-size-small);
+}
+
+/* Muted text is only used at body size and up, see the contrast notes */
+.text-muted {
+	color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+	5.4 Navigation
+	The hand drawn red circle marks the current page. It is a pseudo element
+	with the SVG as a mask, so its color comes from --color-accent and it
+	stretches to fit any item. Hover shows the same circle, fainter.
+   -------------------------------------------------------------------------- */
+
+.nav-list {
+	display: grid;
+	gap: var(--space-s);
+}
+
+.nav-link {
+	position: relative;
+	display: inline-block;
+	padding-block: var(--space-2xs);
+	font-family: var(--font-family-display);
+	font-size: var(--font-size-nav);
+	line-height: var(--line-height-heading);
+	letter-spacing: var(--letter-spacing-display);
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+.nav-link::after {
+	content: '';
+	position: absolute;
+	inset-block: -0.45em;
+	inset-inline: -0.9em;
+	background-color: var(--color-accent);
+	mask: url('images/nav-circle.svg') center / 100% 100% no-repeat;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity var(--duration-normal) var(--easing-standard);
+}
+
+/* The circle replaces the underline as the hover signal */
+.nav-link:hover,
+.nav-link:focus-visible {
+	text-decoration: none;
+}
+
+.nav-link:hover::after {
+	opacity: 0.35;
+}
+
+.nav-link[aria-current='page']::after {
+	opacity: 1;
+}
