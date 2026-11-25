@@ -1,31 +1,4 @@
-/*
-	CRE8 global stylesheet
-
-	One file for the whole platform so every page shares the same tokens,
-	base styles and components. Loaded from src/app.html, so it applies
-	before any Svelte component styles.
-
-	Order:
-	1. Fonts
-	2. Custom properties
-	3. Reset
-	4. Base elements
-	5. Components (buttons, status tags, cards, navigation, form elements)
-	6. Focus styles
-	7. Reduced motion
-	8. Utilities
-*/
-
-/* ==========================================================================
-	1. Fonts
-	woff2 is listed first because it is the smallest; woff is the fallback
-	for older browsers. font-display: swap shows the fallback font right away
-	so text is never invisible while the brand fonts load.
-	Each font only ships in one weight (400), so no other weights are declared.
-	Pointer is drawn heavy and wide by itself, which is why it is not bold.
-   ========================================================================== */
-
-/* Display font: headings, navigation, card titles, labels, buttons */
+/* Fonts */
 @font-face {
 	font-family: 'Pointer';
 	src:
@@ -36,7 +9,6 @@
 	font-display: swap;
 }
 
-/* Script font: only for handwritten accent lines */
 @font-face {
 	font-family: 'Maison des Pastel Script';
 	src:
@@ -47,7 +19,6 @@
 	font-display: swap;
 }
 
-/* Body font: small content text, dates and form fields */
 @font-face {
 	font-family: 'Telegraf';
 	src:
@@ -58,43 +29,21 @@
 	font-display: swap;
 }
 
-/* ==========================================================================
-	2. Custom properties
-	Every value from the design lives here, so a color or size changes in one
-	place. Names describe the role, not the value, so "text muted" stays
-	correct even if the grey changes.
-
-	Breakpoints (custom properties do not work inside media queries, so they
-	are written down here and typed out in each query):
-	small   from 30em  (480px)   larger phones
-	medium  from 48em  (768px)   tablets, sidebar becomes visible
-	large   from 64em  (1024px)  laptops
-	wide    from 90em  (1440px)  the desktop frame of the design
-
-	Fluid sizes use clamp() between a 320px and a 1440px wide viewport.
-	Large text and spacing shrink to roughly 65 percent on mobile. Small text
-	(body, labels, tags) shrinks less, because going below about 11px
-	makes it hard to read.
-   ========================================================================== */
-
 :root {
-	/* Colors: surfaces */
+
+	/* Colors */
 	--color-background: #f9f7f1;
 	--color-surface: #fffef8;
 
-	/* Colors: text */
 	--color-text: #000000;
 	--color-text-muted: #807f7b;
 	--color-text-inverse: #f9f7f1;
 
-	/* Colors: lines */
 	--color-border: #dfded9;
 	--color-border-divider: #e5e3de;
 
-	/* Colors: brand accent, the hand drawn red circle and focus ring */
 	--color-accent: #891b13;
 
-	/* Colors: buttons */
 	--color-button-primary: #000000;
 	--color-button-primary-hover: #1c1c1c;
 	--color-button-primary-text: #f9f7f1;
@@ -102,7 +51,6 @@
 	--color-button-secondary-hover: color-mix(in oklab, var(--color-button-secondary), #000000 8%);
 	--color-button-secondary-text: #000000;
 
-	/* Colors: status tags, background and text in pairs */
 	--color-status-progress: #ddf6fe;
 	--color-status-progress-text: #6e7b7f;
 	--color-status-editing: #e8d9eb;
@@ -110,40 +58,34 @@
 	--color-status-pending: #f8d8d9;
 	--color-status-pending-text: #7d6c6c;
 
-	/* Colors: feedback. Errors use the brand red, as the design asks */
 	--color-error: var(--color-accent);
 
-	/* Font families, each with a system fallback that has similar proportions */
+	/* Typography */
 	--font-family-display: 'Pointer', 'Arial Black', system-ui, sans-serif;
 	--font-family-script: 'Maison des Pastel Script', 'Brush Script MT', cursive;
 	--font-family-body: 'Telegraf', system-ui, sans-serif;
 
-	/* Font weights. Every brand font has a single regular weight */
 	--font-weight-regular: 400;
 
-	/* Line heights */
 	--line-height-tight: 1;
 	--line-height-heading: 1.1;
 	--line-height-body: 1.5;
 
-	/* Letter spacing, the display font is set slightly wide */
 	--letter-spacing-display: 0.04em;
 
-	/* Type scale */
-	--font-size-welcome: clamp(2.25rem, 1.893rem + 1.786vw, 3.5rem); /* 36 to 56px */
-	--font-size-page-heading: clamp(1.5rem, 1.286rem + 1.071vw, 2.25rem); /* 24 to 36px */
-	--font-size-project: clamp(1.25rem, 1.071rem + 0.8929vw, 1.875rem); /* 20 to 30px */
-	--font-size-script: clamp(1.375rem, 1.196rem + 0.8929vw, 2rem); /* 22 to 32px */
-	--font-size-nav: clamp(0.875rem, 0.8036rem + 0.3571vw, 1.125rem); /* 14 to 18px */
-	--font-size-card-title: clamp(0.875rem, 0.8393rem + 0.1786vw, 1rem); /* 14 to 16px */
-	--font-size-button: clamp(0.875rem, 0.8393rem + 0.1786vw, 1rem); /* 14 to 16px */
-	--font-size-button-small: clamp(0.75rem, 0.7321rem + 0.08929vw, 0.8125rem); /* 12 to 13px */
-	--font-size-label: clamp(0.6875rem, 0.6696rem + 0.08929vw, 0.75rem); /* 11 to 12px */
-	--font-size-body: clamp(0.875rem, 0.8571rem + 0.08929vw, 0.9375rem); /* 14 to 15px */
-	--font-size-small: clamp(0.75rem, 0.7321rem + 0.08929vw, 0.8125rem); /* 12 to 13px */
-	--font-size-tag: 0.625rem; /* 10px, already the smallest readable size */
+	--font-size-welcome: clamp(2.25rem, 1.893rem + 1.786vw, 3.5rem);
+	--font-size-page-heading: clamp(1.5rem, 1.286rem + 1.071vw, 2.25rem);
+	--font-size-project: clamp(1.25rem, 1.071rem + 0.8929vw, 1.875rem);
+	--font-size-script: clamp(1.375rem, 1.196rem + 0.8929vw, 2rem);
+	--font-size-nav: clamp(0.875rem, 0.8036rem + 0.3571vw, 1.125rem);
+	--font-size-card-title: clamp(0.875rem, 0.8393rem + 0.1786vw, 1rem);
+	--font-size-button: clamp(0.875rem, 0.8393rem + 0.1786vw, 1rem);
+	--font-size-button-small: clamp(0.75rem, 0.7321rem + 0.08929vw, 0.8125rem);
+	--font-size-label: clamp(0.6875rem, 0.6696rem + 0.08929vw, 0.75rem);
+	--font-size-body: clamp(0.875rem, 0.8571rem + 0.08929vw, 0.9375rem);
+	--font-size-small: clamp(0.75rem, 0.7321rem + 0.08929vw, 0.8125rem);
+	--font-size-tag: 0.625rem;
 
-	/* Headings point to the scale above, so h1 to h6 follow the design roles */
 	--font-size-heading-1: var(--font-size-welcome);
 	--font-size-heading-2: var(--font-size-page-heading);
 	--font-size-heading-3: var(--font-size-project);
@@ -151,62 +93,52 @@
 	--font-size-heading-5: var(--font-size-card-title);
 	--font-size-heading-6: var(--font-size-label);
 
-	/* Spacing scale. Small steps stay fixed, large steps shrink on mobile */
-	--space-2xs: 0.25rem; /* 4px */
-	--space-xs: 0.5rem; /* 8px, gap between list items in cards */
-	--space-s: 1rem; /* 16px */
-	--space-m: clamp(1rem, 0.8571rem + 0.7143vw, 1.5rem); /* 16 to 24px, card padding */
-	--space-l: clamp(1.5rem, 1.286rem + 1.071vw, 2.25rem); /* 24 to 36px, gap between cards */
-	--space-xl: clamp(1.5rem, 1.214rem + 1.429vw, 2.5rem); /* 24 to 40px, page padding and sections */
-	--space-2xl: clamp(2.5rem, 2.071rem + 2.143vw, 4rem); /* 40 to 64px */
-	--space-3xl: clamp(3.5rem, 2.786rem + 3.571vw, 6rem); /* 56 to 96px */
+	/* Spacing */
+	--space-2xs: 0.25rem;
+	--space-xs: 0.5rem;
+	--space-s: 1rem;
+	--space-m: clamp(1rem, 0.8571rem + 0.7143vw, 1.5rem);
+	--space-l: clamp(1.5rem, 1.286rem + 1.071vw, 2.25rem);
+	--space-xl: clamp(1.5rem, 1.214rem + 1.429vw, 2.5rem);
+	--space-2xl: clamp(2.5rem, 2.071rem + 2.143vw, 4rem);
+	--space-3xl: clamp(3.5rem, 2.786rem + 3.571vw, 6rem);
 
-	/* Layout sizes */
-	--size-sidebar: 18.75rem; /* 300px */
-	--size-container: 90rem; /* 1440px, the width of the desktop frame */
-	--size-checkbox: 1.25rem; /* 20px */
+	/* Layout */
+	--size-sidebar: 18.75rem;
+	--size-container: 90rem;
+	--size-checkbox: 1.25rem;
 
-	/* Border radius */
-	--radius-small: 0.5rem; /* 8px, form fields */
-	--radius-card: 1rem; /* 16px */
+	/* Shapes */
+	--radius-small: 0.5rem;
+	--radius-card: 1rem;
 	--radius-pill: 999px;
 
-	/* Border widths */
 	--border-width-thin: 1px;
 	--border-width-thick: 2px;
 
-	/* Shadows: very soft and light, the cards should feel like paper on a table */
 	--shadow-card: 0 0.25rem 1rem rgb(0 0 0 / 0.05);
 
-	/* Transitions */
+	/* Motion */
 	--duration-fast: 150ms;
 	--duration-normal: 250ms;
 	--easing-standard: cubic-bezier(0.2, 0, 0, 1);
 
-	/* Focus ring, shared by every interactive element */
+	/* Focus */
 	--focus-outline: var(--border-width-thick) solid var(--color-accent);
 	--focus-offset: 3px;
 }
 
-/* ==========================================================================
-	3. Reset
-	Kept small on purpose: it only removes browser defaults that get in the
-	way of the design, and keeps the useful ones (like list semantics).
-   ========================================================================== */
-
-/* Sizes include padding and border, so inline-size: 100% never overflows */
+/* Reset */
 *,
 *::before,
 *::after {
 	box-sizing: border-box;
 }
 
-/* Spacing comes from the design tokens, not from browser defaults */
 * {
 	margin: 0;
 }
 
-/* Media behaves like a block and never grows wider than its container */
 img,
 picture,
 svg,
@@ -216,7 +148,6 @@ canvas {
 	max-inline-size: 100%;
 }
 
-/* Form elements do not inherit fonts by default in most browsers */
 input,
 button,
 textarea,
@@ -225,7 +156,6 @@ select {
 	color: inherit;
 }
 
-/* Long words and URLs wrap instead of breaking the layout */
 p,
 h1,
 h2,
@@ -236,12 +166,7 @@ h6 {
 	overflow-wrap: break-word;
 }
 
-/* ==========================================================================
-	4. Base elements
-	Plain HTML already looks like CRE8 before any class is added.
-   ========================================================================== */
-
-/* The body font is the default; display and script are opted into */
+/* Base */
 body {
 	min-block-size: 100dvh;
 	background-color: var(--color-background);
@@ -254,7 +179,7 @@ body {
 	text-rendering: optimizeLegibility;
 }
 
-/* All headings use the wide uppercase display font from the design */
+/* Headings */
 h1,
 h2,
 h3,
@@ -294,22 +219,15 @@ h6 {
 	font-size: var(--font-size-heading-6);
 }
 
-/* Avoids single words on the last line of a paragraph */
 p {
 	text-wrap: pretty;
 }
 
-/* Muted text for dates and secondary info */
 small {
 	font-size: var(--font-size-small);
 }
 
-/*
-	Links keep the text color so they fit into cards and navigation.
-	The underline appears on hover and focus, which is when it helps most.
-	Links inside running text keep a permanent underline, because there
-	color alone would not show that they are links.
-*/
+/* Links */
 a {
 	color: inherit;
 	text-decoration-line: none;
@@ -323,37 +241,25 @@ p a {
 	text-decoration-line: underline;
 }
 
-/* Lists with a class are layout lists (navigation, cards), so no bullets */
+/* Lists */
 ul[class],
 ol[class] {
 	list-style: none;
 	padding: 0;
 }
 
-/* Lists in running text keep their bullets with a bit of room */
 ul:not([class]),
 ol:not([class]) {
 	padding-inline-start: var(--space-m);
 }
 
-/* ==========================================================================
-	5. Components
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-	5.1 Buttons
-	.button holds everything the variants share, so a variant only changes
-	colors. Works on both <button> and <a>, because some actions are links.
-	The secondary button gets its rough paper edge by also adding
-	the .rough-edge utility in the markup.
-   -------------------------------------------------------------------------- */
-
+/* Buttons */
 .button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	gap: var(--space-xs);
-	min-block-size: 2.75rem; /* 44px touch target */
+	min-block-size: 2.75rem;
 	padding-block: 0.75em;
 	padding-inline: 1.5em;
 	border: var(--border-width-thin) solid transparent;
@@ -367,14 +273,13 @@ ol:not([class]) {
 	letter-spacing: var(--letter-spacing-display);
 	text-transform: uppercase;
 	text-decoration: none;
-	white-space: nowrap; /* short labels like CLOCK IN read as one unit */
+	white-space: nowrap;
 	cursor: pointer;
 	transition:
 		background-color var(--duration-fast) var(--easing-standard),
 		transform var(--duration-fast) var(--easing-standard);
 }
 
-/* Header and card buttons are smaller than the welcome screen button */
 .button-small {
 	min-block-size: 2.25rem;
 	font-size: var(--font-size-button-small);
@@ -385,16 +290,11 @@ ol:not([class]) {
 	color: var(--color-button-primary-text);
 }
 
-/* Lifts a little on hover so the button feels like it can be pressed */
 .button-primary:hover {
 	background-color: var(--color-button-primary-hover);
 	transform: translateY(-1px);
 }
 
-/*
-	Hover only changes the custom property, so the color also reaches the
-	pseudo element when the button has the .rough-edge utility.
-*/
 .button-secondary {
 	--rough-edge-background: var(--color-button-secondary);
 	background-color: var(--rough-edge-background);
@@ -405,21 +305,16 @@ ol:not([class]) {
 	--rough-edge-background: var(--color-button-secondary-hover);
 }
 
-/* Pressed down, for both variants */
+/* Button states */
 .button:active {
 	transform: translateY(1px);
 }
 
-/* Underline is not needed on a link that looks like a button */
 .button:hover,
 .button:focus-visible {
 	text-decoration: none;
 }
 
-/*
-	Disabled buttons stay visible but clearly unavailable.
-	aria-disabled is included for links, which cannot be truly disabled.
-*/
 .button:disabled,
 .button[aria-disabled='true'] {
 	opacity: 0.5;
@@ -437,12 +332,7 @@ ol:not([class]) {
 	--rough-edge-background: var(--color-button-secondary);
 }
 
-/* --------------------------------------------------------------------------
-	5.2 Status tags
-	Small uppercase pills that show the state of a project. The colors come
-	in pairs, so each modifier sets both the background and the text.
-   -------------------------------------------------------------------------- */
-
+/* Status tags */
 .status-tag {
 	display: inline-block;
 	padding-block: 0.35em;
@@ -471,13 +361,7 @@ ol:not([class]) {
 	color: var(--color-status-pending-text);
 }
 
-/* --------------------------------------------------------------------------
-	5.3 Cards and text styles
-	Cards are pieces of paper on the page. Add .rough-edge in the markup to
-	give them the torn edge. The text classes cover the roles from the
-	design that are not headings, so the HTML can stay semantic.
-   -------------------------------------------------------------------------- */
-
+/* Cards */
 .card {
 	--rough-edge-background: var(--color-surface);
 	--rough-edge-shadow: var(--shadow-card);
@@ -487,7 +371,6 @@ ol:not([class]) {
 	box-shadow: var(--shadow-card);
 }
 
-/* TODAY, DEADLINES, ACTIVE PROJECTS */
 .card-title {
 	font-family: var(--font-family-display);
 	font-size: var(--font-size-card-title);
@@ -496,13 +379,11 @@ ol:not([class]) {
 	text-transform: uppercase;
 }
 
-/* Items inside a card sit close together */
 .card-list {
 	display: grid;
 	gap: var(--space-xs);
 }
 
-/* Cards sit next to each other on wide screens and stack on mobile */
 .card-grid {
 	display: grid;
 	gap: var(--space-l);
@@ -514,7 +395,7 @@ ol:not([class]) {
 	}
 }
 
-/* MAANDAG 23 NOV, UP NEXT, FACTUUR, CONTRACT */
+/* Text */
 .label {
 	font-family: var(--font-family-display);
 	font-size: var(--font-size-label);
@@ -523,7 +404,6 @@ ol:not([class]) {
 	text-transform: uppercase;
 }
 
-/* Handwritten accent lines such as "ready to clock in?" */
 .text-script {
 	font-family: var(--font-family-script);
 	font-size: var(--font-size-script);
@@ -534,18 +414,11 @@ ol:not([class]) {
 	font-size: var(--font-size-small);
 }
 
-/* Muted text is only used at body size and up, see the contrast notes */
 .text-muted {
 	color: var(--color-text-muted);
 }
 
-/* --------------------------------------------------------------------------
-	5.4 Navigation
-	The hand drawn red circle marks the current page. It is a pseudo element
-	with the SVG as a mask, so its color comes from --color-accent and it
-	stretches to fit any item. Hover shows the same circle, fainter.
-   -------------------------------------------------------------------------- */
-
+/* Navigation */
 .nav-list {
 	display: grid;
 	gap: var(--space-s);
@@ -575,12 +448,12 @@ ol:not([class]) {
 	transition: opacity var(--duration-normal) var(--easing-standard);
 }
 
-/* The circle replaces the underline as the hover signal */
 .nav-link:hover,
 .nav-link:focus-visible {
 	text-decoration: none;
 }
 
+/* Navigation active */
 .nav-link:hover::after {
 	opacity: 0.35;
 }
@@ -589,12 +462,7 @@ ol:not([class]) {
 	opacity: 1;
 }
 
-/* --------------------------------------------------------------------------
-	5.5 Form elements
-	Text fields share one look. Errors are shown with aria-invalid, so the
-	same attribute that tells screen readers about the error also styles it.
-   -------------------------------------------------------------------------- */
-
+/* Forms */
 label {
 	display: block;
 	margin-block-end: var(--space-2xs);
@@ -609,7 +477,7 @@ textarea,
 select {
 	display: block;
 	inline-size: 100%;
-	min-block-size: 2.75rem; /* 44px touch target */
+	min-block-size: 2.75rem;
 	padding-block: var(--space-xs);
 	padding-inline: var(--space-s);
 	border: var(--border-width-thin) solid var(--color-border);
@@ -632,7 +500,7 @@ textarea::placeholder {
 	opacity: 1;
 }
 
-/* The border turns black on focus, the accent outline comes from section 6 */
+/* Form states */
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
@@ -645,7 +513,6 @@ select[aria-invalid='true'] {
 	border-color: var(--color-error);
 }
 
-/* Error text under a field, linked to it with aria-describedby */
 .field-error {
 	margin-block-start: var(--space-2xs);
 	color: var(--color-error);
@@ -659,11 +526,7 @@ select:disabled {
 	cursor: not-allowed;
 }
 
-/*
-	Task checkboxes are hand drawn circles. The native look is removed but
-	the real input stays, so keyboard and screen reader support is kept.
-	The circle and the check mark are masks, so they take the text color.
-*/
+/* Checkboxes */
 input[type='checkbox'] {
 	appearance: none;
 	display: inline-grid;
@@ -711,32 +574,19 @@ input[type='checkbox']:disabled {
 	cursor: not-allowed;
 }
 
-/* ==========================================================================
-	6. Focus styles
-	One clear accent outline for everything that can be reached with the
-	keyboard. :focus-visible keeps it away from mouse clicks, so nobody is
-	tempted to remove it. The red has 8.8:1 contrast on the background.
-   ========================================================================== */
-
+/* Focus */
 :focus-visible {
 	outline: var(--focus-outline);
 	outline-offset: var(--focus-offset);
 }
 
-/* Text fields sit close to other fields, so the outline hugs them */
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
 	outline-offset: 1px;
 }
 
-/* ==========================================================================
-	7. Reduced motion
-	For people who get dizzy or distracted by movement: transitions,
-	animations and the hover lift are switched off. The rough edge filter is
-	not animated, so it stays.
-   ========================================================================== */
-
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,
@@ -753,13 +603,7 @@ select:focus-visible {
 	}
 }
 
-/* ==========================================================================
-	8. Utilities
-	Small helpers that do one thing. They come last so they win over
-	component styles with the same specificity.
-   ========================================================================== */
-
-/* Hidden on screen, still read by screen readers */
+/* Utilities */
 .visually-hidden {
 	position: absolute;
 	inline-size: 1px;
@@ -769,7 +613,6 @@ select:focus-visible {
 	white-space: nowrap;
 }
 
-/* Centers page content and gives it the page padding from the design */
 .container {
 	inline-size: 100%;
 	max-inline-size: var(--size-container);
@@ -777,14 +620,7 @@ select:focus-visible {
 	padding-inline: var(--space-xl);
 }
 
-/*
-	Rough, torn paper edge.
-	The SVG filter is defined once in src/app.html (browsers only apply
-	filters from the same document). The filter would also make text wobble,
-	so it is applied to a pseudo element behind the content instead of the
-	element itself. Components pass their background and shadow through
-	--rough-edge-background and --rough-edge-shadow.
-*/
+/* Rough edge */
 .rough-edge {
 	position: relative;
 	isolation: isolate;
