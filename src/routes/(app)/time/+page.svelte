@@ -26,15 +26,17 @@
 	title={project ? `Time · ${project.title}` : 'Time'}
 	back={project ? { href: `/projects/${project.id}`, text: 'the project' } : undefined}
 />
-<FormNotice {form} />
-<HoursSummary {project} {year} {totalHours} {hoursCriterion} {criterionPercentage} />
-<TimeEntryList
-	{entries}
-	{monday}
-	{previousWeek}
-	{nextWeek}
-	{weekHours}
-	projectId={project?.id}
-	timeZone={timezone}
-/>
-<TimeEntryForm {projects} projectId={project?.id} />
+<div class="card-grid">
+	<FormNotice {form} />
+	<HoursSummary {project} {year} {totalHours} {hoursCriterion} {criterionPercentage} />
+	<TimeEntryList
+		{entries}
+		{monday}
+		{previousWeek}
+		{nextWeek}
+		{weekHours}
+		projectId={project?.id}
+		timeZone={timezone}
+	/>
+	<TimeEntryForm {projects} projectId={project?.id} />
+</div>

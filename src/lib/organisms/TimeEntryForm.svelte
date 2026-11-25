@@ -9,7 +9,7 @@
 	const { projects, projectId } = $props()
 </script>
 
-<section class="time-entry-form">
+<section class="time-entry-form card rough-edge">
 	<Heading>Add hours afterwards</Heading>
 	<form method="POST" action="?/add">
 		<SelectField

@@ -5,12 +5,14 @@
 	const { project, year, totalHours, hoursCriterion, criterionPercentage } = $props()
 </script>
 
-<section class="hours-summary">
+<section class="hours-summary card rough-edge">
 	<Heading>Total</Heading>
 	{#if project}
-		<p><strong>{totalHours} h</strong> on this project. <a href="/time">See all hours</a></p>
+		<p class="stat-number">{totalHours} h</p>
+		<p>On this project. <a href="/time">See all hours</a></p>
 	{:else}
-		<p><strong>{year}: {totalHours} of {hoursCriterion} hours</strong></p>
+		<p class="label text-muted">{year}</p>
+		<p class="stat-number">{totalHours} <span class="text-small">of {hoursCriterion} h</span></p>
 		<meter
 			min="0"
 			max="100"
@@ -19,6 +21,8 @@
 		>
 			{criterionPercentage}%
 		</meter>
-		<p>{criterionPercentage}% of the hours criterion (zelfstandigenaftrek)</p>
+		<p class="text-small text-muted">
+			{criterionPercentage}% of the hours criterion (zelfstandigenaftrek)
+		</p>
 	{/if}
 </section>

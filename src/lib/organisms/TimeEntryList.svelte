@@ -13,21 +13,30 @@
 	const projectQuery = $derived(projectId ? `&project=${projectId}` : '')
 </script>
 
-<section class="time-entry-list">
+<section class="time-entry-list card rough-edge">
 	<Heading>Week of {monday}: {weekHours} h</Heading>
 	<nav aria-label="Weeks">
-		<a href="?week={previousWeek}{projectQuery}">Previous week</a> ·
-		<a href="?week={nextWeek}{projectQuery}">Next week</a>
+		<ul class="pill-list">
+			<li><a class="pill-link" href="?week={previousWeek}{projectQuery}">Previous week</a></li>
+			<li><a class="pill-link" href="?week={nextWeek}{projectQuery}">Next week</a></li>
+		</ul>
 	</nav>
 	<ul>
 		{#each entries as { id, started_at, ended_at, hours, category, note, stopped_by, projects } (id)}
 			<li>
-				<DateTime value={started_at} {timeZone} /> to
-				{#if ended_at}<DateTime value={ended_at} {timeZone} show="time" />{:else}running{/if}
-				· {hours} h · {category.replaceAll('_', ' ')}
-				{#if projects}· {projects.title}{/if}
-				{#if stopped_by && stopped_by !== 'manual'}· stopped: {stopped_by.replaceAll('_', ' ')}{/if}
-				{#if note}· {note}{/if}
+				<span class="time-entry-text">
+					<span>
+						<DateTime value={started_at} {timeZone} /> to
+						{#if ended_at}<DateTime value={ended_at} {timeZone} show="time" />{:else}running{/if}
+					</span>
+					<span class="text-small text-muted">
+						{category.replaceAll('_', ' ')}{#if projects}
+							· {projects.title}{/if}{#if stopped_by && stopped_by !== 'manual'}
+							· stopped: {stopped_by.replaceAll('_', ' ')}{/if}{#if note}
+							· {note}{/if}
+					</span>
+				</span>
+				<span class="list-end card-title">{hours} h</span>
 				{#if ended_at}
 					<ActionButton
 						action="?/delete"
@@ -39,7 +48,14 @@
 				{/if}
 			</li>
 		{:else}
-			<li>No hours this week.</li>
+			<li class="text-muted">No hours this week.</li>
 		{/each}
 	</ul>
 </section>
+
+<style>
+	.time-entry-text {
+		display: grid;
+		flex: 1 1 var(--size-grid-s);
+	}
+</style>
