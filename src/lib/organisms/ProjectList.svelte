@@ -1,7 +1,7 @@
 <script>
 	import Heading from '#lib/atoms/Heading.svelte'
-	import StatusLabel from '#lib/atoms/StatusLabel.svelte'
 	import NavLinks from '#lib/molecules/NavLinks.svelte'
+	import ProjectCard from '#lib/molecules/ProjectCard.svelte'
 
 	/**
 	 * @type {{
@@ -22,18 +22,37 @@
 </script>
 
 <section class="project-list">
-	<Heading>Your projects</Heading>
+	<div class="visually-hidden"><Heading>Your projects</Heading></div>
 	<NavLinks label="Filter projects" links={filters} {current} exact />
-	<ul>
-		{#each projects as { id, title, status: projectStatus, deadline, clients } (id)}
-			<li>
-				<a href="/projects/{id}">{title}</a>
-				<StatusLabel status={projectStatus} />
-				{#if clients}· {clients.name}{/if}
-				{#if deadline}· deadline {deadline}{/if}
-			</li>
-		{:else}
-			<li>No projects here.</li>
-		{/each}
-	</ul>
+	{#if projects.length}
+		<ul class="card-grid project-list-grid">
+			{#each projects as { id, title, status: projectStatus, deadline, clients } (id)}
+				<li>
+					<ProjectCard
+						href="/projects/{id}"
+						{title}
+						status={projectStatus}
+						meta={[clients?.name, deadline ? `deadline ${deadline}` : null]}
+					/>
+				</li>
+			{/each}
+		</ul>
+	{:else}
+		<p class="empty-state">No projects here.</p>
+	{/if}
 </section>
+
+<style>
+	.project-list {
+		display: grid;
+		gap: var(--space-m);
+	}
+
+	.project-list-grid {
+		--grid-min: var(--size-grid-l);
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--grid-min)), 1fr));
+		align-items: stretch;
+		padding: 0;
+		list-style: none;
+	}
+</style>
