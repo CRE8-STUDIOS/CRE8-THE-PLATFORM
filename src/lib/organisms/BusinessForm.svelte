@@ -15,7 +15,7 @@
 	)
 </script>
 
-<section class="business-form">
+<section class="business-form card rough-edge">
 	<Heading>Business & facturen</Heading>
 	<p>These details go on your facturen. Your login email: {email}</p>
 	<form method="POST" action="?/save">

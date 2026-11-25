@@ -9,7 +9,7 @@
 	const { title, action, submitLabel, template } = $props()
 </script>
 
-<section class="template-form">
+<section class="template-form" class:card={!template} class:rough-edge={!template}>
 	<Heading level={template ? 3 : 2}>{title}</Heading>
 	<form method="POST" {action}>
 		{#if template}<Input type="hidden" name="id" value={template.id} />{/if}

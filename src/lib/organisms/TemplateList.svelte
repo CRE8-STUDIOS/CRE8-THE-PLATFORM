@@ -7,7 +7,7 @@
 	const { templates } = $props()
 </script>
 
-<section class="template-list">
+<section class="template-list card rough-edge span-full">
 	<Heading>Contract templates</Heading>
 	{#each templates as template (template.id)}
 		<article class="template-list-item">

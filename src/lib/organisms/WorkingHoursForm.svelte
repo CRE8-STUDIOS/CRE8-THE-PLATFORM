@@ -10,7 +10,7 @@
 	const { kinds } = $props()
 </script>
 
-<section class="working-hours-form">
+<section class="working-hours-form card rough-edge">
 	<Heading>Add hours</Heading>
 	<form method="POST" action="?/add">
 		<SelectField label="Kind" name="kind" options={kinds} value="work" />

@@ -7,7 +7,7 @@
 	const { nextPosition } = $props()
 </script>
 
-<section class="tile-form">
+<section class="tile-form card rough-edge">
 	<Heading>Add an app button</Heading>
 	<form method="POST" action="?/add" enctype="multipart/form-data">
 		<TextField label="Name" name="name" required />

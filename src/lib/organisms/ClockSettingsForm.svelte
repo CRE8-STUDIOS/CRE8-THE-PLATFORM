@@ -14,7 +14,7 @@
 	]
 </script>
 
-<section class="clock-settings-form">
+<section class="clock-settings-form card rough-edge">
 	<Heading>Clock & meetings</Heading>
 	<form method="POST" action="?/save">
 		<fieldset>
