@@ -235,3 +235,103 @@ h5,
 h6 {
 	overflow-wrap: break-word;
 }
+
+/* ==========================================================================
+	4. Base elements
+	Plain HTML already looks like CRE8 before any class is added.
+   ========================================================================== */
+
+/* The body font is the default; display and script are opted into */
+body {
+	min-block-size: 100dvh;
+	background-color: var(--color-background);
+	color: var(--color-text);
+	font-family: var(--font-family-body);
+	font-size: var(--font-size-body);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--line-height-body);
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+/* All headings use the wide uppercase display font from the design */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-family-display);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--line-height-heading);
+	letter-spacing: var(--letter-spacing-display);
+	text-transform: uppercase;
+	text-wrap: balance;
+}
+
+h1 {
+	font-size: var(--font-size-heading-1);
+	line-height: var(--line-height-tight);
+}
+
+h2 {
+	font-size: var(--font-size-heading-2);
+}
+
+h3 {
+	font-size: var(--font-size-heading-3);
+}
+
+h4 {
+	font-size: var(--font-size-heading-4);
+}
+
+h5 {
+	font-size: var(--font-size-heading-5);
+}
+
+h6 {
+	font-size: var(--font-size-heading-6);
+}
+
+/* Avoids single words on the last line of a paragraph */
+p {
+	text-wrap: pretty;
+}
+
+/* Muted text for dates and secondary info */
+small {
+	font-size: var(--font-size-small);
+}
+
+/*
+	Links keep the text color so they fit into cards and navigation.
+	The underline appears on hover and focus, which is when it helps most.
+	Links inside running text keep a permanent underline, because there
+	color alone would not show that they are links.
+*/
+a {
+	color: inherit;
+	text-decoration-line: none;
+	text-decoration-thickness: var(--border-width-thin);
+	text-underline-offset: 0.2em;
+}
+
+a:hover,
+a:focus-visible,
+p a {
+	text-decoration-line: underline;
+}
+
+/* Lists with a class are layout lists (navigation, cards), so no bullets */
+ul[class],
+ol[class] {
+	list-style: none;
+	padding: 0;
+}
+
+/* Lists in running text keep their bullets with a bit of room */
+ul:not([class]),
+ol:not([class]) {
+	padding-inline-start: var(--space-m);
+}
