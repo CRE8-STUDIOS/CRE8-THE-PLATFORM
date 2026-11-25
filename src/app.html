@@ -9,5 +9,24 @@
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>
+		<!-- Shared rough paper edge filter, used by the .rough-edge class in static/stylesheet.css -->
+		<svg aria-hidden="true" focusable="false" width="0" height="0" style="position: absolute">
+			<filter id="rough-edge" x="-5%" y="-5%" width="110%" height="110%">
+				<feTurbulence
+					type="fractalNoise"
+					baseFrequency="0.05"
+					numOctaves="3"
+					seed="8"
+					result="noise"
+				/>
+				<feDisplacementMap
+					in="SourceGraphic"
+					in2="noise"
+					scale="5"
+					xChannelSelector="R"
+					yChannelSelector="G"
+				/>
+			</filter>
+		</svg>
 	</body>
 </html>

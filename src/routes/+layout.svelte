@@ -1,5 +1,4 @@
 <script>
-	import '../app.css'
 	import favicon from '#lib/assets/favicon.svg'
 	import { invalidate } from '$app/navigation'
 
