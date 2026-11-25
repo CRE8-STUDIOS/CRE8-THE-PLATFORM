@@ -1,6 +1,6 @@
 <script>
-	/** @type {{ name: string, href?: string, iconUrl?: string | null, external?: boolean }} */
-	const { name, href, iconUrl, external = false } = $props()
+	/** @type {{ name: string, href?: string, iconUrl?: string | null, group?: string | null, external?: boolean }} */
+	const { name, href, iconUrl, group, external = false } = $props()
 	const initial = $derived(name.replace(/[^\p{L}\p{N}]/gu, '').charAt(0))
 </script>
 
@@ -17,6 +17,7 @@
 		<span class="app-tile-icon" aria-hidden="true">{initial}</span>
 	{/if}
 	<span class="app-tile-name">{name}</span>
+	{#if group}<span class="text-small text-muted">{group}</span>{/if}
 </svelte:element>
 
 <style>
