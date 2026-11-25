@@ -37,6 +37,7 @@
 	.page-header-titles {
 		display: grid;
 		gap: var(--space-xs);
+		min-inline-size: 0;
 	}
 
 	.page-header-meta {

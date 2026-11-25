@@ -92,9 +92,9 @@
 	--font-size-small: clamp(0.75rem, 0.7321rem + 0.08929vw, 0.8125rem);
 	--font-size-tag: 0.625rem;
 
-	--font-size-heading-1: var(--font-size-welcome);
-	--font-size-heading-2: var(--font-size-page-heading);
-	--font-size-heading-3: var(--font-size-project);
+	--font-size-heading-1: var(--font-size-page-heading);
+	--font-size-heading-2: var(--font-size-project);
+	--font-size-heading-3: var(--font-size-nav);
 	--font-size-heading-4: var(--font-size-nav);
 	--font-size-heading-5: var(--font-size-card-title);
 	--font-size-heading-6: var(--font-size-label);
