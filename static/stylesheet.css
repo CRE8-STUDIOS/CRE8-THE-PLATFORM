@@ -367,6 +367,7 @@ ol:not([class]) {
 	letter-spacing: var(--letter-spacing-display);
 	text-transform: uppercase;
 	text-decoration: none;
+	white-space: nowrap; /* short labels like CLOCK IN read as one unit */
 	cursor: pointer;
 	transition:
 		background-color var(--duration-fast) var(--easing-standard),
@@ -390,15 +391,18 @@ ol:not([class]) {
 	transform: translateY(-1px);
 }
 
+/*
+	Hover only changes the custom property, so the color also reaches the
+	pseudo element when the button has the .rough-edge utility.
+*/
 .button-secondary {
 	--rough-edge-background: var(--color-button-secondary);
-	background-color: var(--color-button-secondary);
+	background-color: var(--rough-edge-background);
 	color: var(--color-button-secondary-text);
 }
 
 .button-secondary:hover {
 	--rough-edge-background: var(--color-button-secondary-hover);
-	background-color: var(--color-button-secondary-hover);
 }
 
 /* Pressed down, for both variants */
@@ -431,7 +435,6 @@ ol:not([class]) {
 .button-secondary:disabled:hover,
 .button-secondary[aria-disabled='true']:hover {
 	--rough-edge-background: var(--color-button-secondary);
-	background-color: var(--color-button-secondary);
 }
 
 /* --------------------------------------------------------------------------
