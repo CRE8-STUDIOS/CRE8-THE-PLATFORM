@@ -13,10 +13,12 @@
 	back={{ href: '/clients', text: 'Clients' }}
 	intro={client.archived_at ? 'Archived' : undefined}
 />
-<ClientForm title="Details" action="?/update" submitLabel="Save" {client} {form} />
-<LinkList title="Projects" links={projectLinks} empty="No projects yet." />
-<ArchiveOrDelete
-	archived={Boolean(client.archived_at)}
-	what="client"
-	note="Clients with active projects or sent facturen can only be archived."
-/>
+<div class="card-grid">
+	<ClientForm title="Details" action="?/update" submitLabel="Save" {client} {form} />
+	<LinkList title="Projects" links={projectLinks} empty="No projects yet." />
+	<ArchiveOrDelete
+		archived={Boolean(client.archived_at)}
+		what="client"
+		note="Clients with active projects or sent facturen can only be archived."
+	/>
+</div>

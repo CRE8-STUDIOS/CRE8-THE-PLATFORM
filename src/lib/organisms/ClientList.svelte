@@ -5,10 +5,11 @@
 	const { clients, showArchived } = $props()
 </script>
 
-<section class="client-list">
+<section class="client-list card rough-edge">
 	<Heading>{showArchived ? 'Archived clients' : 'Active clients'}</Heading>
 	<p>
-		{#if showArchived}<a href="/clients">Show active clients</a>{:else}<a
+		{#if showArchived}<a class="pill-link" href="/clients">Show active clients</a>{:else}<a
+				class="pill-link"
 				href="/clients?archived=1"
 			>
 				Show archived clients
@@ -17,12 +18,24 @@
 	<ul>
 		{#each clients as { id, name, company, email } (id)}
 			<li>
-				<a href="/clients/{id}">{name}</a>{#if company}
-					· {company}{/if}{#if email}
-					· {email}{/if}
+				<span class="avatar" aria-hidden="true">{name.charAt(0)}</span>
+				<span class="client-list-text">
+					<a href="/clients/{id}">{name}</a>
+					{#if company || email}<span class="text-small text-muted">
+							{[company, email].filter(Boolean).join(' · ')}
+						</span>{/if}
+				</span>
 			</li>
 		{:else}
-			<li>No clients here.</li>
+			<li class="text-muted">No clients here.</li>
 		{/each}
 	</ul>
 </section>
+
+<style>
+	.client-list-text {
+		display: grid;
+		min-inline-size: 0;
+		overflow-wrap: anywhere;
+	}
+</style>
