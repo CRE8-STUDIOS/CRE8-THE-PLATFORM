@@ -335,3 +335,101 @@ ul:not([class]),
 ol:not([class]) {
 	padding-inline-start: var(--space-m);
 }
+
+/* ==========================================================================
+	5. Components
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+	5.1 Buttons
+	.button holds everything the variants share, so a variant only changes
+	colors. Works on both <button> and <a>, because some actions are links.
+	The secondary button gets its rough paper edge by also adding
+	the .rough-edge utility in the markup.
+   -------------------------------------------------------------------------- */
+
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-xs);
+	min-block-size: 2.75rem; /* 44px touch target */
+	padding-block: 0.75em;
+	padding-inline: 1.5em;
+	border: var(--border-width-thin) solid transparent;
+	border-radius: var(--radius-pill);
+	background-color: var(--color-button-secondary);
+	color: var(--color-button-secondary-text);
+	font-family: var(--font-family-display);
+	font-size: var(--font-size-button);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--line-height-tight);
+	letter-spacing: var(--letter-spacing-display);
+	text-transform: uppercase;
+	text-decoration: none;
+	cursor: pointer;
+	transition:
+		background-color var(--duration-fast) var(--easing-standard),
+		transform var(--duration-fast) var(--easing-standard);
+}
+
+/* Header and card buttons are smaller than the welcome screen button */
+.button-small {
+	min-block-size: 2.25rem;
+	font-size: var(--font-size-button-small);
+}
+
+.button-primary {
+	background-color: var(--color-button-primary);
+	color: var(--color-button-primary-text);
+}
+
+/* Lifts a little on hover so the button feels like it can be pressed */
+.button-primary:hover {
+	background-color: var(--color-button-primary-hover);
+	transform: translateY(-1px);
+}
+
+.button-secondary {
+	--rough-edge-background: var(--color-button-secondary);
+	background-color: var(--color-button-secondary);
+	color: var(--color-button-secondary-text);
+}
+
+.button-secondary:hover {
+	--rough-edge-background: var(--color-button-secondary-hover);
+	background-color: var(--color-button-secondary-hover);
+}
+
+/* Pressed down, for both variants */
+.button:active {
+	transform: translateY(1px);
+}
+
+/* Underline is not needed on a link that looks like a button */
+.button:hover,
+.button:focus-visible {
+	text-decoration: none;
+}
+
+/*
+	Disabled buttons stay visible but clearly unavailable.
+	aria-disabled is included for links, which cannot be truly disabled.
+*/
+.button:disabled,
+.button[aria-disabled='true'] {
+	opacity: 0.5;
+	cursor: not-allowed;
+	transform: none;
+}
+
+.button-primary:disabled:hover,
+.button-primary[aria-disabled='true']:hover {
+	background-color: var(--color-button-primary);
+}
+
+.button-secondary:disabled:hover,
+.button-secondary[aria-disabled='true']:hover {
+	--rough-edge-background: var(--color-button-secondary);
+	background-color: var(--color-button-secondary);
+}
