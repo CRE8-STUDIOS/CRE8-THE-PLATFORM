@@ -11,15 +11,23 @@
 		$derived(data)
 </script>
 
-<PageHeader title="Agenda" />
-<FormNotice {form} />
-<MeetingRequests {meetings} timeZone={timezone} />
-<AgendaWeek {monday} {previousWeek} {nextWeek} {week} timeZone={timezone} />
-<AgendaInbox items={inbox} />
-<AgendaItemForm
-	title="Add to agenda"
-	action="?/create"
-	submitLabel="Add"
-	{projects}
-	timeZone={timezone}
-/>
+<PageHeader title="Agenda">
+	{#snippet actions()}
+		<a class="button button-primary" href="#add-to-agenda">+ Add to agenda</a>
+	{/snippet}
+</PageHeader>
+
+<div class="card-grid">
+	<FormNotice {form} />
+	<MeetingRequests {meetings} timeZone={timezone} />
+	<AgendaWeek {monday} {previousWeek} {nextWeek} {week} timeZone={timezone} />
+	<AgendaInbox items={inbox} />
+	<AgendaItemForm
+		id="add-to-agenda"
+		title="Add to agenda"
+		action="?/create"
+		submitLabel="Add"
+		{projects}
+		timeZone={timezone}
+	/>
+</div>

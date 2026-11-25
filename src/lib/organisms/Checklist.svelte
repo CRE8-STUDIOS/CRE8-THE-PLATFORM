@@ -8,7 +8,7 @@
 	const { items } = $props()
 </script>
 
-<section class="checklist">
+<section class="checklist card rough-edge">
 	<Heading>Checklist</Heading>
 	<ul>
 		{#each items as { id, label, done } (id)}

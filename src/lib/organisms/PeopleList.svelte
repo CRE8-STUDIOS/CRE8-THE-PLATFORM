@@ -8,7 +8,7 @@
 	const { people } = $props()
 </script>
 
-<section class="people-list">
+<section class="people-list card rough-edge">
 	<Heading>People</Heading>
 	<ul>
 		{#each people as { id, name, role, email, phone } (id)}

@@ -8,7 +8,7 @@
 </script>
 
 {#if meetings.length}
-	<section class="meeting-requests">
+	<section class="meeting-requests card rough-edge">
 		<Heading>Meeting requests from clients</Heading>
 		<ul>
 			{#each meetings as { id, starts_at, ends_at, message, projects } (id)}
