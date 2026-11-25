@@ -7,7 +7,7 @@
 	const { updates, timeZone, editable = true, title = 'Updates' } = $props()
 </script>
 
-<section class="update-list">
+<section class="update-list card rough-edge">
 	<Heading>{title}</Heading>
 	{#each updates as { id, title: updateTitle, body, created_at, visible_to_client } (id)}
 		<article class="update-list-item">

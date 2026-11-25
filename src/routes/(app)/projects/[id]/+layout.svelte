@@ -18,4 +18,12 @@
 	/>
 {/if}
 
-{@render children()}
+<div class="card-grid project-content">
+	{@render children()}
+</div>
+
+<style>
+	.project-content {
+		--grid-min: var(--size-grid-xl);
+	}
+</style>

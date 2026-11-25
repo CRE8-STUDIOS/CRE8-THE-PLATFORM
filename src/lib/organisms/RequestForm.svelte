@@ -5,11 +5,11 @@
 	import TextField from '#lib/molecules/TextField.svelte'
 	import TextareaField from '#lib/molecules/TextareaField.svelte'
 
-	/** @type {{ title: string, action: string, submitLabel: string, request?: { id: string, title: string, description: string | null, price: number | null, estimated_hours: number | null, planned_start: string | null } }} */
-	const { title, action, submitLabel, request } = $props()
+	/** @type {{ title: string, action: string, submitLabel: string, request?: { id: string, title: string, description: string | null, price: number | null, estimated_hours: number | null, planned_start: string | null }, id?: string }} */
+	const { title, action, submitLabel, request, id } = $props()
 </script>
 
-<section class="request-form">
+<section {id} class="request-form" class:card={!request} class:rough-edge={!request}>
 	<Heading level={request ? 3 : 2}>{title}</Heading>
 	<form method="POST" {action}>
 		{#if request}<Input type="hidden" name="id" value={request.id} />{/if}

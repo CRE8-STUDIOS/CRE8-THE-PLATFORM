@@ -14,7 +14,7 @@
 	const { access, signupLink, clientEmail, timeZone } = $props()
 </script>
 
-<section class="portal-access">
+<section class="portal-access card rough-edge">
 	<Heading>Client portal access</Heading>
 	<p>
 		Invited clients see this project's title, dates, briefing, visible updates, shared files,

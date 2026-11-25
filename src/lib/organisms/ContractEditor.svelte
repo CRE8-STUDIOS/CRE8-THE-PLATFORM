@@ -12,7 +12,7 @@
 	const { contract, timeZone, projectId, hasClient } = $props()
 </script>
 
-<section class="contract-editor">
+<section class="contract-editor card rough-edge">
 	<Heading>Contract</Heading>
 	<p>
 		<StatusLabel status={contract.status} />

@@ -1,8 +1,8 @@
 <script>
 	import Heading from '#lib/atoms/Heading.svelte'
 
-	/** @type {{ title: string, level?: 1 | 2, back?: { href: string, text: string }, intro?: string, label?: string, tag?: string, actions?: import('svelte').Snippet }} */
-	const { title, level = 1, back, intro, label, tag, actions } = $props()
+	/** @type {{ title: string, level?: 1 | 2, back?: { href: string, text: string }, intro?: string, label?: string, tag?: string, meta?: import('svelte').Snippet, actions?: import('svelte').Snippet }} */
+	const { title, level = 1, back, intro, label, tag, meta, actions } = $props()
 </script>
 
 <header class="page-header">
@@ -10,6 +10,7 @@
 	<div class="page-header-main">
 		<div class="page-header-titles">
 			{#if label}<p class="label text-muted">{label}</p>{/if}
+			{#if meta}<p class="page-header-meta text-small text-muted">{@render meta()}</p>{/if}
 			<Heading {level}>
 				{title}{#if tag}<span class="version-tag page-header-tag">{tag}</span>{/if}
 			</Heading>
@@ -35,6 +36,13 @@
 
 	.page-header-titles {
 		display: grid;
+		gap: var(--space-xs);
+	}
+
+	.page-header-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
 		gap: var(--space-xs);
 	}
 

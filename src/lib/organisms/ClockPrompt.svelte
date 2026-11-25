@@ -19,14 +19,34 @@
 </script>
 
 {#if !running && mode !== 'off' && !dismissed}
-	<section class="clock-prompt" aria-label="Clock in" hidden={mode === 'auto'}>
+	<section
+		class="clock-prompt card card-highlight rough-edge"
+		aria-label="Clock in"
+		hidden={mode === 'auto'}
+	>
 		<form method="POST" action="/clock?/in" bind:this={form}>
 			<Input type="hidden" name="project_id" value={projectId} />
 			<Input type="hidden" name="started_by" value={mode === 'auto' ? 'auto' : 'prompt'} />
 			<Input type="hidden" name="redirectTo" value={current} />
-			<p>Clock in for {projectTitle}?</p>
-			<Button variant="primary">Yes, clock in</Button>
-			<Button type="button" onclick={() => (dismissed = true)}>Not now</Button>
+			<p class="card-title">Clock in for {projectTitle}?</p>
+			<div class="button-group">
+				<Button variant="primary">Yes, clock in</Button>
+				<Button type="button" onclick={() => (dismissed = true)}>Not now</Button>
+			</div>
 		</form>
 	</section>
 {/if}
+
+<style>
+	.clock-prompt form {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-s);
+	}
+
+	.clock-prompt[hidden] {
+		display: none;
+	}
+</style>

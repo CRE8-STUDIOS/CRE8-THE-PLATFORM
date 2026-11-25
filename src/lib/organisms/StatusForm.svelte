@@ -7,7 +7,7 @@
 	const { status, options } = $props()
 </script>
 
-<section class="status-form">
+<section class="status-form card rough-edge">
 	<Heading>Status</Heading>
 	<form method="POST" action="?/status">
 		<SelectField label="Status" name="status" {options} value={status} />

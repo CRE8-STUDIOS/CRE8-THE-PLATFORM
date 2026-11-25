@@ -6,7 +6,7 @@
 	const { files, editable = true, title = 'Files' } = $props()
 </script>
 
-<section class="file-list">
+<section class="file-list card rough-edge">
 	<Heading>{title}</Heading>
 	<ul>
 		{#each files as { id, name, size, shared, url } (id)}
