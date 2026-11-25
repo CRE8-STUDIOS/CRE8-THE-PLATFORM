@@ -881,6 +881,7 @@ legend {
 	align-items: start;
 }
 
+.card fieldset > p,
 .card form:not(.action-button) > :is(fieldset, p, .field:has(textarea), .signature-field),
 .card form:not(.action-button) > .button {
 	grid-column: 1 / -1;
