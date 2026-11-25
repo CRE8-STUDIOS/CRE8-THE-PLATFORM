@@ -114,6 +114,8 @@
 	--size-container: 90rem;
 	--size-content: 75rem;
 	--size-narrow: 40rem;
+	--size-portal: 56rem;
+	--size-signature: 9.375rem;
 	--size-checkbox: 1.25rem;
 	--size-avatar: 2.5rem;
 	--size-icon: 3rem;
@@ -509,8 +511,47 @@ ol:not([class]) {
 	align-items: start;
 }
 
-.span-full {
+.span-full,
+.card-grid > .notice {
 	grid-column: 1 / -1;
+}
+
+.card img {
+	border-radius: var(--radius-small);
+}
+
+.card pre {
+	font-family: var(--font-family-body);
+	white-space: pre-wrap;
+}
+
+blockquote {
+	padding-inline-start: var(--space-s);
+	border-inline-start: var(--border-width-thick) solid var(--color-border);
+	color: var(--color-text-muted);
+}
+
+meter {
+	inline-size: 100%;
+	block-size: var(--space-s);
+}
+
+/* Signature */
+.signature-field {
+	display: grid;
+	gap: var(--space-xs);
+	justify-items: start;
+}
+
+.signature-canvas {
+	inline-size: 100%;
+	block-size: auto;
+	max-block-size: var(--size-signature);
+	border: var(--border-width-thick) dashed var(--color-border);
+	border-radius: var(--radius-card);
+	background-color: var(--color-background);
+	touch-action: none;
+	cursor: crosshair;
 }
 
 /* Stats */
