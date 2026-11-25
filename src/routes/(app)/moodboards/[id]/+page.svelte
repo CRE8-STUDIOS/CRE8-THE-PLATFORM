@@ -11,8 +11,10 @@
 </script>
 
 <PageHeader title={board.title} back={{ href: '/moodboards', text: 'Moodboards' }} />
-<FormNotice {form} />
-<MoodboardForm title="Board settings" action="?/update" submitLabel="Save" {board} {projects} />
-<MoodboardItems {items} editable />
-<MoodboardItemForm />
-<ArchiveOrDelete what="moodboard" note="Deleting a board also deletes its images." />
+<div class="card-grid">
+	<FormNotice {form} />
+	<MoodboardItems {items} editable />
+	<MoodboardForm title="Board settings" action="?/update" submitLabel="Save" {board} {projects} />
+	<MoodboardItemForm />
+	<ArchiveOrDelete what="moodboard" note="Deleting a board also deletes its images." />
+</div>

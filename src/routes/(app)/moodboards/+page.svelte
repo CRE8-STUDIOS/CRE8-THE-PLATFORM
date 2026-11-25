@@ -11,13 +11,21 @@
 <PageHeader
 	title="Moodboards"
 	back={projectId ? { href: `/projects/${projectId}`, text: 'the project' } : undefined}
-/>
-<MoodboardList {boards} />
-<FormNotice {form} />
-<MoodboardForm
-	title="New moodboard"
-	action="?/create"
-	submitLabel="Create"
-	{projects}
-	{projectId}
-/>
+>
+	{#snippet actions()}
+		<a class="button button-primary" href="#new-moodboard">+ New moodboard</a>
+	{/snippet}
+</PageHeader>
+
+<div class="card-grid">
+	<MoodboardList {boards} />
+	<FormNotice {form} />
+	<MoodboardForm
+		id="new-moodboard"
+		title="New moodboard"
+		action="?/create"
+		submitLabel="Create"
+		{projects}
+		{projectId}
+	/>
+</div>
