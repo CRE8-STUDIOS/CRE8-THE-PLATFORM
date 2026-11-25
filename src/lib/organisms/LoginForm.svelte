@@ -8,7 +8,7 @@
 	const { form, redirectTo } = $props()
 </script>
 
-<section class="login-form">
+<section class="login-form card rough-edge">
 	<FormNotice {form} />
 	<form method="POST">
 		<Input type="hidden" name="redirectTo" value={redirectTo} />
@@ -29,6 +29,8 @@
 		/>
 		<Button variant="primary">Log in</Button>
 	</form>
-	<p>New freelancer? <a href="/signup">Create your CRE8 account</a></p>
-	<p>Invited as a client? <a href="/portal/signup">Create your portal account</a></p>
+	<p class="text-small">New freelancer? <a href="/signup">Create your CRE8 account</a></p>
+	<p class="text-small">
+		Invited as a client? <a href="/portal/signup">Create your portal account</a>
+	</p>
 </section>

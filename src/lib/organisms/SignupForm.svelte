@@ -7,7 +7,7 @@
 	const { kind, form } = $props()
 </script>
 
-<section class="signup-form">
+<section class="signup-form card rough-edge">
 	<FormNotice {form} />
 	{#if !form?.success}
 		<form method="POST">
@@ -58,5 +58,5 @@
 			</Button>
 		</form>
 	{/if}
-	<p>Already have an account? <a href="/login">Log in</a></p>
+	<p class="text-small">Already have an account? <a href="/login">Log in</a></p>
 </section>
