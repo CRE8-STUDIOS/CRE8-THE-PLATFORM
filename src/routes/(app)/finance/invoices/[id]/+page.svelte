@@ -15,11 +15,16 @@
 	title={`Factuur ${invoice.invoice_number ?? '(draft)'}${invoice.credits_invoice_id ? ' · credit factuur' : ''}`}
 	back={{ href: '/finance', text: 'Finance' }}
 />
-<FormNotice {form} />
-{#if isDraft}
-	<InvoiceSettings {invoice} {clients} />
-{:else}
-	<InvoiceDetails {invoice} {project} timeZone={timezone} />
-{/if}
-<InvoiceLines {lines} {invoice} editable={isDraft} {openRequests} />
-<InvoiceActions status={invoice.status ?? 'draft'} isCredit={Boolean(invoice.credits_invoice_id)} />
+<div class="card-grid">
+	<FormNotice {form} />
+	{#if isDraft}
+		<InvoiceSettings {invoice} {clients} />
+	{:else}
+		<InvoiceDetails {invoice} {project} timeZone={timezone} />
+	{/if}
+	<InvoiceLines {lines} {invoice} editable={isDraft} {openRequests} />
+	<InvoiceActions
+		status={invoice.status ?? 'draft'}
+		isCredit={Boolean(invoice.credits_invoice_id)}
+	/>
+</div>

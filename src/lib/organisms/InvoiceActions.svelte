@@ -6,7 +6,7 @@
 	const { status, isCredit } = $props()
 </script>
 
-<section class="invoice-actions">
+<section class="invoice-actions card rough-edge">
 	{#if status === 'draft'}
 		<Heading>Send</Heading>
 		<ActionButton

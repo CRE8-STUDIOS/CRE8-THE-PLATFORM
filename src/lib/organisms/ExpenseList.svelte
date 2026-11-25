@@ -7,17 +7,23 @@
 	const { expenses } = $props()
 </script>
 
-<section class="expense-list">
+<section class="expense-list card rough-edge">
 	<Heading>All expenses</Heading>
 	<ul>
 		{#each expenses as { id, date, supplier, amount_excl_vat, vat_amount, category, receiptUrl, projects } (id)}
 			<li>
-				{date} · {supplier ?? 'none'} · <Money value={amount_excl_vat} /> + btw <Money
-					value={vat_amount}
-				/>
-				{#if category}· {category}{/if}
-				{#if projects}· {projects.title}{/if}
-				{#if receiptUrl}· <a href={receiptUrl} target="_blank" rel="noopener">receipt</a>{/if}
+				<span class="expense-text">
+					<span>{supplier ?? 'none'}</span>
+					<span class="text-small text-muted">
+						{date}{#if category}
+							· {category}{/if}{#if projects}
+							· {projects.title}{/if}{#if receiptUrl}
+							· <a href={receiptUrl} target="_blank" rel="noopener">receipt</a>{/if}
+					</span>
+				</span>
+				<span class="list-end number">
+					<Money value={amount_excl_vat} /> + btw <Money value={vat_amount} />
+				</span>
 				<ActionButton
 					action="?/delete"
 					label="Delete"
@@ -27,7 +33,14 @@
 				/>
 			</li>
 		{:else}
-			<li>No expenses yet.</li>
+			<li class="text-muted">No expenses yet.</li>
 		{/each}
 	</ul>
 </section>
+
+<style>
+	.expense-text {
+		display: grid;
+		flex: 1 1 var(--size-grid-s);
+	}
+</style>

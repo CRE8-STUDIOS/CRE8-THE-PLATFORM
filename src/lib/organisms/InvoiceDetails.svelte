@@ -18,7 +18,7 @@
 	const to = $derived(/** @type {any} */ (invoice.client_details) ?? {})
 </script>
 
-<section class="invoice-details">
+<section class="invoice-details card rough-edge">
 	<Heading>Details</Heading>
 	<p>
 		<StatusLabel status={invoice.is_overdue ? 'overdue' : (invoice.status ?? 'sent')} />
@@ -30,7 +30,7 @@
 				this factuur
 			</a>{/if}
 	</p>
-	<dl>
+	<dl class="detail-list">
 		<dt>From</dt>
 		<dd>
 			{from.business_name ?? from.name}<br />

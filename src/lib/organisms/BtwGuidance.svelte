@@ -6,14 +6,14 @@
 	const { quarter } = $props()
 </script>
 
-<section class="btw-guidance">
+<section class="btw-guidance card rough-edge">
 	<Heading>Btw guidance · {quarter.label}</Heading>
-	<p>
+	<p class="text-muted">
 		<small>
 			Based on facturen sent and expenses in CRE8. Guidance only: you file the aangifte yourself.
 		</small>
 	</p>
-	<dl>
+	<dl class="amount-list">
 		<dt>Revenue (excl. btw)</dt>
 		<dd><Money value={quarter.revenue} /></dd>
 		<dt>Btw charged on your facturen</dt>
@@ -22,7 +22,7 @@
 		<dd><Money value={quarter.costs} /></dd>
 		<dt>Btw paid on costs</dt>
 		<dd><Money value={quarter.btwPaid} /></dd>
-		<dt><strong>Btw to pay this quarter (estimate)</strong></dt>
-		<dd><strong><Money value={quarter.btwToPay} /></strong></dd>
+		<dt>Btw to pay this quarter (estimate)</dt>
+		<dd><Money value={quarter.btwToPay} /></dd>
 	</dl>
 </section>

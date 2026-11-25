@@ -7,19 +7,40 @@
 	const { invoices } = $props()
 </script>
 
-<section class="invoice-list">
+<section class="invoice-list card rough-edge span-full">
 	<Heading>Facturen</Heading>
-	<ul>
-		{#each invoices as { id, invoice_number, status, total, is_overdue, days_overdue, credits_invoice_id, clientName } (id)}
-			<li>
-				<a href="/finance/invoices/{id}">{invoice_number ?? 'Draft'}</a>
-				· {clientName} · <Money value={total} />
-				<StatusLabel status={is_overdue ? 'overdue' : (status ?? 'draft')} />
-				{#if is_overdue}({days_overdue} days){/if}
-				{#if credits_invoice_id}· credit factuur{/if}
-			</li>
-		{:else}
-			<li>No facturen yet.</li>
-		{/each}
-	</ul>
+	{#if invoices.length}
+		<div class="table-scroll">
+			<table>
+				<thead>
+					<tr>
+						<th scope="col">Number</th>
+						<th scope="col">Client</th>
+						<th scope="col" class="number">Total</th>
+						<th scope="col">Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each invoices as { id, invoice_number, status, total, is_overdue, days_overdue, credits_invoice_id, clientName } (id)}
+						<tr>
+							<td>
+								<a href="/finance/invoices/{id}">{invoice_number ?? 'Draft'}</a>
+								{#if credits_invoice_id}<span class="text-small text-muted">
+										credit factuur
+									</span>{/if}
+							</td>
+							<td>{clientName}</td>
+							<td class="number"><Money value={total} /></td>
+							<td>
+								<StatusLabel status={is_overdue ? 'overdue' : (status ?? 'draft')} />
+								{#if is_overdue}<span class="text-small text-muted">{days_overdue} days</span>{/if}
+							</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{:else}
+		<p class="text-muted">No facturen yet.</p>
+	{/if}
 </section>

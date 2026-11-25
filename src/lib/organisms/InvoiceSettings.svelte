@@ -10,7 +10,7 @@
 	const { invoice, clients } = $props()
 </script>
 
-<section class="invoice-settings">
+<section class="invoice-settings card rough-edge">
 	<Heading>Factuur settings</Heading>
 	<form method="POST" action="?/update">
 		<SelectField label="Client" name="client_id" options={clients} value={invoice.client_id} />
