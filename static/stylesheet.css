@@ -57,3 +57,133 @@
 	font-style: normal;
 	font-display: swap;
 }
+
+/* ==========================================================================
+	2. Custom properties
+	Every value from the design lives here, so a color or size changes in one
+	place. Names describe the role, not the value, so "text muted" stays
+	correct even if the grey changes.
+
+	Breakpoints (custom properties do not work inside media queries, so they
+	are written down here and typed out in each query):
+	small   from 30em  (480px)   larger phones
+	medium  from 48em  (768px)   tablets, sidebar becomes visible
+	large   from 64em  (1024px)  laptops
+	wide    from 90em  (1440px)  the desktop frame of the design
+
+	Fluid sizes use clamp() between a 320px and a 1440px wide viewport.
+	Large text and spacing shrink to roughly 65 percent on mobile. Small text
+	(body, labels, tags) shrinks less, because going below about 11px
+	makes it hard to read.
+   ========================================================================== */
+
+:root {
+	/* Colors: surfaces */
+	--color-background: #f9f7f1;
+	--color-surface: #fffef8;
+
+	/* Colors: text */
+	--color-text: #000000;
+	--color-text-muted: #807f7b;
+	--color-text-inverse: #f9f7f1;
+
+	/* Colors: lines */
+	--color-border: #dfded9;
+	--color-border-divider: #e5e3de;
+
+	/* Colors: brand accent, the hand drawn red circle and focus ring */
+	--color-accent: #891b13;
+
+	/* Colors: buttons */
+	--color-button-primary: #000000;
+	--color-button-primary-hover: #1c1c1c;
+	--color-button-primary-text: #f9f7f1;
+	--color-button-secondary: #e1e0dc;
+	--color-button-secondary-hover: color-mix(in oklab, var(--color-button-secondary), #000000 8%);
+	--color-button-secondary-text: #000000;
+
+	/* Colors: status tags, background and text in pairs */
+	--color-status-progress: #ddf6fe;
+	--color-status-progress-text: #6e7b7f;
+	--color-status-editing: #e8d9eb;
+	--color-status-editing-text: #746c75;
+	--color-status-pending: #f8d8d9;
+	--color-status-pending-text: #7d6c6c;
+
+	/* Colors: feedback. Errors use the brand red, as the design asks */
+	--color-error: var(--color-accent);
+
+	/* Font families, each with a system fallback that has similar proportions */
+	--font-family-display: 'Pointer', 'Arial Black', system-ui, sans-serif;
+	--font-family-script: 'Maison des Pastel Script', 'Brush Script MT', cursive;
+	--font-family-body: 'Telegraf', system-ui, sans-serif;
+
+	/* Font weights. Every brand font has a single regular weight */
+	--font-weight-regular: 400;
+
+	/* Line heights */
+	--line-height-tight: 1;
+	--line-height-heading: 1.1;
+	--line-height-body: 1.5;
+
+	/* Letter spacing, the display font is set slightly wide */
+	--letter-spacing-display: 0.04em;
+
+	/* Type scale */
+	--font-size-welcome: clamp(2.25rem, 1.893rem + 1.786vw, 3.5rem); /* 36 to 56px */
+	--font-size-page-heading: clamp(1.5rem, 1.286rem + 1.071vw, 2.25rem); /* 24 to 36px */
+	--font-size-project: clamp(1.25rem, 1.071rem + 0.8929vw, 1.875rem); /* 20 to 30px */
+	--font-size-script: clamp(1.375rem, 1.196rem + 0.8929vw, 2rem); /* 22 to 32px */
+	--font-size-nav: clamp(0.875rem, 0.8036rem + 0.3571vw, 1.125rem); /* 14 to 18px */
+	--font-size-card-title: clamp(0.875rem, 0.8393rem + 0.1786vw, 1rem); /* 14 to 16px */
+	--font-size-button: clamp(0.875rem, 0.8393rem + 0.1786vw, 1rem); /* 14 to 16px */
+	--font-size-button-small: clamp(0.75rem, 0.7321rem + 0.08929vw, 0.8125rem); /* 12 to 13px */
+	--font-size-label: clamp(0.6875rem, 0.6696rem + 0.08929vw, 0.75rem); /* 11 to 12px */
+	--font-size-body: clamp(0.875rem, 0.8571rem + 0.08929vw, 0.9375rem); /* 14 to 15px */
+	--font-size-small: clamp(0.75rem, 0.7321rem + 0.08929vw, 0.8125rem); /* 12 to 13px */
+	--font-size-tag: 0.625rem; /* 10px, already the smallest readable size */
+
+	/* Headings point to the scale above, so h1 to h6 follow the design roles */
+	--font-size-heading-1: var(--font-size-welcome);
+	--font-size-heading-2: var(--font-size-page-heading);
+	--font-size-heading-3: var(--font-size-project);
+	--font-size-heading-4: var(--font-size-nav);
+	--font-size-heading-5: var(--font-size-card-title);
+	--font-size-heading-6: var(--font-size-label);
+
+	/* Spacing scale. Small steps stay fixed, large steps shrink on mobile */
+	--space-2xs: 0.25rem; /* 4px */
+	--space-xs: 0.5rem; /* 8px, gap between list items in cards */
+	--space-s: 1rem; /* 16px */
+	--space-m: clamp(1rem, 0.8571rem + 0.7143vw, 1.5rem); /* 16 to 24px, card padding */
+	--space-l: clamp(1.5rem, 1.286rem + 1.071vw, 2.25rem); /* 24 to 36px, gap between cards */
+	--space-xl: clamp(1.5rem, 1.214rem + 1.429vw, 2.5rem); /* 24 to 40px, page padding and sections */
+	--space-2xl: clamp(2.5rem, 2.071rem + 2.143vw, 4rem); /* 40 to 64px */
+	--space-3xl: clamp(3.5rem, 2.786rem + 3.571vw, 6rem); /* 56 to 96px */
+
+	/* Layout sizes */
+	--size-sidebar: 18.75rem; /* 300px */
+	--size-container: 90rem; /* 1440px, the width of the desktop frame */
+	--size-checkbox: 1.25rem; /* 20px */
+
+	/* Border radius */
+	--radius-small: 0.5rem; /* 8px, form fields */
+	--radius-card: 1rem; /* 16px */
+	--radius-pill: 999px;
+
+	/* Border widths */
+	--border-width-thin: 1px;
+	--border-width-thick: 2px;
+
+	/* Shadows: very soft and light, the cards should feel like paper on a table */
+	--shadow-card: 0 0.25rem 1rem rgb(0 0 0 / 0.05);
+
+	/* Transitions */
+	--duration-fast: 150ms;
+	--duration-normal: 250ms;
+	--easing-standard: cubic-bezier(0.2, 0, 0, 1);
+
+	/* Focus ring, shared by every interactive element */
+	--focus-outline: var(--border-width-thick) solid var(--color-accent);
+	--focus-offset: 3px;
+}
