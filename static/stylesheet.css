@@ -1,0 +1,59 @@
+/*
+	CRE8 global stylesheet
+
+	One file for the whole platform so every page shares the same tokens,
+	base styles and components. Loaded from src/app.html, so it applies
+	before any Svelte component styles.
+
+	Order:
+	1. Fonts
+	2. Custom properties
+	3. Reset
+	4. Base elements
+	5. Components (buttons, status tags, cards, navigation, form elements)
+	6. Focus styles
+	7. Reduced motion
+	8. Utilities
+*/
+
+/* ==========================================================================
+	1. Fonts
+	woff2 is listed first because it is the smallest; woff is the fallback
+	for older browsers. font-display: swap shows the fallback font right away
+	so text is never invisible while the brand fonts load.
+	Each font only ships in one weight (400), so no other weights are declared.
+	Pointer is drawn heavy and wide by itself, which is why it is not bold.
+   ========================================================================== */
+
+/* Display font: headings, navigation, card titles, labels, buttons */
+@font-face {
+	font-family: 'Pointer';
+	src:
+		url('fonts/pointer-regular.woff2') format('woff2'),
+		url('fonts/pointer-regular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Script font: only for handwritten accent lines */
+@font-face {
+	font-family: 'Maison des Pastel Script';
+	src:
+		url('fonts/maison-des-pastel-script-regular.woff2') format('woff2'),
+		url('fonts/maison-des-pastel-script-regular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Body font: small content text, dates and form fields */
+@font-face {
+	font-family: 'Telegraf';
+	src:
+		url('fonts/telegraf-regular.woff2') format('woff2'),
+		url('fonts/telegraf-regular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
