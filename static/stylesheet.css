@@ -674,6 +674,7 @@ meter {
 
 /* Tables */
 .table-scroll {
+	position: relative;
 	overflow-x: auto;
 }
 
