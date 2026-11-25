@@ -12,7 +12,7 @@
 	const { invoices } = $props()
 </script>
 
-<section class="portal-invoices">
+<section class="portal-invoices card rough-edge">
 	<Heading>Facturen</Heading>
 	{#each invoices as { id, invoice_number, status, issue_date, due_date, subtotal, vat_total, total, is_overdue, lines } (id)}
 		<article class="portal-invoices-item">

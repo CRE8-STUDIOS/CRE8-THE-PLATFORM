@@ -9,16 +9,20 @@
 	const { contract } = $props()
 </script>
 
-<section class="portal-contract">
+<section
+	class="portal-contract card rough-edge span-full"
+	class:card-highlight={contract && contract.status !== 'signed'}
+>
 	{#if !contract}
 		<Heading>Contract</Heading>
 		<p>No contract has been sent yet.</p>
 	{:else if contract.status === 'signed'}
 		<SignedContract {contract} />
 	{:else}
+		<p class="label text-muted">Contract to sign</p>
 		<Heading>{contract.title}</Heading>
 		<pre class="portal-contract-body">{contract.body}</pre>
-		<form method="POST" action="?/signContract">
+		<form class="portal-contract-sign" method="POST" action="?/signContract">
 			<Input type="hidden" name="contract_id" value={contract.id} />
 			<SignatureField label="Draw your signature to agree" />
 			<Button variant="primary">Sign contract</Button>
@@ -29,5 +33,11 @@
 <style>
 	.portal-contract-body {
 		white-space: pre-wrap;
+	}
+
+	.portal-contract-sign {
+		display: grid;
+		gap: var(--space-s);
+		justify-items: start;
 	}
 </style>

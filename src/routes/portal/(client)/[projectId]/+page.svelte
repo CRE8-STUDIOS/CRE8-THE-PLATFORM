@@ -16,12 +16,20 @@
 </script>
 
 <PageHeader title={project.title} back={{ href: '/portal', text: 'My projects' }} />
-<FormNotice {form} />
-<ProjectBriefing {project} />
-<UpdateList {updates} editable={false} title="Progress" />
-<PortalContract {contract} />
-<PortalRequests {requests} />
-<PortalMeetings {meetings} {slots} />
-<PortalInvoices {invoices} />
-<FileList {files} editable={false} title="Shared files" />
-<PortalMoodboards {boards} />
+<div class="card-grid portal-project">
+	<FormNotice {form} />
+	<ProjectBriefing {project} />
+	<UpdateList {updates} editable={false} title="Progress" />
+	<PortalContract {contract} />
+	<PortalRequests {requests} />
+	<PortalMeetings {meetings} {slots} />
+	<PortalInvoices {invoices} />
+	<FileList {files} editable={false} title="Shared files" />
+	<PortalMoodboards {boards} />
+</div>
+
+<style>
+	.portal-project {
+		--grid-min: var(--size-grid-xl);
+	}
+</style>

@@ -18,7 +18,7 @@
 	)
 </script>
 
-<section class="portal-meetings">
+<section class="portal-meetings card rough-edge">
 	<Heading>Meetings</Heading>
 	<ul>
 		{#each meetings as { id, starts_at, ends_at, status } (id)}

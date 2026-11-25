@@ -6,12 +6,14 @@
 	const { project } = $props()
 </script>
 
-<section class="project-briefing">
-	<p>
-		With {project.freelancer_name ?? 'your freelancer'}
+<section class="project-briefing card rough-edge">
+	<p class="project-briefing-meta">
 		<StatusLabel status={project.status} />
-		{#if project.start_date}· start {project.start_date}{/if}
-		{#if project.deadline}· deadline {project.deadline}{/if}
+		<span class="text-small text-muted">
+			With {project.freelancer_name ?? 'your freelancer'}{#if project.start_date}
+				· start {project.start_date}{/if}{#if project.deadline}
+				· deadline {project.deadline}{/if}
+		</span>
 	</p>
 	{#if project.briefing}
 		<Heading>Briefing</Heading>
@@ -20,6 +22,13 @@
 </section>
 
 <style>
+	.project-briefing-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-xs);
+	}
+
 	.project-briefing-text {
 		white-space: pre-wrap;
 	}
