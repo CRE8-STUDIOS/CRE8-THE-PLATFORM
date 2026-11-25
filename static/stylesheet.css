@@ -585,3 +585,125 @@ ol:not([class]) {
 .nav-link[aria-current='page']::after {
 	opacity: 1;
 }
+
+/* --------------------------------------------------------------------------
+	5.5 Form elements
+	Text fields share one look. Errors are shown with aria-invalid, so the
+	same attribute that tells screen readers about the error also styles it.
+   -------------------------------------------------------------------------- */
+
+label {
+	display: block;
+	margin-block-end: var(--space-2xs);
+	font-family: var(--font-family-display);
+	font-size: var(--font-size-label);
+	letter-spacing: var(--letter-spacing-display);
+	text-transform: uppercase;
+}
+
+input:not([type='checkbox'], [type='radio'], [type='submit'], [type='button']),
+textarea,
+select {
+	display: block;
+	inline-size: 100%;
+	min-block-size: 2.75rem; /* 44px touch target */
+	padding-block: var(--space-xs);
+	padding-inline: var(--space-s);
+	border: var(--border-width-thin) solid var(--color-border);
+	border-radius: var(--radius-small);
+	background-color: var(--color-surface);
+	color: var(--color-text);
+	font-family: var(--font-family-body);
+	font-size: var(--font-size-body);
+	transition: border-color var(--duration-fast) var(--easing-standard);
+}
+
+textarea {
+	min-block-size: 8rem;
+	resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+	color: var(--color-text-muted);
+	opacity: 1;
+}
+
+/* The border turns black on focus, the accent outline comes from section 6 */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+	border-color: var(--color-text);
+}
+
+input[aria-invalid='true'],
+textarea[aria-invalid='true'],
+select[aria-invalid='true'] {
+	border-color: var(--color-error);
+}
+
+/* Error text under a field, linked to it with aria-describedby */
+.field-error {
+	margin-block-start: var(--space-2xs);
+	color: var(--color-error);
+	font-size: var(--font-size-small);
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/*
+	Task checkboxes are hand drawn circles. The native look is removed but
+	the real input stays, so keyboard and screen reader support is kept.
+	The circle and the check mark are masks, so they take the text color.
+*/
+input[type='checkbox'] {
+	appearance: none;
+	display: inline-grid;
+	place-content: center;
+	flex-shrink: 0;
+	inline-size: var(--size-checkbox);
+	block-size: var(--size-checkbox);
+	border-radius: 50%;
+	color: var(--color-text);
+	cursor: pointer;
+}
+
+input[type='checkbox']::before,
+input[type='checkbox']::after {
+	content: '';
+	grid-area: 1 / 1;
+	inline-size: var(--size-checkbox);
+	block-size: var(--size-checkbox);
+	background-color: currentColor;
+	mask-position: center;
+	mask-size: 100% 100%;
+	mask-repeat: no-repeat;
+}
+
+input[type='checkbox']::before {
+	mask-image: url('images/checkbox-circle.svg');
+}
+
+input[type='checkbox']::after {
+	mask-image: url('images/checkbox-check.svg');
+	transform: scale(0);
+	transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+input[type='checkbox']:checked::after {
+	transform: scale(1);
+}
+
+input[type='checkbox'][aria-invalid='true'] {
+	color: var(--color-error);
+}
+
+input[type='checkbox']:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
