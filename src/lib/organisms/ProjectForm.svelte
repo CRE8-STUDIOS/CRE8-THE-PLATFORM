@@ -7,7 +7,6 @@
 	import FormNotice from '#lib/molecules/FormNotice.svelte'
 
 	/**
-	 * Create or edit a project. Without `project` the form is empty.
 	 * @type {{
 	 *   title: string, action: string, submitLabel: string,
 	 *   clients: { value: string, label: string }[],

@@ -5,10 +5,7 @@
 	import TextField from '#lib/molecules/TextField.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * Tasks and errands without a time yet. "Plan" gives them a time in the week.
-	 * @type {{ items: { id: string, type: string, title: string, due_date: string | null, status: string, estimated_minutes: number | null, projects: { title: string } | null }[] }}
-	 */
+	/** @type {{ items: { id: string, type: string, title: string, due_date: string | null, status: string, estimated_minutes: number | null, projects: { title: string } | null }[] }} */
 	const { items } = $props()
 </script>
 

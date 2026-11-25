@@ -4,9 +4,7 @@
 	import TextField from '#lib/molecules/TextField.svelte'
 	import SelectField from '#lib/molecules/SelectField.svelte'
 
-	/**
-	 * @type {{ settings: { clock_in_mode: string, check_in_after_minutes: number, timezone: string, meeting_minutes: number, booking_notice_hours: number, booking_days_ahead: number } }}
-	 */
+	/** @type {{ settings: { clock_in_mode: string, check_in_after_minutes: number, timezone: string, meeting_minutes: number, booking_notice_hours: number, booking_days_ahead: number } }} */
 	const { settings } = $props()
 
 	const modes = [

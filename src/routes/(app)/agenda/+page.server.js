@@ -32,7 +32,6 @@ export const load = async ({ locals, url }) => {
 		projectOptions(supabase)
 	])
 
-	// Group the week's items per local day, here on the server
 	const week = Array.from({ length: 7 }, (_, index) => {
 		const date = addDays(monday, index)
 		return {
@@ -87,7 +86,6 @@ export const actions = {
 		return { success: done ? 'Done.' : 'Open again.' }
 	},
 
-	/** Plan an inbox item into the day ("give it a time"). */
 	schedule: async ({ request, locals }) => {
 		const formData = await request.formData()
 		const startsAt = toUtcIso(text(formData, 'starts_at'), locals.timezone)

@@ -1,5 +1,3 @@
-// Fixed lists that match the database enums.
-
 export const AGENDA_TYPES = ['meeting', 'work', 'shoot', 'deadline', 'rest', 'task', 'errand']
 export const ENERGY_TYPES = ['creative', 'admin', 'other']
 export const PROJECT_STATUSES = ['draft', 'active', 'done', 'archived']
@@ -22,7 +20,6 @@ export const CLOCK_IN_MODES = ['ask', 'auto', 'off']
 export const CLOCK_START_SOURCES = ['manual', 'prompt', 'auto']
 export const CLOCK_STOP_REASONS = ['manual', 'switch', 'no_answer', 'inactive']
 
-/** EU country codes, used to decide reverse charge on facturen */
 export const EU_COUNTRIES = [
 	'AT',
 	'BE',
@@ -52,6 +49,5 @@ export const EU_COUNTRIES = [
 	'SE'
 ]
 
-/** Turn a list into { value, label } options for a select. */
 export const toOptions = (/** @type {readonly (string | number)[]} */ values) =>
 	values.map((value) => ({ value: String(value), label: String(value).replaceAll('_', ' ') }))

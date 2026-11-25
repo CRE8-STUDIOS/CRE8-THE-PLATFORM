@@ -2,10 +2,7 @@
 	import Heading from '#lib/atoms/Heading.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * What you can do with a factuur: send/delete a draft; mark paid/unpaid or credit a sent one.
-	 * @type {{ status: string, isCredit: boolean }}
-	 */
+	/** @type {{ status: string, isCredit: boolean }} */
 	const { status, isCredit } = $props()
 </script>
 

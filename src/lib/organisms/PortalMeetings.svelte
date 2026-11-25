@@ -7,11 +7,7 @@
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 	import { formatDateTime, formatTime } from '#lib/utils/dates.js'
 
-	/**
-	 * Meetings in the portal: your meetings, and request a new one in a free time.
-	 * Times are shown in the client's own time zone, so they're formatted here in the browser.
-	 * @type {{ meetings: { id: string, starts_at: string, ends_at: string, status: string }[], slots: { starts_at: string, ends_at: string }[] }}
-	 */
+	/** @type {{ meetings: { id: string, starts_at: string, ends_at: string, status: string }[], slots: { starts_at: string, ends_at: string }[] }} */
 	const { meetings, slots } = $props()
 
 	const slotOptions = $derived(

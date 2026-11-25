@@ -5,7 +5,6 @@
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
 	/**
-	 * The running clock: status, clock out, the "still here" heartbeat and the "Still working?" question.
 	 * @type {{
 	 *   clock: { started_at: string, category: string, project_id: string | null, projects: { title: string } | null } | null,
 	 *   supabase: import('@supabase/supabase-js').SupabaseClient<import('#lib/database.types.js').Database>,
@@ -20,10 +19,9 @@
 	const ANSWER_WITHIN_MS = 10 * 60_000
 
 	let lastActivity = $state(Date.now())
-	/** @type {number | null} the moment "Still working?" was asked */
+	/** @type {number | null} */
 	let askedAt = $state(null)
 
-	// "Still here" signal every minute while CRE8 is open; without it the database stops the clock
 	$effect(() => {
 		if (!clock) return
 		const beat = () => supabase.rpc('clock_heartbeat')
@@ -32,7 +30,6 @@
 		return () => clearInterval(interval)
 	})
 
-	// Remember the last activity in CRE8
 	$effect(() => {
 		const events = ['pointerdown', 'keydown', 'scroll', 'focus']
 		const markActive = () => {
@@ -44,7 +41,6 @@
 		}
 	})
 
-	// Ask "Still working?" after a while; no answer stops the clock at the moment we asked
 	$effect(() => {
 		if (!clock) return
 		const limit = checkInAfterMinutes * 60_000

@@ -2,11 +2,7 @@
 	import Heading from '#lib/atoms/Heading.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * Archive / un-archive / delete buttons, calling the ?/archive, ?/unarchive and ?/delete actions.
-	 * Leave `archived` out to only show delete.
-	 * @type {{ what: string, archived?: boolean, note?: string }}
-	 */
+	/** @type {{ what: string, archived?: boolean, note?: string }} */
 	const { what, archived, note } = $props()
 </script>
 

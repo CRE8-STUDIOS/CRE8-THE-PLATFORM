@@ -3,9 +3,7 @@
 	import Money from '#lib/atoms/Money.svelte'
 	import StatusLabel from '#lib/atoms/StatusLabel.svelte'
 
-	/**
-	 * @type {{ invoices: { id: string | null, invoice_number: string | null, status: string | null, total: number | null, is_overdue: boolean | null, days_overdue: number | null, credits_invoice_id: string | null, clientName: string }[] }}
-	 */
+	/** @type {{ invoices: { id: string | null, invoice_number: string | null, status: string | null, total: number | null, is_overdue: boolean | null, days_overdue: number | null, credits_invoice_id: string | null, clientName: string }[] }} */
 	const { invoices } = $props()
 </script>
 

@@ -1,7 +1,4 @@
-/**
- * The logged-in client's own account (hooks already made sure this is a client).
- * @type {import('./$types').LayoutServerLoad}
- */
+/** @type {import('./$types').LayoutServerLoad} */
 export const load = async ({ locals }) => {
 	const { data: account } = await locals.supabase
 		.from('client_accounts')

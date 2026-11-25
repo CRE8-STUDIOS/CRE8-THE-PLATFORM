@@ -4,10 +4,7 @@
 	import TextField from '#lib/molecules/TextField.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * People on an agenda item: people on set, meeting attendees.
-	 * @type {{ people: { id: string, name: string, role: string | null, email: string | null, phone: string | null }[] }}
-	 */
+	/** @type {{ people: { id: string, name: string, role: string | null, email: string | null, phone: string | null }[] }} */
 	const { people } = $props()
 </script>
 

@@ -1,10 +1,7 @@
 import { error } from '@sveltejs/kit'
 import { id, text, number, failMessage, failWith } from '#lib/server/form.js'
 
-/**
- * Admin only: the shared yearly tax values. The database blocks non-admins as well.
- * @type {import('./$types').PageServerLoad}
- */
+/** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals, parent }) => {
 	const { profile } = await parent()
 	if (!profile?.is_admin) error(403, 'Only the admin can edit tax rules.')

@@ -5,10 +5,7 @@
 	import TextField from '#lib/molecules/TextField.svelte'
 	import TextareaField from '#lib/molecules/TextareaField.svelte'
 
-	/**
-	 * Create or edit a request (extra work). Without `request` the form is empty.
-	 * @type {{ title: string, action: string, submitLabel: string, request?: { id: string, title: string, description: string | null, price: number | null, estimated_hours: number | null, planned_start: string | null } }}
-	 */
+	/** @type {{ title: string, action: string, submitLabel: string, request?: { id: string, title: string, description: string | null, price: number | null, estimated_hours: number | null, planned_start: string | null } }} */
 	const { title, action, submitLabel, request } = $props()
 </script>
 

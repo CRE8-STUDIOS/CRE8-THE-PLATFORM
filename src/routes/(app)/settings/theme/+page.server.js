@@ -7,7 +7,6 @@ export const load = async ({ locals }) => {
 		.select('template_name, colors, fonts, layout')
 		.maybeSingle()
 
-	// JSON as readable text for the editor
 	const pretty = (/** @type {unknown} */ value) => JSON.stringify(value ?? {}, null, 2)
 	return {
 		theme: {
@@ -19,7 +18,6 @@ export const load = async ({ locals }) => {
 	}
 }
 
-/** A JSON object from a text field; undefined when it isn't valid. */
 const jsonObject = (/** @type {string | null} */ value) => {
 	if (!value) return {}
 	try {

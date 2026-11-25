@@ -1,10 +1,7 @@
 <script>
 	import Heading from '#lib/atoms/Heading.svelte'
 
-	/**
-	 * Total hours: on one project, or this year against the 1,225-hour criterion.
-	 * @type {{ project: { id: string, title: string } | null, year: number, totalHours: number, hoursCriterion: number, criterionPercentage: number }}
-	 */
+	/** @type {{ project: { id: string, title: string } | null, year: number, totalHours: number, hoursCriterion: number, criterionPercentage: number }} */
 	const { project, year, totalHours, hoursCriterion, criterionPercentage } = $props()
 </script>
 

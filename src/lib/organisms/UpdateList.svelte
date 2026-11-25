@@ -3,10 +3,7 @@
 	import DateTime from '#lib/atoms/DateTime.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * Project updates. With `editable`, updates can be hidden, shown and deleted.
-	 * @type {{ updates: { id: string, title: string, body: string | null, created_at: string, visible_to_client?: boolean }[], timeZone?: string, editable?: boolean, title?: string }}
-	 */
+	/** @type {{ updates: { id: string, title: string, body: string | null, created_at: string, visible_to_client?: boolean }[], timeZone?: string, editable?: boolean, title?: string }} */
 	const { updates, timeZone, editable = true, title = 'Updates' } = $props()
 </script>
 

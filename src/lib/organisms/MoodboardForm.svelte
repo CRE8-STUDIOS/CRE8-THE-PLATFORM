@@ -5,10 +5,7 @@
 	import SelectField from '#lib/molecules/SelectField.svelte'
 	import CheckboxField from '#lib/molecules/CheckboxField.svelte'
 
-	/**
-	 * Create or edit a moodboard.
-	 * @type {{ title: string, action: string, submitLabel: string, projects: { value: string, label: string }[], projectId?: string | null, board?: { title: string, project_id: string | null, visible_to_client: boolean } }}
-	 */
+	/** @type {{ title: string, action: string, submitLabel: string, projects: { value: string, label: string }[], projectId?: string | null, board?: { title: string, project_id: string | null, visible_to_client: boolean } }} */
 	const { title, action, submitLabel, projects, projectId, board } = $props()
 </script>
 

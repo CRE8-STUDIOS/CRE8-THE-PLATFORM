@@ -2,7 +2,6 @@
 	import { page } from '$app/state'
 	import PortalHeader from '#lib/organisms/PortalHeader.svelte'
 
-	// Template for the client portal: header, then the page
 	const { data, children } = $props()
 	const { account } = $derived(data)
 </script>

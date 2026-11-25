@@ -1,11 +1,7 @@
 import { createBrowserClient, createServerClient, isBrowser } from '@supabase/ssr'
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY } from '$app/env/public'
 
-/**
- * A Supabase client for the browser (used for things like the clock heartbeat).
- * Most data goes through the server (+page.server.js files).
- * @type {import('./$types').LayoutLoad}
- */
+/** @type {import('./$types').LayoutLoad} */
 export const load = async ({ data, depends, fetch }) => {
 	depends('supabase:auth')
 

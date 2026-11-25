@@ -7,7 +7,6 @@
 	import RequestForm from '#lib/organisms/RequestForm.svelte'
 
 	/**
-	 * All requests of a project. Drafts and client-asked requests can be edited, priced and sent.
 	 * @type {{
 	 *   requests: { id: string, title: string, description: string | null, price: number | null, estimated_hours: number | null, planned_start: string | null, status: string, requested_by: string | null, approved_at: string | null, declined_at: string | null }[],
 	 *   timeZone: string

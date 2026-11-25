@@ -4,7 +4,6 @@
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
 	/**
-	 * One week of the agenda, day by day.
 	 * @type {{
 	 *   monday: string, previousWeek: string, nextWeek: string, timeZone: string,
 	 *   week: { date: string, label: string, items: { id: string, type: string, title: string, starts_at: string | null, ends_at: string | null, all_day: boolean, status: string, is_protected: boolean, projects: { title: string } | null }[] }[]
@@ -29,7 +28,8 @@
 							value={starts_at}
 							{timeZone}
 							show="time"
-						/>{#if ends_at} to <DateTime value={ends_at} {timeZone} show="time" />{/if}{/if}
+						/>{#if ends_at}
+							to <DateTime value={ends_at} {timeZone} show="time" />{/if}{/if}
 					· {type}{#if is_protected}
 						(locked){/if} · <a href="/agenda/{id}">{title}</a>
 					{#if projects}· {projects.title}{/if}

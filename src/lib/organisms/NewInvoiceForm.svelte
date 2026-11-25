@@ -4,9 +4,7 @@
 	import SelectField from '#lib/molecules/SelectField.svelte'
 	import FormNotice from '#lib/molecules/FormNotice.svelte'
 
-	/**
-	 * @type {{ clients: { value: string, label: string }[], projects: { value: string, label: string }[], projectId: string | null, form: { message?: string } | null | undefined }}
-	 */
+	/** @type {{ clients: { value: string, label: string }[], projects: { value: string, label: string }[], projectId: string | null, form: { message?: string } | null | undefined }} */
 	const { clients, projects, projectId, form } = $props()
 </script>
 

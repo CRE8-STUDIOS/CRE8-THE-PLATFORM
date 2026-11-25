@@ -5,10 +5,7 @@
 	import TextField from '#lib/molecules/TextField.svelte'
 	import TextareaField from '#lib/molecules/TextareaField.svelte'
 
-	/**
-	 * Create or edit a contract template.
-	 * @type {{ title: string, action: string, submitLabel: string, template?: { id: string, name: string, body: string } }}
-	 */
+	/** @type {{ title: string, action: string, submitLabel: string, template?: { id: string, name: string, body: string } }} */
 	const { title, action, submitLabel, template } = $props()
 </script>
 

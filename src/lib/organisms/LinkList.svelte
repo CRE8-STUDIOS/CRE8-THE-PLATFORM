@@ -1,10 +1,7 @@
 <script>
 	import Heading from '#lib/atoms/Heading.svelte'
 
-	/**
-	 * A titled list of links, with a text when the list is empty.
-	 * @type {{ title: string, links: { id: string, text: string, href: string }[], empty: string, level?: 2 | 3 }}
-	 */
+	/** @type {{ title: string, links: { id: string, text: string, href: string }[], empty: string, level?: 2 | 3 }} */
 	const { title, links, empty, level = 2 } = $props()
 </script>
 

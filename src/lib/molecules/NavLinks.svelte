@@ -1,8 +1,5 @@
 <script>
-	/**
-	 * A list of navigation links; the current page is marked with aria-current.
-	 * @type {{ label: string, links: { href: string, text: string }[], current: string, exact?: boolean }}
-	 */
+	/** @type {{ label: string, links: { href: string, text: string }[], current: string, exact?: boolean }} */
 	const { label, links, current, exact = false } = $props()
 
 	const isCurrent = (/** @type {string} */ href) =>

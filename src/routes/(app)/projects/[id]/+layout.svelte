@@ -3,7 +3,6 @@
 	import ProjectHeader from '#lib/organisms/ProjectHeader.svelte'
 	import ClockPrompt from '#lib/organisms/ClockPrompt.svelte'
 
-	// Template for everything inside a project: header + tabs, the clock-in question, then the tab itself
 	const { data, children } = $props()
 	const { project, projectTabs, profile, clock } = $derived(data)
 </script>

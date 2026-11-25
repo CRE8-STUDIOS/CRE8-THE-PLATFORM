@@ -2,11 +2,7 @@
 	import Button from '#lib/atoms/Button.svelte'
 	import Input from '#lib/atoms/Input.svelte'
 
-	/**
-	 * A one-button form that runs a form action, e.g. "Delete" or "Mark as paid".
-	 * `fields` become hidden inputs (like the id of the row). `confirm` asks first.
-	 * @type {{ action: string, label: string, fields?: Record<string, string | number | boolean | null | undefined>, confirm?: string, variant?: 'primary' | 'secondary' | 'danger' }}
-	 */
+	/** @type {{ action: string, label: string, fields?: Record<string, string | number | boolean | null | undefined>, confirm?: string, variant?: 'primary' | 'secondary' | 'danger' }} */
 	const { action, label, fields = {}, confirm, variant = 'secondary' } = $props()
 
 	const askFirst = (/** @type {SubmitEvent} */ event) => {

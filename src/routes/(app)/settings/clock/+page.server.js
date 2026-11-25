@@ -13,7 +13,6 @@ export const load = async ({ locals }) => {
 	return { settings }
 }
 
-/** Is this a time zone the browser and server know? */
 const isTimeZone = (/** @type {string} */ timeZone) => {
 	try {
 		new Intl.DateTimeFormat('en', { timeZone })

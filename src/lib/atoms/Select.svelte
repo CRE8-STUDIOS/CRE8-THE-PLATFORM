@@ -1,8 +1,5 @@
 <script>
-	/**
-	 * A dropdown. `options` are { value, label } pairs; `empty` adds a first "nothing chosen" option.
-	 * @type {{ options: { value: string, label: string }[], value?: string | null, empty?: string } & import('svelte/elements').HTMLSelectAttributes}
-	 */
+	/** @type {{ options: { value: string, label: string }[], value?: string | null, empty?: string } & import('svelte/elements').HTMLSelectAttributes} */
 	const { options, value = '', empty, ...rest } = $props()
 </script>
 

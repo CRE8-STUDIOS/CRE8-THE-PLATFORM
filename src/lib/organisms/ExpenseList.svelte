@@ -3,9 +3,7 @@
 	import Money from '#lib/atoms/Money.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * @type {{ expenses: { id: string, date: string, supplier: string | null, amount_excl_vat: number, vat_amount: number, category: string | null, receiptUrl: string | null, projects: { title: string } | null }[] }}
-	 */
+	/** @type {{ expenses: { id: string, date: string, supplier: string | null, amount_excl_vat: number, vat_amount: number, category: string | null, receiptUrl: string | null, projects: { title: string } | null }[] }} */
 	const { expenses } = $props()
 </script>
 

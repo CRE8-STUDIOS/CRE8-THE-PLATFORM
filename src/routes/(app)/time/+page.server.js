@@ -26,7 +26,6 @@ export const load = async ({ locals, url }) => {
 		.lt('started_at', toUtcIso(addDays(monday, 7), timezone) ?? '')
 		.order('started_at', { ascending: false })
 
-	// Project page: all hours on that project. Otherwise: all hours this year (1,225-hour criterion).
 	const totalQuery = projectId
 		? supabase.from('time_entries').select('started_at, ended_at').eq('project_id', projectId)
 		: supabase
@@ -73,7 +72,6 @@ export const load = async ({ locals, url }) => {
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	/** Add hours afterwards (forgot to clock in). */
 	add: async ({ request, locals }) => {
 		const formData = await request.formData()
 		const startedAt = toUtcIso(text(formData, 'started_at'), locals.timezone)

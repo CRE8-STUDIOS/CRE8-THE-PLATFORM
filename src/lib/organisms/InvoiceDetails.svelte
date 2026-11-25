@@ -4,7 +4,6 @@
 	import StatusLabel from '#lib/atoms/StatusLabel.svelte'
 
 	/**
-	 * A sent factuur, with the details as they were saved when it was sent.
 	 * @type {{
 	 *   invoice: { status: string | null, is_overdue: boolean | null, days_overdue: number | null, issue_date: string | null, due_date: string | null, sent_at: string | null, paid_at: string | null, notes: string | null, credits_invoice_id: string | null, issuer_details: unknown, client_details: unknown },
 	 *   project: { id: string, title: string } | null,

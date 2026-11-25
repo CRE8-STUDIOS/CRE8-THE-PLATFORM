@@ -2,10 +2,7 @@
 	import Heading from '#lib/atoms/Heading.svelte'
 	import DateTime from '#lib/atoms/DateTime.svelte'
 
-	/**
-	 * A signed (locked) contract with the signature as proof.
-	 * @type {{ contract: { title: string, body: string, signed_at: string | null, signed_ip: unknown, signature_data: string | null }, timeZone?: string, projectId?: string }}
-	 */
+	/** @type {{ contract: { title: string, body: string, signed_at: string | null, signed_ip: unknown, signature_data: string | null }, timeZone?: string, projectId?: string }} */
 	const { contract, timeZone, projectId } = $props()
 	const signatureSource = $derived(
 		contract.signature_data

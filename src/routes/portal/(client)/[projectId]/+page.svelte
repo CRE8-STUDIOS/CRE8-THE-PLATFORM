@@ -10,7 +10,6 @@
 	import FileList from '#lib/organisms/FileList.svelte'
 	import PortalMoodboards from '#lib/organisms/PortalMoodboards.svelte'
 
-	// Times in the portal are shown in the client's own (browser) time zone
 	const { data, form } = $props()
 	const { project, updates, contract, requests, meetings, slots, invoices, files, boards } =
 		$derived(data)

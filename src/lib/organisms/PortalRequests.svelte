@@ -9,10 +9,7 @@
 	import SignatureField from '#lib/molecules/SignatureField.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * Extra work in the portal: approve (with signature) or decline, or ask for something new.
-	 * @type {{ requests: { id: string, title: string, description: string | null, price: number | null, estimated_hours: number | null, status: string }[] }}
-	 */
+	/** @type {{ requests: { id: string, title: string, description: string | null, price: number | null, estimated_hours: number | null, status: string }[] }} */
 	const { requests } = $props()
 </script>
 

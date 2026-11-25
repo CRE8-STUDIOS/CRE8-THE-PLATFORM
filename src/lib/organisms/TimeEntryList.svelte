@@ -4,7 +4,6 @@
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
 	/**
-	 * Clocked hours of one week.
 	 * @type {{
 	 *   entries: { id: string, started_at: string, ended_at: string | null, hours: number, category: string, note: string | null, stopped_by: string | null, projects: { title: string } | null }[],
 	 *   monday: string, previousWeek: string, nextWeek: string, weekHours: number, projectId?: string, timeZone: string

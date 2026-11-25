@@ -3,7 +3,6 @@
 	import Button from '#lib/atoms/Button.svelte'
 	import SelectField from '#lib/molecules/SelectField.svelte'
 
-	/** Change a status with the ?/status action. */
 	/** @type {{ status: string, options: { value: string, label: string }[] }} */
 	const { status, options } = $props()
 </script>

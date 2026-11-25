@@ -16,7 +16,6 @@ export const load = async ({ locals }) => {
 		.order('starts_at')
 	const hours = data ?? []
 
-	// One group per kind, with readable rows
 	return {
 		groups: WORKING_HOURS_KINDS.map((kind) => ({
 			kind,

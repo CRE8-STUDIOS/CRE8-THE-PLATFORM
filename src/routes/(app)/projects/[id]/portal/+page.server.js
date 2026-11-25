@@ -1,9 +1,6 @@
 import { id, text, failMessage, failWith } from '#lib/server/form.js'
 
-/**
- * Who can see this project in the client portal.
- * @type {import('./$types').PageServerLoad}
- */
+/** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals, params, url }) => {
 	const { data: access } = await locals.supabase
 		.from('portal_access')
@@ -29,13 +26,11 @@ export const actions = {
 		if (!project?.client_id)
 			return failMessage('Link a client to this project first (Overview tab).')
 
-		const { error } = await supabase
-			.from('portal_access')
-			.insert({
-				project_id: params.id,
-				client_id: project.client_id,
-				invited_email: email.toLowerCase()
-			})
+		const { error } = await supabase.from('portal_access').insert({
+			project_id: params.id,
+			client_id: project.client_id,
+			invited_email: email.toLowerCase()
+		})
 		if (error) return failWith(error)
 		return { success: `Invited ${email}. Send them the signup link below.` }
 	},

@@ -5,10 +5,7 @@
 	import SignatureField from '#lib/molecules/SignatureField.svelte'
 	import SignedContract from '#lib/organisms/SignedContract.svelte'
 
-	/**
-	 * The contract in the portal: read it and sign it with a drawn signature.
-	 * @type {{ contract: { id: string, title: string, body: string, status: string, signed_at: string | null, signed_ip: unknown, signature_data: string | null } | null }}
-	 */
+	/** @type {{ contract: { id: string, title: string, body: string, status: string, signed_at: string | null, signed_ip: unknown, signature_data: string | null } | null }} */
 	const { contract } = $props()
 </script>
 

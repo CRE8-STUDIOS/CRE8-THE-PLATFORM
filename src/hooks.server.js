@@ -3,7 +3,6 @@ import { redirect } from '@sveltejs/kit'
 import { sequence } from '@sveltejs/kit/hooks'
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY } from '$app/env/public'
 
-/** Routes anyone can open (matched on route id, which can't be bypassed with encoded URLs) */
 const PUBLIC_ROUTES = new Set([
 	'/',
 	'/login',
@@ -13,13 +12,9 @@ const PUBLIC_ROUTES = new Set([
 	'/logout'
 ])
 
-/** Routes a logged-in user doesn't need */
 const GUEST_ROUTES = new Set(['/login', '/signup', '/portal/signup'])
 
-/**
- * 1. A Supabase client per request, logged in with the user's cookies.
- * @type {import('@sveltejs/kit/hooks').Handle}
- */
+/** @type {import('@sveltejs/kit/hooks').Handle} */
 const supabase = async ({ event, resolve }) => {
 	event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY, {
 		cookies: {
@@ -28,7 +23,6 @@ const supabase = async ({ event, resolve }) => {
 				for (const { name, value, options } of cookiesToSet) {
 					event.cookies.set(name, value, { ...options, path: '/' })
 				}
-				// Supabase sends cache headers so pages with a session are never cached
 				if (headers && Object.keys(headers).length > 0) event.setHeaders(headers)
 			}
 		}
@@ -40,11 +34,7 @@ const supabase = async ({ event, resolve }) => {
 	})
 }
 
-/**
- * 2. Who is this? getClaims() verifies the login token's signature, so it can't be faked.
- * Then: freelancer (has a profile) or client (has a client account)?
- * @type {import('@sveltejs/kit/hooks').Handle}
- */
+/** @type {import('@sveltejs/kit/hooks').Handle} */
 const identify = async ({ event, resolve }) => {
 	const { supabase } = event.locals
 	event.locals.user = null
@@ -73,19 +63,11 @@ const identify = async ({ event, resolve }) => {
 	return resolve(event)
 }
 
-/**
- * 3. Route protection.
- * - logged out -> only public routes
- * - client     -> only the portal
- * - freelancer -> everything except the portal
- * The database (Row Level Security) protects the data as well, this only guards the pages.
- * @type {import('@sveltejs/kit/hooks').Handle}
- */
+/** @type {import('@sveltejs/kit/hooks').Handle} */
 const guard = async ({ event, resolve }) => {
 	const routeId = event.route.id
 	const { user, role } = event.locals
 
-	// No route (404) or a static file: nothing to protect
 	if (!routeId) return resolve(event)
 
 	const home = role === 'client' ? '/portal' : '/overview'

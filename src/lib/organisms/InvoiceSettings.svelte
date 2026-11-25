@@ -6,10 +6,7 @@
 	import TextareaField from '#lib/molecules/TextareaField.svelte'
 	import { VAT_TREATMENTS, toOptions } from '#lib/utils/constants.js'
 
-	/**
-	 * Settings of a draft factuur.
-	 * @type {{ invoice: { client_id: string | null, issue_date: string | null, due_date: string | null, vat_treatment: string | null, notes: string | null }, clients: { value: string, label: string }[] }}
-	 */
+	/** @type {{ invoice: { client_id: string | null, issue_date: string | null, due_date: string | null, vat_treatment: string | null, notes: string | null }, clients: { value: string, label: string }[] }} */
 	const { invoice, clients } = $props()
 </script>
 

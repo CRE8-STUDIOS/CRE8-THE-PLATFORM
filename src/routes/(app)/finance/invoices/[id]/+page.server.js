@@ -30,7 +30,6 @@ export const load = async ({ locals, params }) => {
 			: Promise.resolve({ data: [] })
 	])
 
-	// Approved requests that aren't on any factuur line yet
 	const requestIds = (approvedRequests ?? []).map(({ id: requestId }) => requestId)
 	const { data: billed } = requestIds.length
 		? await supabase.from('invoice_lines').select('request_id').in('request_id', requestIds)
@@ -49,7 +48,6 @@ export const load = async ({ locals, params }) => {
 	}
 }
 
-/** Change the status of this factuur (send, paid, unpaid). */
 const setStatus = async (
 	/** @type {App.Locals} */ locals,
 	/** @type {string} */ invoiceId,
@@ -154,7 +152,6 @@ export const actions = {
 		redirect(303, '/finance')
 	},
 
-	/** Correct a sent factuur: a new draft with the same lines, as negative amounts. */
 	createCredit: async ({ locals, params }) => {
 		const { supabase } = locals
 		const [{ data: original }, { data: lines }] = await Promise.all([

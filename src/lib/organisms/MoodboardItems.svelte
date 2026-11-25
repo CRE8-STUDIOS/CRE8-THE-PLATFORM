@@ -3,10 +3,7 @@
 	import ColorSwatch from '#lib/atoms/ColorSwatch.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * The items on a moodboard. The visual board (drag, resize) comes with the design.
-	 * @type {{ items: { id: string, type: string, content: string | null, imageUrl: string | null, x?: number, y?: number, width?: number | null, height?: number | null }[], editable?: boolean, title?: string }}
-	 */
+	/** @type {{ items: { id: string, type: string, content: string | null, imageUrl: string | null, x?: number, y?: number, width?: number | null, height?: number | null }[], editable?: boolean, title?: string }} */
 	const { items, editable = false, title = 'Items' } = $props()
 </script>
 

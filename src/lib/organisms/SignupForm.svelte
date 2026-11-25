@@ -3,10 +3,7 @@
 	import TextField from '#lib/molecules/TextField.svelte'
 	import FormNotice from '#lib/molecules/FormNotice.svelte'
 
-	/**
-	 * Signup for freelancers (`kind="freelancer"`) or for clients of the portal (`kind="client"`).
-	 * @type {{ kind: 'freelancer' | 'client', form: { message?: string, success?: string, name?: string | null, email?: string | null, username?: string | null, display_name?: string | null } | null | undefined }}
-	 */
+	/** @type {{ kind: 'freelancer' | 'client', form: { message?: string, success?: string, name?: string | null, email?: string | null, username?: string | null, display_name?: string | null } | null | undefined }} */
 	const { kind, form } = $props()
 </script>
 

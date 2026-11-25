@@ -8,7 +8,6 @@
 	import { VAT_RATES, toOptions } from '#lib/utils/constants.js'
 
 	/**
-	 * The lines and totals of a factuur. With `editable` (drafts) lines can be added and removed.
 	 * @type {{
 	 *   lines: { id: string, description: string, quantity: number, unit_price: number, vat_rate: number, amount: number }[],
 	 *   invoice: { subtotal: number | null, vat_total: number | null, total: number | null, vat_treatment: string | null },

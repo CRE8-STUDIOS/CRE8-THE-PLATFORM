@@ -1,10 +1,7 @@
 <script>
 	import Heading from '#lib/atoms/Heading.svelte'
 
-	/**
-	 * Page title with an optional back link and intro text.
-	 * @type {{ title: string, level?: 1 | 2, back?: { href: string, text: string }, intro?: string }}
-	 */
+	/** @type {{ title: string, level?: 1 | 2, back?: { href: string, text: string }, intro?: string }} */
 	const { title, level = 1, back, intro } = $props()
 </script>
 

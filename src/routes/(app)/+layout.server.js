@@ -1,7 +1,4 @@
-/**
- * Everything a freelancer page needs: profile basics and the running clock.
- * @type {import('./$types').LayoutServerLoad}
- */
+/** @type {import('./$types').LayoutServerLoad} */
 export const load = async ({ locals }) => {
 	const { supabase, user } = locals
 	const userId = user?.id ?? ''

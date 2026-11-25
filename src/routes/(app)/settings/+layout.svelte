@@ -3,7 +3,6 @@
 	import PageHeader from '#lib/molecules/PageHeader.svelte'
 	import NavLinks from '#lib/molecules/NavLinks.svelte'
 
-	// Template for all settings pages: title, settings menu, then the settings page
 	const { data, children } = $props()
 	const links = $derived([
 		{ href: '/settings', text: 'Business & facturen' },

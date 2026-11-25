@@ -2,11 +2,7 @@
 	import Button from '#lib/atoms/Button.svelte'
 	import Input from '#lib/atoms/Input.svelte'
 
-	/**
-	 * Clock-in when opening a project ("everything inside the project" counts).
-	 * mode "ask" shows the question, "auto" clocks in right away, "off" does nothing.
-	 * @type {{ projectId: string, projectTitle: string, mode: string, running: boolean, current: string }}
-	 */
+	/** @type {{ projectId: string, projectTitle: string, mode: string, running: boolean, current: string }} */
 	const { projectId, projectTitle, mode, running, current } = $props()
 
 	let dismissed = $state(false)
@@ -14,7 +10,6 @@
 	let form = $state()
 	let autoSent = false
 
-	// "auto": send the form once, as soon as it exists
 	$effect(() => {
 		if (mode === 'auto' && !running && form && !autoSent) {
 			autoSent = true

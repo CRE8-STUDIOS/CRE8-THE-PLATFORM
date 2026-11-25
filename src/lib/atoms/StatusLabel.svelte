@@ -1,8 +1,5 @@
 <script>
-	/**
-	 * A status word, e.g. draft, active, sent, paid, overdue.
-	 * @type {{ status: string }}
-	 */
+	/** @type {{ status: string }} */
 	const { status } = $props()
 </script>
 

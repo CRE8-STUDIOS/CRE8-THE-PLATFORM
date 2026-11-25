@@ -1,6 +1,5 @@
 import { text } from '#lib/server/form.js'
 
-/** Client fields from a create/edit form. */
 export const clientFromForm = (/** @type {FormData} */ formData) => ({
 	name: text(formData, 'name') ?? '',
 	company: text(formData, 'company'),

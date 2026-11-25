@@ -1,10 +1,7 @@
 <script>
 	import Input from '#lib/atoms/Input.svelte'
 
-	/**
-	 * A labelled input. All input attributes (name, type, value, required...) are passed on.
-	 * @type {{ label: string, hint?: string } & import('svelte/elements').HTMLInputAttributes}
-	 */
+	/** @type {{ label: string, hint?: string } & import('svelte/elements').HTMLInputAttributes} */
 	const { label, hint, ...rest } = $props()
 </script>
 

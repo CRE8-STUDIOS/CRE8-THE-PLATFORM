@@ -3,7 +3,6 @@
 	import AppHeader from '#lib/organisms/AppHeader.svelte'
 	import ClockStatus from '#lib/organisms/ClockStatus.svelte'
 
-	// Template for all freelancer pages: header, clock and the page itself
 	const { data, children } = $props()
 	const { clock, supabase, timezone, profile } = $derived(data)
 </script>

@@ -9,7 +9,6 @@
 	import { AGENDA_TYPES, ENERGY_TYPES, toOptions } from '#lib/utils/constants.js'
 
 	/**
-	 * Add (short form) or edit (full form, when `item` is given) an agenda item.
 	 * @type {{
 	 *   title: string, action: string, submitLabel: string, timeZone: string,
 	 *   projects: { value: string, label: string }[],

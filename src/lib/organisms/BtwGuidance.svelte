@@ -2,10 +2,7 @@
 	import Heading from '#lib/atoms/Heading.svelte'
 	import Money from '#lib/atoms/Money.svelte'
 
-	/**
-	 * Btw estimate for this quarter, based on facturen and expenses in CRE8.
-	 * @type {{ quarter: { label: string, revenue: number, btwCharged: number, costs: number, btwPaid: number, btwToPay: number } }}
-	 */
+	/** @type {{ quarter: { label: string, revenue: number, btwCharged: number, costs: number, btwPaid: number, btwToPay: number } }} */
 	const { quarter } = $props()
 </script>
 
