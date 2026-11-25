@@ -873,7 +873,7 @@ legend {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--size-grid-m)), 1fr));
 	gap: var(--space-s);
-	align-items: end;
+	align-items: start;
 }
 
 .card form:not(.action-button) > :is(fieldset, p, .field:has(textarea), .signature-field),
