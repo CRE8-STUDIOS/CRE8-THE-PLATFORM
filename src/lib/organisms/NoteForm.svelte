@@ -5,11 +5,11 @@
 	import SelectField from '#lib/molecules/SelectField.svelte'
 	import TextareaField from '#lib/molecules/TextareaField.svelte'
 
-	/** @type {{ projects: { value: string, label: string }[], projectId: string | null }} */
-	const { projects, projectId } = $props()
+	/** @type {{ projects: { value: string, label: string }[], projectId: string | null, id?: string }} */
+	const { projects, projectId, id } = $props()
 </script>
 
-<section class="note-form">
+<section {id} class="note-form card rough-edge">
 	<Heading>New note</Heading>
 	<form method="POST" action="?/create">
 		<TextField label="Title" name="title" />

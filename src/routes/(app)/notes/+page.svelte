@@ -13,6 +13,8 @@
 	intro="Notes are private: clients never see them."
 	back={projectId ? { href: `/projects/${projectId}`, text: 'the project' } : undefined}
 />
-<FormNotice {form} />
-<NoteForm {projects} {projectId} />
-<NoteList {notes} />
+<div class="card-grid">
+	<FormNotice {form} />
+	<NoteForm id="new-note" {projects} {projectId} />
+	<NoteList {notes} />
+</div>
