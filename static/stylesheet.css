@@ -187,3 +187,51 @@
 	--focus-outline: var(--border-width-thick) solid var(--color-accent);
 	--focus-offset: 3px;
 }
+
+/* ==========================================================================
+	3. Reset
+	Kept small on purpose: it only removes browser defaults that get in the
+	way of the design, and keeps the useful ones (like list semantics).
+   ========================================================================== */
+
+/* Sizes include padding and border, so inline-size: 100% never overflows */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* Spacing comes from the design tokens, not from browser defaults */
+* {
+	margin: 0;
+}
+
+/* Media behaves like a block and never grows wider than its container */
+img,
+picture,
+svg,
+video,
+canvas {
+	display: block;
+	max-inline-size: 100%;
+}
+
+/* Form elements do not inherit fonts by default in most browsers */
+input,
+button,
+textarea,
+select {
+	font: inherit;
+	color: inherit;
+}
+
+/* Long words and URLs wrap instead of breaking the layout */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+}
