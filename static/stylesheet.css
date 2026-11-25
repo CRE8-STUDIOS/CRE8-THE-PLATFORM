@@ -511,6 +511,10 @@ ol:not([class]) {
 	align-items: start;
 }
 
+.card-grid > * {
+	min-inline-size: 0;
+}
+
 .span-full,
 .card-grid > .notice {
 	grid-column: 1 / -1;
@@ -883,6 +887,11 @@ legend {
 
 .card form:not(.action-button) > .button {
 	justify-self: start;
+}
+
+.card :is(form, fieldset) > .field-checkbox {
+	align-self: end;
+	min-block-size: 2.75rem;
 }
 
 input:not([type='checkbox'], [type='radio'], [type='submit'], [type='button']),

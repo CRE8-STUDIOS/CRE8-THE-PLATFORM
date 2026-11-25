@@ -53,6 +53,7 @@
 
 	.app-main {
 		display: grid;
+		grid-template-columns: minmax(0, 1fr);
 		align-content: start;
 		gap: var(--space-xl);
 		inline-size: 100%;
