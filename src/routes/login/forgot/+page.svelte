@@ -8,7 +8,7 @@
 	const error = $derived(form?.message ?? '')
 </script>
 
-<AuthCard title="Forgot password" intro="enter your email and we send you a link">
+<AuthCard compact title="Forgot password" intro="enter your email and we send you a link">
 	{#if form?.sent}
 		<p class="auth-message" role="status">If this email has an account, a link is on its way.</p>
 	{:else}

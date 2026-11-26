@@ -5,6 +5,6 @@
 	const { form } = $props()
 </script>
 
-<AuthCard title="Create account">
+<AuthCard compact title="Create account">
 	<SignupForm kind="freelancer" {form} />
 </AuthCard>

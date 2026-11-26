@@ -56,7 +56,7 @@
 	.login-form {
 		display: grid;
 		justify-items: center;
-		gap: var(--space-s);
+		gap: var(--space-m);
 		inline-size: 100%;
 	}
 

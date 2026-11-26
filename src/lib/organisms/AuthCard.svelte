@@ -1,11 +1,11 @@
 <script>
 	import Mascot from '#lib/atoms/Mascot.svelte'
 
-	/** @type {{ title: string, intro?: string, children: import('svelte').Snippet, bottom?: import('svelte').Snippet, after?: import('svelte').Snippet }} */
-	const { title, intro, children, bottom, after } = $props()
+	/** @type {{ title: string, intro?: string, compact?: boolean, children: import('svelte').Snippet, bottom?: import('svelte').Snippet, after?: import('svelte').Snippet }} */
+	const { title, intro, compact = false, children, bottom, after } = $props()
 </script>
 
-<main id="content" class="auth-page">
+<main id="content" class="auth-page" class:auth-page-compact={compact}>
 	<div class="auth-top">
 		<h1 class="auth-heading">Welcome to<br />CRE8 the platform</h1>
 		<div class="auth-peek">
@@ -34,6 +34,7 @@
 
 <style>
 	.auth-page {
+		--auth-card-width: var(--size-auth-card);
 		--auth-card-offset: clamp(1rem, 30dvh - 8rem, 7.5rem);
 		--auth-heading-offset: 4.5rem;
 		--auth-notch: clamp(1.75rem, 1rem + 3.5vw, 3.5rem);
@@ -47,6 +48,10 @@
 		overflow-x: clip;
 		background-color: var(--color-background);
 		text-align: center;
+	}
+
+	.auth-page-compact {
+		--auth-card-width: var(--size-auth-card-compact);
 	}
 
 	.auth-top {
@@ -73,14 +78,14 @@
 
 	.auth-heading {
 		margin-block-start: var(--auth-heading-offset);
-		font-size: calc(min(100vw - 2 * var(--space-m), var(--size-auth-card) + 6rem) / 14.4);
+		font-size: calc(min(100vw - 2 * var(--space-m), var(--auth-card-width) + 6rem) / 14.4);
 		line-height: var(--line-height-tight);
 	}
 
 	.auth-stage {
 		position: relative;
 		translate: 0 var(--auth-card-offset);
-		inline-size: min(100%, var(--size-auth-card));
+		inline-size: min(100%, var(--auth-card-width));
 	}
 
 	.auth-mascot {

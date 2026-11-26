@@ -6,7 +6,7 @@
 	const { as, redirectTo, passwordChanged } = $derived(data)
 </script>
 
-<AuthCard title="Login">
+<AuthCard compact title="Login">
 	<LoginForm
 		{form}
 		{as}

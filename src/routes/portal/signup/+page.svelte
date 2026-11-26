@@ -5,6 +5,6 @@
 	const { form } = $props()
 </script>
 
-<AuthCard title="Portal account" intro="use the email address your freelancer invited">
+<AuthCard compact title="Portal account" intro="use the email address your freelancer invited">
 	<SignupForm kind="client" {form} />
 </AuthCard>
