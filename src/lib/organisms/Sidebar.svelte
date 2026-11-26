@@ -120,6 +120,10 @@
 			overflow-y: auto;
 		}
 
+		.sidebar-logo {
+			margin-block-start: calc(var(--space-m) * -1);
+		}
+
 		.sidebar-clock {
 			justify-self: start;
 		}
