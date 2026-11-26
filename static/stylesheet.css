@@ -1,29 +1,9 @@
 /* Fonts */
 @font-face {
-	font-family: 'Pointer';
-	src:
-		url('fonts/pointer-regular.woff2') format('woff2'),
-		url('fonts/pointer-regular.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
 	font-family: 'Maison des Pastel Script';
 	src:
 		url('fonts/maison-des-pastel-script-regular.woff2') format('woff2'),
 		url('fonts/maison-des-pastel-script-regular.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Telegraf';
-	src:
-		url('fonts/telegraf-regular.woff2') format('woff2'),
-		url('fonts/telegraf-regular.woff') format('woff');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
