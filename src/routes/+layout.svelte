@@ -1,21 +1,11 @@
 <script>
-	import favicon from '#lib/assets/favicon.svg'
-	import { invalidate } from '$app/navigation'
+	import favicon from '#lib/assets/favicon.svg';
 
-	const { data, children } = $props()
-
-	$effect(() => {
-		const { data: listener } = data.supabase.auth.onAuthStateChange((event) => {
-			if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') invalidate('supabase:auth')
-		})
-
-		return () => listener.subscription.unsubscribe()
-	})
+	let { children } = $props();
 </script>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<title>CRE8</title>
 </svelte:head>
 
 {@render children()}

@@ -1,6 +1,6 @@
 {
 	"name": "cre8-the-platform",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"private": true,
 	"type": "module",
 	"imports": {
@@ -13,9 +13,7 @@
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"lint": "prettier --check .",
-		"format": "prettier --write .",
-		"check": "svelte-kit sync && svelte-check",
-		"check:watch": "svelte-kit sync && svelte-check --watch"
+		"format": "prettier --write ."
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^8.0.1",
@@ -24,12 +22,6 @@
 		"prettier": "^3.10.1",
 		"prettier-plugin-svelte": "^4.1.1",
 		"svelte": "^5.57.3",
-		"svelte-check": "^4.7.8",
-		"typescript": "^6.0.3",
 		"vite": "^8.3.8"
-	},
-	"dependencies": {
-		"@supabase/ssr": "^0.12.7",
-		"@supabase/supabase-js": "^2.119.2"
 	}
 }
