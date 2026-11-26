@@ -30,7 +30,8 @@
 <style>
 	.auth-page {
 		--auth-mascot-size: clamp(14rem, 10rem + 14vw, 21rem);
-		--auth-notch: clamp(1rem, 0.6rem + 2vw, 2rem);
+		--auth-notch: clamp(1.75rem, 1rem + 3.5vw, 3.5rem);
+		--auth-notch-depth: calc(var(--auth-notch) * 1.6);
 
 		display: grid;
 		justify-items: center;
@@ -68,8 +69,8 @@
 		z-index: 1;
 		isolation: isolate;
 		display: grid;
-		padding-block: var(--space-2xl);
-		padding-inline: calc(var(--auth-notch) + var(--space-l));
+		padding-block: var(--space-xl);
+		padding-inline: calc(var(--auth-notch-depth) + var(--space-s));
 		color: var(--color-auth-card-text);
 	}
 
@@ -110,12 +111,12 @@
 			0 0,
 			100% 0,
 			100% calc(50% - var(--auth-notch)),
-			calc(100% - var(--auth-notch)) 50%,
+			calc(100% - var(--auth-notch-depth)) 50%,
 			100% calc(50% + var(--auth-notch)),
 			100% 100%,
 			0 100%,
 			0 calc(50% + var(--auth-notch)),
-			var(--auth-notch) 50%,
+			var(--auth-notch-depth) 50%,
 			0 calc(50% - var(--auth-notch))
 		);
 	}
@@ -125,6 +126,7 @@
 	}
 
 	.auth-card-intro {
+		margin-block-start: calc(var(--space-s) * -1 + var(--space-2xs));
 		font-size: var(--font-size-small);
 	}
 

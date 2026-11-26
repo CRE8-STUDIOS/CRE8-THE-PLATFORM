@@ -13,7 +13,9 @@
 
 <AuthCard title="Login as" intro="choose the one that applies to you">
 	{#if error}<p class="auth-message" role="alert">{error}</p>{/if}
-	<a class="button button-light login-choice" href={formLink('freelancer')}>Freelancer</a>
+	<a class="button button-light login-choice login-choice-first" href={formLink('freelancer')}>
+		Freelancer
+	</a>
 
 	{#snippet bottom()}
 		<a class="button button-light login-choice" href={formLink('client')}>Client</a>
@@ -23,5 +25,9 @@
 <style>
 	.login-choice {
 		inline-size: min(100%, var(--size-choice-button));
+	}
+
+	.login-choice-first {
+		margin-block-start: var(--space-m);
 	}
 </style>
