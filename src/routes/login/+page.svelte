@@ -1,6 +1,6 @@
 <script>
 	import AuthCard from '#lib/organisms/AuthCard.svelte'
-	import PencilCircle from '#lib/atoms/PencilCircle.svelte'
+	import PencilUnderline from '#lib/atoms/PencilUnderline.svelte'
 
 	const { data } = $props()
 	const { redirectTo, error } = $derived(data)
@@ -18,12 +18,12 @@
 		class="button button-light login-choice login-choice-first has-pencil"
 		href={formLink('freelancer')}
 	>
-		Freelancer<PencilCircle />
+		Freelancer<PencilUnderline />
 	</a>
 
 	{#snippet bottom()}
 		<a class="button button-light login-choice has-pencil" href={formLink('client')}>
-			Client<PencilCircle />
+			Client<PencilUnderline />
 		</a>
 	{/snippet}
 </AuthCard>
@@ -31,6 +31,10 @@
 <style>
 	.login-choice {
 		inline-size: min(100%, var(--size-choice-button));
+	}
+
+	.login-choice:hover {
+		--rough-edge-background: var(--color-surface);
 	}
 
 	.login-choice-first {
