@@ -31,7 +31,7 @@
 </script>
 
 <header class="sidebar" class:sidebar-collapsed={enhanced && !menuOpen}>
-	<a class="sidebar-logo" href="/overview"><Mascot size="4.5rem" /></a>
+	<a class="sidebar-logo" href="/overview"><Mascot size="5.5rem" /></a>
 
 	<div class="sidebar-clock">{@render clock()}</div>
 
