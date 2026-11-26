@@ -2,7 +2,7 @@
 	import Button from '#lib/atoms/Button.svelte'
 	import Input from '#lib/atoms/Input.svelte'
 
-	/** @type {{ action: string, label: string, fields?: Record<string, string | number | boolean | null | undefined>, confirm?: string, variant?: 'primary' | 'secondary' | 'danger' }} */
+	/** @type {{ action: string, label: string, fields?: Record<string, string | number | boolean | null | undefined>, confirm?: string, variant?: 'primary' | 'secondary' | 'muted' | 'danger' }} */
 	const { action, label, fields = {}, confirm, variant = 'secondary' } = $props()
 
 	const askFirst = (/** @type {SubmitEvent} */ event) => {

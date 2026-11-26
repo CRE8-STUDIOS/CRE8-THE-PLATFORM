@@ -324,6 +324,15 @@ ol:not([class]) {
 	--rough-edge-background: var(--color-button-secondary);
 }
 
+.button-muted {
+	background-color: var(--color-button-secondary);
+	color: var(--color-text-muted);
+}
+
+.button-muted:hover {
+	background-color: var(--color-button-secondary-hover);
+}
+
 .button-danger {
 	--rough-edge-background: var(--color-button-secondary);
 	background-color: var(--rough-edge-background);

@@ -1,14 +1,10 @@
+import { redirect } from '@sveltejs/kit'
+
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals, parent }) => {
-	const { supabase, timezone } = locals
-	const [{ profile }, { data: projects }] = await Promise.all([
-		parent(),
-		supabase
-			.from('projects')
-			.select('id, title, status')
-			.in('status', ['active', 'draft'])
-			.order('deadline', { ascending: true, nullsFirst: false })
-	])
+	const { timezone } = locals
+	const { profile, clock } = await parent()
+	if (clock) redirect(303, '/overview')
 
 	const hour = Number(
 		new Intl.DateTimeFormat('en-GB', {
@@ -20,7 +16,7 @@ export const load = async ({ locals, parent }) => {
 	const partOfDay = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening'
 
 	return {
-		greeting: profile?.name ? `${partOfDay}, ${profile.name}` : partOfDay,
-		projects: projects ?? []
+		partOfDay,
+		firstName: profile?.name?.trim().split(/\s+/)[0] || null
 	}
 }
