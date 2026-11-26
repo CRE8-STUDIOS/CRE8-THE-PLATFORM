@@ -1,9 +1,7 @@
 <svg class="pencil-underline" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true">
-	<path pathLength="1" d="M3 7C40 4 80 9 120 6C150 4 178 8 197 5" />
 	<path
-		class="pencil-underline-second"
 		pathLength="1"
-		d="M10 9C55 7 100 10 145 8C165 7 182 9 194 8"
+		d="M4 5C45 3 90 7 130 5C160 4 182 6 196 5C198 6 197 8 192 8C150 9 100 7 60 9C40 10 22 9 12 10"
 	/>
 </svg>
 
@@ -29,13 +27,7 @@
 		stroke-dasharray: 1;
 		stroke-dashoffset: 1;
 		vector-effect: non-scaling-stroke;
-		transition: stroke-dashoffset var(--duration-pencil) ease-out;
-	}
-
-	.pencil-underline-second {
-		stroke-width: 1.5;
-		opacity: 0.8;
-		transition-delay: calc(var(--duration-pencil) * 0.35);
+		transition: stroke-dashoffset var(--duration-pencil) ease-in-out;
 	}
 
 	:global(.has-pencil:hover) > .pencil-underline path,

@@ -124,7 +124,7 @@
 	/* Motion */
 	--duration-fast: 150ms;
 	--duration-normal: 250ms;
-	--duration-pencil: 600ms;
+	--duration-pencil: 800ms;
 	--easing-standard: cubic-bezier(0.2, 0, 0, 1);
 
 	/* Focus */
