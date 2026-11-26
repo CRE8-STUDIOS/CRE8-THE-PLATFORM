@@ -2,7 +2,7 @@
 	import Button from '#lib/atoms/Button.svelte'
 	import AuthField from '#lib/molecules/AuthField.svelte'
 
-	/** @type {{ kind: 'freelancer' | 'client', form: { message?: string, success?: string, name?: string | null, email?: string | null, username?: string | null, display_name?: string | null } | null | undefined }} */
+	/** @type {{ kind: 'freelancer' | 'client', form: { message?: string, success?: string, email?: string | null, username?: string | null, display_name?: string | null } | null | undefined }} */
 	const { kind, form } = $props()
 
 	const error = $derived(form?.message ?? '')
@@ -16,18 +16,6 @@
 	<p class="auth-message" role="status">{form.success}</p>
 {:else}
 	<form class="signup-form" method="POST">
-		{#if kind === 'freelancer'}
-			<AuthField
-				label="Your name"
-				id="signup-name"
-				name="name"
-				autocomplete="name"
-				value={form?.name ?? ''}
-				aria-describedby={describedby}
-				aria-invalid={invalid}
-				required
-			/>
-		{/if}
 		<AuthField
 			label="Email"
 			id="signup-email"
