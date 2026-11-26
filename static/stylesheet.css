@@ -110,6 +110,7 @@
 	--rough-edge: url('#rough');
 	--rough-edge-strong: url('#rough-strong');
 
+	--color-pencil: var(--color-text-muted);
 	--color-auth-card: var(--color-text);
 	--color-auth-card-text: var(--color-text-inverse);
 
@@ -122,6 +123,7 @@
 	/* Motion */
 	--duration-fast: 150ms;
 	--duration-normal: 250ms;
+	--duration-pencil: 600ms;
 	--easing-standard: cubic-bezier(0.2, 0, 0, 1);
 
 	/* Focus */

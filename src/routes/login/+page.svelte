@@ -1,5 +1,6 @@
 <script>
 	import AuthCard from '#lib/organisms/AuthCard.svelte'
+	import PencilCircle from '#lib/atoms/PencilCircle.svelte'
 
 	const { data } = $props()
 	const { redirectTo, error } = $derived(data)
@@ -13,12 +14,17 @@
 
 <AuthCard title="Login as" intro="choose the one that applies to you">
 	{#if error}<p class="auth-message" role="alert">{error}</p>{/if}
-	<a class="button button-light login-choice login-choice-first" href={formLink('freelancer')}>
-		Freelancer
+	<a
+		class="button button-light login-choice login-choice-first has-pencil"
+		href={formLink('freelancer')}
+	>
+		Freelancer<PencilCircle />
 	</a>
 
 	{#snippet bottom()}
-		<a class="button button-light login-choice" href={formLink('client')}>Client</a>
+		<a class="button button-light login-choice has-pencil" href={formLink('client')}>
+			Client<PencilCircle />
+		</a>
 	{/snippet}
 </AuthCard>
 
