@@ -57,9 +57,7 @@
 				await wait(duration('--duration-eraser'))
 			}
 
-			const go = () => goto(result.location, { invalidateAll: true })
-			if (calm || !document.startViewTransition) return go()
-			await document.startViewTransition(go).finished
+			await goto(result.location, { invalidateAll: true })
 		}
 	}
 </script>
