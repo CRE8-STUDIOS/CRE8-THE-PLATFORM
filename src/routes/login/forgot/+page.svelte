@@ -38,6 +38,7 @@
 	.forgot-form {
 		display: grid;
 		justify-items: center;
+		max-inline-size: var(--size-auth-form);
 		gap: var(--space-s);
 		inline-size: 100%;
 	}
