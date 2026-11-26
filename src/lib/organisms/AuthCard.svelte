@@ -29,16 +29,16 @@
 
 <style>
 	.auth-page {
-		--auth-mascot-size: clamp(14rem, 10rem + 14vw, 21rem);
+		--auth-mascot-size: clamp(18rem, 12rem + 18vw, 28rem);
 		--auth-notch: clamp(1.75rem, 1rem + 3.5vw, 3.5rem);
 		--auth-notch-depth: calc(var(--auth-notch) * 1.6);
 
 		display: grid;
 		justify-items: center;
-		align-content: center;
-		gap: var(--space-l);
+		align-content: start;
+		gap: var(--space-m);
 		min-block-size: 100dvh;
-		padding: var(--space-xl) var(--space-m);
+		padding: var(--space-l) var(--space-m) var(--space-xl);
 		background-color: var(--color-background);
 		text-align: center;
 	}
