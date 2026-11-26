@@ -26,8 +26,8 @@
 
 <style>
 	.auth-page {
-		--auth-mascot-size: clamp(6rem, 4.5rem + 6vw, 8.5rem);
-		--auth-notch: clamp(0.625rem, 0.35rem + 1.5vw, 1.25rem);
+		--auth-mascot-size: clamp(10rem, 7rem + 10vw, 15rem);
+		--auth-notch: clamp(1rem, 0.6rem + 2vw, 2rem);
 
 		display: grid;
 		justify-items: center;

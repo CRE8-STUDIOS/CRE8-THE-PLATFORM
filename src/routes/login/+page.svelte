@@ -21,10 +21,9 @@
 
 <style>
 	.login-choice {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: var(--space-s);
+		display: grid;
+		gap: var(--space-xs);
+		inline-size: min(100%, var(--size-choice-button));
 		margin-block-start: var(--space-xs);
 	}
 </style>
