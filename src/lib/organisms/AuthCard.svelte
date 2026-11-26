@@ -29,7 +29,7 @@
 
 <style>
 	.auth-page {
-		--auth-mascot-size: clamp(20rem, 12rem + 24vw, 36rem);
+		--auth-mascot-size: clamp(24rem, 14rem + 30vw, 46rem);
 		--auth-notch: clamp(1.75rem, 1rem + 3.5vw, 3.5rem);
 		--auth-notch-depth: calc(var(--auth-notch) * 1.6);
 
@@ -38,7 +38,8 @@
 		align-content: start;
 		gap: var(--space-m);
 		min-block-size: 100dvh;
-		padding: var(--space-l) var(--space-m) var(--space-xl);
+		padding: var(--space-m) var(--space-m) var(--space-xl);
+		overflow-x: clip;
 		background-color: var(--color-background);
 		text-align: center;
 	}
@@ -50,19 +51,22 @@
 	.auth-stage {
 		position: relative;
 		inline-size: min(100%, var(--size-auth-card));
+		margin-block-start: calc(var(--auth-mascot-size) * -0.09);
 		padding-block-start: calc(var(--auth-mascot-size) * 0.58);
 	}
 
 	.auth-mascot {
 		position: absolute;
 		inset-block-start: 0;
-		inset-inline-start: 50%;
+		inset-inline: 0;
 		z-index: 0;
 		display: flex;
-		translate: -50% 0;
+		justify-content: center;
 	}
 
 	.auth-mascot :global(.mascot) {
+		flex-shrink: 0;
+		max-inline-size: none;
 		animation: none;
 	}
 
