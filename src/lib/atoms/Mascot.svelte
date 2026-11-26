@@ -43,8 +43,8 @@
 	{#if face}
 		<g class="look" style:transform="translate({look.x}px, {look.y}px)">
 			<g class="eyes">
-				<ellipse cx="83" cy="106" rx="15" ry="22" />
-				<ellipse cx="117" cy="106" rx="15" ry="22" />
+				<ellipse cx="80" cy="106" rx="15" ry="22" />
+				<ellipse cx="120" cy="106" rx="15" ry="22" />
 			</g>
 		</g>
 	{/if}
