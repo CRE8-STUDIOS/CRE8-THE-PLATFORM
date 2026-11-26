@@ -118,6 +118,7 @@
 	--color-backdrop: color-mix(in oklab, var(--color-text) 45%, transparent);
 	--backdrop-blur: 6px;
 	--layer-modal: 100;
+	--layer-eraser: 1000;
 
 	--shadow-card: 0 0.25rem 1rem rgb(0 0 0 / 0.05);
 
@@ -129,6 +130,8 @@
 	--duration-auth-duck: 300ms;
 	--duration-auth-shake: 700ms;
 	--duration-auth-jump: 700ms;
+	--duration-login-cheer: 1100ms;
+	--duration-eraser: 1000ms;
 	--easing-standard: cubic-bezier(0.2, 0, 0, 1);
 
 	/* Focus */

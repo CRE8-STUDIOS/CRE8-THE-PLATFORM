@@ -1,4 +1,30 @@
+<script module>
+	const CHEERS = [
+		"You're back!",
+		'Exciting, here we go',
+		"Yeah, let's work",
+		'Look who is here',
+		'Ready, set, create',
+		'Back at it',
+		"Let's make something",
+		'Good to see you',
+		'Time to shine',
+		'The studio is open'
+	]
+
+	const pickCheer = () => {
+		const last = Number(sessionStorage.getItem('last-cheer') ?? -1)
+		let index = Math.floor(Math.random() * CHEERS.length)
+		if (index === last) index = (index + 1) % CHEERS.length
+		sessionStorage.setItem('last-cheer', String(index))
+		return CHEERS[index]
+	}
+</script>
+
 <script>
+	import { enhance } from '$app/forms'
+	import { goto } from '$app/navigation'
+	import EraserWipe from '#lib/atoms/EraserWipe.svelte'
 	import Button from '#lib/atoms/Button.svelte'
 	import Input from '#lib/atoms/Input.svelte'
 	import AuthField from '#lib/molecules/AuthField.svelte'
@@ -10,9 +36,35 @@
 	const error = $derived(form?.message ?? '')
 	const describedby = $derived(error ? 'login-error' : undefined)
 	const invalid = $derived(error ? 'true' : undefined)
+
+	let cheer = $state('')
+	let erasing = $state(false)
+
+	const duration = (/** @type {string} */ name) =>
+		parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0
+	const wait = (/** @type {number} */ ms) => new Promise((done) => setTimeout(done, ms))
+
+	/** @type {import('$app/forms').SubmitFunction} */
+	const celebrate = () => {
+		return async ({ result, update }) => {
+			if (result.type !== 'redirect') return update()
+
+			const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
+			cheer = pickCheer()
+			await wait(duration('--duration-login-cheer'))
+			if (!calm) {
+				erasing = true
+				await wait(duration('--duration-eraser'))
+			}
+
+			const go = () => goto(result.location, { invalidateAll: true })
+			if (calm || !document.startViewTransition) return go()
+			await document.startViewTransition(go).finished
+		}
+	}
 </script>
 
-<AuthCard title="Login" compact>
+<AuthCard title={cheer || 'Login'} compact>
 	{#if notice && !error}<p class="auth-message" role="status">{notice}</p>{/if}
 	{#if error}
 		<p id="login-error" class="auth-message" role="alert">
@@ -23,7 +75,7 @@
 		</p>
 	{/if}
 
-	<form id="login-form" class="login-form" method="POST">
+	<form id="login-form" class="login-form" method="POST" use:enhance={celebrate}>
 		<Input type="hidden" name="redirectTo" value={redirectTo} />
 		<Input type="hidden" name="as" value={as} />
 		<AuthField
@@ -69,6 +121,8 @@
 		{/if}
 	{/snippet}
 </AuthCard>
+
+{#if erasing}<EraserWipe />{/if}
 
 <style>
 	.login-form {
