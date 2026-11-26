@@ -1,5 +1,5 @@
 <script>
-	/** @type {{ type?: 'submit' | 'button' | 'reset', variant?: 'primary' | 'secondary' | 'muted' | 'text' | 'danger', children: import('svelte').Snippet } & import('svelte/elements').HTMLButtonAttributes} */
+	/** @type {{ type?: 'submit' | 'button' | 'reset', variant?: 'primary' | 'secondary' | 'light' | 'muted' | 'text' | 'danger', children: import('svelte').Snippet } & import('svelte/elements').HTMLButtonAttributes} */
 	const { type = 'submit', variant = 'secondary', class: extra, children, ...rest } = $props()
 </script>
 

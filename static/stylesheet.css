@@ -82,6 +82,7 @@
 	--size-container: 90rem;
 	--size-content: 75rem;
 	--size-narrow: 40rem;
+	--size-auth-card: 28rem;
 	--size-portal: 56rem;
 	--size-signature: 9.375rem;
 	--size-checkbox: 1.25rem;
@@ -106,6 +107,9 @@
 	--border-width-thick: 2px;
 
 	--rough-edge: url('#rough');
+
+	--color-auth-card: var(--color-text);
+	--color-auth-card-text: var(--color-text-inverse);
 
 	--color-backdrop: color-mix(in oklab, var(--color-text) 45%, transparent);
 	--backdrop-blur: 6px;
@@ -325,6 +329,16 @@ ol:not([class]) {
 
 .button-secondary:disabled:hover,
 .button-secondary[aria-disabled='true']:hover {
+	--rough-edge-background: var(--color-button-secondary);
+}
+
+.button-light {
+	--rough-edge-background: var(--color-surface);
+	background-color: var(--rough-edge-background);
+	color: var(--color-text);
+}
+
+.button-light:hover {
 	--rough-edge-background: var(--color-button-secondary);
 }
 
@@ -1039,7 +1053,8 @@ select:focus-visible {
 
 /* Rough edge */
 .rough-edge,
-.button-primary {
+.button-primary,
+.button-light {
 	position: relative;
 	isolation: isolate;
 	background-color: transparent;
@@ -1047,7 +1062,8 @@ select:focus-visible {
 }
 
 .rough-edge::before,
-.button-primary::before {
+.button-primary::before,
+.button-light::before {
 	content: '';
 	position: absolute;
 	inset: 0;
