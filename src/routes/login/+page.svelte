@@ -1,15 +1,30 @@
 <script>
-	import PageHeader from '#lib/molecules/PageHeader.svelte'
-	import Notice from '#lib/atoms/Notice.svelte'
-	import LoginForm from '#lib/organisms/LoginForm.svelte'
-	import CenteredPage from '#lib/organisms/CenteredPage.svelte'
+	import AuthCard from '#lib/organisms/AuthCard.svelte'
 
-	const { data, form } = $props()
+	const { data } = $props()
 	const { redirectTo, error } = $derived(data)
+
+	const formLink = (/** @type {'freelancer' | 'client'} */ as) => {
+		const params = new URLSearchParams({ as })
+		if (redirectTo) params.set('redirectTo', redirectTo)
+		return `/login/form?${params}`
+	}
 </script>
 
-<CenteredPage>
-	<PageHeader title="Log in to CRE8" />
-	{#if error}<Notice type="error">{error}</Notice>{/if}
-	<LoginForm {form} {redirectTo} />
-</CenteredPage>
+<AuthCard title="Login as" intro="choose the one that applies to you">
+	{#if error}<p class="auth-message" role="alert">{error}</p>{/if}
+	<div class="login-choice">
+		<a class="button button-light" href={formLink('freelancer')}>Freelancer</a>
+		<a class="button button-light" href={formLink('client')}>Client</a>
+	</div>
+</AuthCard>
+
+<style>
+	.login-choice {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: var(--space-s);
+		margin-block-start: var(--space-xs);
+	}
+</style>

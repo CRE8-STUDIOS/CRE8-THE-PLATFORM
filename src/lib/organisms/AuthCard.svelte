@@ -107,6 +107,10 @@
 		font-size: var(--font-size-small);
 	}
 
+	.auth-card :global(.auth-message) {
+		font-size: var(--font-size-small);
+	}
+
 	.auth-card :global(a:not(.button)) {
 		color: inherit;
 	}
