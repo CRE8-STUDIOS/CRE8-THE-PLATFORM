@@ -17,8 +17,8 @@
 	/>
 	{#if face}
 		<g class="eyes">
-			<ellipse cx="83" cy="100" rx="12.5" ry="18.5" />
-			<ellipse cx="117" cy="100" rx="12.5" ry="18.5" />
+			<ellipse cx="83" cy="106" rx="15" ry="22" />
+			<ellipse cx="117" cy="106" rx="15" ry="22" />
 		</g>
 	{/if}
 </svg>
@@ -38,7 +38,7 @@
 
 	.eyes {
 		fill: var(--mascot-eye);
-		transform-origin: 100px 100px;
+		transform-origin: 100px 106px;
 		transform-box: view-box;
 	}
 
