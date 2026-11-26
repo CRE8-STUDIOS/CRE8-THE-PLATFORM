@@ -1,6 +1,5 @@
 <script>
 	import Mascot from '#lib/atoms/Mascot.svelte'
-	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
 	/** @type {{ summary: string }} */
 	const { summary } = $props()
@@ -13,12 +12,7 @@
 
 	{#if summary}<p class="intro-summary">{summary}</p>{/if}
 
-	<ActionButton
-		action="/clock?/in"
-		label="Lets get to work"
-		variant="primary"
-		fields={{ redirectTo: '/overview' }}
-	/>
+	<a class="button button-primary" href="/overview">Lets get to work</a>
 </section>
 
 <style>

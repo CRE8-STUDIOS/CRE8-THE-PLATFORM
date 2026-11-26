@@ -48,5 +48,7 @@ export const buildPlanningSummary = (data, timeZone) => {
 		)
 	}
 
-	return sentences.length ? sentences.join(' ') : 'There is nothing on the schedule today.'
+	return sentences.length
+		? sentences.join(' ')
+		: 'It is a calm day, there is nothing on the schedule today.'
 }

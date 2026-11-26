@@ -1,6 +1,5 @@
 <script>
 	import Mascot from '#lib/atoms/Mascot.svelte'
-	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
 	/** @type {{ partOfDay: string, firstName: string | null }} */
 	const { partOfDay, firstName } = $props()
@@ -18,12 +17,7 @@
 
 	<div class="intro-actions">
 		<a class="button button-primary" href="?step=planning">Yes</a>
-		<ActionButton
-			action="/clock?/in"
-			label="No"
-			variant="muted"
-			fields={{ redirectTo: '/overview' }}
-		/>
+		<a class="button button-muted" href="/overview">No</a>
 	</div>
 </section>
 
