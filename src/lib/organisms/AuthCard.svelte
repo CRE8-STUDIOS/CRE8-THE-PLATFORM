@@ -6,13 +6,16 @@
 </script>
 
 <main id="content" class="auth-page">
-	<h1 class="auth-heading">Welcome to<br />CRE8 the platform</h1>
+	<div class="auth-top">
+		<h1 class="auth-heading">Welcome to<br />CRE8 the platform</h1>
+		<div class="auth-peek">
+			<div class="auth-mascot" aria-hidden="true">
+				<Mascot size="var(--auth-mascot-size)" follow />
+			</div>
+		</div>
+	</div>
 
 	<div class="auth-stage">
-		<div class="auth-mascot" aria-hidden="true">
-			<Mascot size="var(--auth-mascot-size)" follow />
-		</div>
-
 		<section class="auth-card" class:auth-card-split={bottom} aria-labelledby="auth-card-title">
 			<div class="auth-card-shape" aria-hidden="true"></div>
 			<div class="auth-card-half">
@@ -24,24 +27,43 @@
 		</section>
 	</div>
 
-	{#if after}<div class="auth-after">{@render after()}</div>{/if}
+	<div class="auth-after">
+		{#if after}{@render after()}{/if}
+	</div>
 </main>
 
 <style>
 	.auth-page {
-		--auth-mascot-size: clamp(24rem, 14rem + 30vw, 46rem);
 		--auth-notch: clamp(1.75rem, 1rem + 3.5vw, 3.5rem);
 		--auth-notch-depth: calc(var(--auth-notch) * 1.6);
 
 		display: grid;
+		grid-template-rows: minmax(min-content, 1fr) auto minmax(min-content, 1fr);
 		justify-items: center;
-		align-content: start;
-		gap: var(--space-m);
-		min-block-size: 100dvh;
-		padding: var(--space-m) var(--space-m) var(--space-xl);
+		block-size: 100dvh;
+		padding: var(--space-m);
 		overflow-x: clip;
 		background-color: var(--color-background);
 		text-align: center;
+	}
+
+	.auth-top {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-s);
+		inline-size: 100%;
+		min-block-size: 0;
+	}
+
+	.auth-peek {
+		--auth-mascot-size: min(clamp(24rem, 14rem + 30vw, 46rem), 100cqh / 0.49);
+
+		position: relative;
+		flex: 1;
+		inline-size: 100%;
+		min-block-size: 0;
+		container-type: size;
 	}
 
 	.auth-heading {
@@ -51,13 +73,11 @@
 	.auth-stage {
 		position: relative;
 		inline-size: min(100%, var(--size-auth-card));
-		margin-block-start: calc(var(--auth-mascot-size) * -0.09);
-		padding-block-start: calc(var(--auth-mascot-size) * 0.58);
 	}
 
 	.auth-mascot {
 		position: absolute;
-		inset-block-start: 0;
+		inset-block-end: calc(var(--auth-mascot-size) * -0.42);
 		inset-inline: 0;
 		z-index: 0;
 		display: flex;
@@ -147,6 +167,8 @@
 	}
 
 	.auth-after {
+		align-self: start;
+		padding-block-start: var(--space-m);
 		font-size: var(--font-size-small);
 	}
 
