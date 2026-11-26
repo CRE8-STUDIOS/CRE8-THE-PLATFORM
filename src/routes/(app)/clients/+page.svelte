@@ -7,6 +7,19 @@
 	const { clients, showArchived } = $derived(data)
 </script>
 
-<PageHeader title="Clients" />
-<ClientList {clients} {showArchived} />
-<ClientForm title="New client" action="?/create" submitLabel="Add client" {form} />
+<PageHeader title="Clients">
+	{#snippet actions()}
+		<a class="button button-primary" href="#new-client">+ New client</a>
+	{/snippet}
+</PageHeader>
+
+<div class="card-grid">
+	<ClientList {clients} {showArchived} />
+	<ClientForm
+		id="new-client"
+		title="New client"
+		action="?/create"
+		submitLabel="Add client"
+		{form}
+	/>
+</div>

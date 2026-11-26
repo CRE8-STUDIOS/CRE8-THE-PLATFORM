@@ -4,7 +4,6 @@ import { clientOptions } from '#lib/server/projects.js'
 import { todayIn } from '#lib/utils/dates.js'
 import { EU_COUNTRIES } from '#lib/utils/constants.js'
 
-/** Sum one numeric column of a list of rows. */
 const sum = (/** @type {Record<string, unknown>[]} */ rows, /** @type {string} */ key) =>
 	rows.reduce((total, row) => total + Number(row[key] ?? 0), 0)
 
@@ -14,7 +13,7 @@ export const load = async ({ locals, url }) => {
 	const projectId = url.searchParams.get('project')
 	const today = todayIn(timezone)
 	const year = Number(today.slice(0, 4))
-	const quarter = Math.floor((Number(today.slice(5, 7)) - 1) / 3) // 0..3
+	const quarter = Math.floor((Number(today.slice(5, 7)) - 1) / 3)
 	const quarterStart = `${year}-${String(quarter * 3 + 1).padStart(2, '0')}-01`
 	const quarterEnd =
 		quarter === 3 ? `${year + 1}-01-01` : `${year}-${String(quarter * 3 + 4).padStart(2, '0')}-01`
@@ -79,7 +78,6 @@ export const actions = {
 		const clientId = text(formData, 'client_id') ?? project?.client_id
 		if (!clientId) return failMessage('Choose a client (or a project that has one).')
 
-		// NL: 21/9/0% btw. Other EU country with a btw number: reverse charge. Outside the EU: no btw.
 		const { data: client } = await supabase
 			.from('clients')
 			.select('country, btw_number')

@@ -1,15 +1,10 @@
 <script>
-	/**
-	 * A drawing area for a signature (mouse, finger or pen).
-	 * `paths` is bindable: the drawn lines as SVG path commands.
-	 * @type {{ paths?: string[], width?: number, height?: number }}
-	 */
+	/** @type {{ paths?: string[], width?: number, height?: number }} */
 	let { paths = $bindable([]), width = 400, height = 150 } = $props()
 
 	let current = $state('')
 	let drawing = false
 
-	/** Pointer position, scaled to the drawing's own coordinates */
 	const point = (/** @type {PointerEvent} */ event) => {
 		const box = /** @type {Element} */ (event.currentTarget).getBoundingClientRect()
 		const x = Math.round(((event.clientX - box.left) / box.width) * width)

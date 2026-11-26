@@ -8,7 +8,7 @@
 	const { theme } = $props()
 </script>
 
-<section class="theme-form">
+<section class="theme-form card rough-edge">
 	<Heading>Theme</Heading>
 	<p>
 		Your own look for CRE8 ("your tool, your world"). The visual theme editor comes with the design;

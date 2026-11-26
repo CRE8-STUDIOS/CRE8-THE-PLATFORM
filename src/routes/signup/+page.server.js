@@ -1,6 +1,5 @@
 import { text, failMessage } from '#lib/server/form.js'
 
-/** Freelancer signup. The database creates the profile + theme automatically. */
 /** @type {import('./$types').Actions} */
 export const actions = {
 	default: async ({ request, locals, url }) => {

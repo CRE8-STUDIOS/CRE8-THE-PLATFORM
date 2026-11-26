@@ -6,10 +6,7 @@
 	import CheckboxField from '#lib/molecules/CheckboxField.svelte'
 	import { BUSINESS_TYPES, toOptions } from '#lib/utils/constants.js'
 
-	/**
-	 * Business details (they go on your facturen) and factuur settings.
-	 * @type {{ business: import('#lib/database.types.js').Tables<'profiles'>, email: string }}
-	 */
+	/** @type {{ business: import('#lib/database.types.js').Tables<'profiles'>, email: string }} */
 	const { business, email } = $props()
 	const lastNumber = $derived(
 		business.invoice_counter_period
@@ -18,7 +15,7 @@
 	)
 </script>
 
-<section class="business-form">
+<section class="business-form card rough-edge">
 	<Heading>Business & facturen</Heading>
 	<p>These details go on your facturen. Your login email: {email}</p>
 	<form method="POST" action="?/save">

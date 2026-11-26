@@ -6,7 +6,7 @@
 	const { account } = $props()
 </script>
 
-<section class="account-form">
+<section class="account-form card rough-edge">
 	<p>Email: {account.email}</p>
 	<form method="POST" action="?/save">
 		<TextField

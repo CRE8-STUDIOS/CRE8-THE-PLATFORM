@@ -7,16 +7,16 @@
 	import FormNotice from '#lib/molecules/FormNotice.svelte'
 
 	/**
-	 * Create or edit a project. Without `project` the form is empty.
 	 * @type {{
 	 *   title: string, action: string, submitLabel: string,
 	 *   clients: { value: string, label: string }[],
 	 *   clientId?: string | null,
 	 *   project?: { title: string, client_id: string | null, price_type: string, price: number | null, start_date: string | null, deadline: string | null, color: string | null, briefing: string | null },
-	 *   form: { message?: string, success?: string } | null | undefined
+	 *   form: { message?: string, success?: string } | null | undefined,
+	 *   id?: string
 	 * }}
 	 */
-	const { title, action, submitLabel, clients, clientId, project, form } = $props()
+	const { title, action, submitLabel, clients, clientId, project, form, id } = $props()
 
 	const priceTypes = [
 		{ value: 'fixed', label: 'Fixed price' },
@@ -24,7 +24,7 @@
 	]
 </script>
 
-<section class="project-form">
+<section class="project-form card rough-edge" {id}>
 	<Heading>{title}</Heading>
 	<FormNotice {form} />
 	<form method="POST" {action}>

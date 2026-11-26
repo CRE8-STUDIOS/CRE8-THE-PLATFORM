@@ -2,15 +2,11 @@
 	import Heading from '#lib/atoms/Heading.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * Archive / un-archive / delete buttons, calling the ?/archive, ?/unarchive and ?/delete actions.
-	 * Leave `archived` out to only show delete.
-	 * @type {{ what: string, archived?: boolean, note?: string }}
-	 */
+	/** @type {{ what: string, archived?: boolean, note?: string }} */
 	const { what, archived, note } = $props()
 </script>
 
-<section class="archive-or-delete">
+<section class="archive-or-delete card rough-edge">
 	<Heading>{archived === undefined ? 'Delete' : 'Archive or delete'}</Heading>
 	{#if archived === true}
 		<ActionButton action="?/unarchive" label="Make active again" />

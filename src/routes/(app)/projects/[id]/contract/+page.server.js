@@ -25,13 +25,11 @@ export const actions = {
 			? await supabase.from('contract_templates').select('body').eq('id', templateId).single()
 			: { data: null }
 
-		const { error } = await supabase
-			.from('contracts')
-			.insert({
-				project_id: params.id,
-				title: text(formData, 'title') ?? 'Contract',
-				body: template?.body ?? ''
-			})
+		const { error } = await supabase.from('contracts').insert({
+			project_id: params.id,
+			title: text(formData, 'title') ?? 'Contract',
+			body: template?.body ?? ''
+		})
 		if (error) return failWith(error)
 		return { success: 'Contract created.' }
 	},

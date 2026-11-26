@@ -1,9 +1,6 @@
 import { redirect } from '@sveltejs/kit'
 
-/**
- * Log out (used by a <form method="POST" action="/logout">).
- * @type {import('./$types').RequestHandler}
- */
+/** @type {import('./$types').RequestHandler} */
 export const POST = async ({ locals }) => {
 	await locals.supabase.auth.signOut()
 	redirect(303, '/login')

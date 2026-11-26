@@ -1,9 +1,6 @@
 import { todayIn, dayRange } from '#lib/utils/dates.js'
 
-/**
- * "What does my day look like?" Names only, no money (this page may be open in public).
- * @type {import('./$types').PageServerLoad}
- */
+/** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals }) => {
 	const { supabase, timezone } = locals
 	const today = todayIn(timezone)
@@ -54,7 +51,6 @@ export const load = async ({ locals }) => {
 		supabase.from('dashboard_tiles').select('id, name, url, group_name').order('position')
 	])
 
-	// One "to do" list with links, built here so the page only has to show it
 	const toDo = [
 		...(draftContracts.data ?? []).map(({ id, title, project_id, projects }) => ({
 			id,

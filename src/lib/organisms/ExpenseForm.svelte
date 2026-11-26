@@ -14,7 +14,7 @@
 	]
 </script>
 
-<section class="expense-form">
+<section class="expense-form card rough-edge">
 	<Heading>Add expense</Heading>
 	<form method="POST" action="?/add" enctype="multipart/form-data">
 		<TextField label="Supplier" name="supplier" />

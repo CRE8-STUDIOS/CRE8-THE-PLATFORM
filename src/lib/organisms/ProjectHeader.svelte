@@ -5,7 +5,7 @@
 
 	/**
 	 * @type {{
-	 *   project: { title: string, status: string, deadline: string | null, clients: { id: string, name: string } | null },
+	 *   project: { id: string, title: string, status: string, deadline: string | null, clients: { id: string, name: string } | null },
 	 *   tabs: { href: string, text: string }[],
 	 *   current: string
 	 * }}
@@ -14,13 +14,29 @@
 </script>
 
 <div class="project-header">
-	<PageHeader title={project.title} back={{ href: '/projects', text: 'Projects' }} />
-	<p>
-		<StatusLabel status={project.status} />
-		{#if project.clients}· Client: <a href="/clients/{project.clients.id}">
-				{project.clients.name}
-			</a>{/if}
-		{#if project.deadline}· Deadline: {project.deadline}{/if}
-	</p>
+	<PageHeader title={project.title} back={{ href: '/projects', text: 'all projects' }}>
+		{#snippet meta()}
+			<StatusLabel status={project.status} />
+			{#if project.clients}<span>
+					Client: <a href="/clients/{project.clients.id}">{project.clients.name}</a>
+				</span>{/if}
+			{#if project.deadline}<span>Deadline: {project.deadline}</span>{/if}
+		{/snippet}
+		{#snippet actions()}
+			<a
+				class="button button-secondary rough-edge"
+				href="/projects/{project.id}/requests#new-request"
+			>
+				+ Add request
+			</a>
+		{/snippet}
+	</PageHeader>
 	<NavLinks label="Project sections" links={tabs} {current} exact />
 </div>
+
+<style>
+	.project-header {
+		display: grid;
+		gap: var(--space-m);
+	}
+</style>

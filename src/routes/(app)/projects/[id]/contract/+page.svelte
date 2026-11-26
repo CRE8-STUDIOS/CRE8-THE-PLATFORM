@@ -12,7 +12,9 @@
 {#if !contract}
 	<NewContract {templates} />
 {:else if contract.status === 'signed'}
-	<SignedContract {contract} timeZone={timezone} projectId={project.id} />
+	<div class="card rough-edge">
+		<SignedContract {contract} timeZone={timezone} projectId={project.id} />
+	</div>
 {:else}
 	<ContractEditor
 		{contract}

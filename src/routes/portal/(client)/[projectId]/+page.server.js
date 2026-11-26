@@ -2,11 +2,7 @@ import { error } from '@sveltejs/kit'
 import { id, text, failWith } from '#lib/server/form.js'
 import { signedUrls } from '#lib/server/form.js'
 
-/**
- * One project in the client portal. The database only returns what the client may see:
- * visible updates, shared files, sent contract/requests/facturen and visible moodboards.
- * @type {import('./$types').PageServerLoad}
- */
+/** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals, params }) => {
 	const { supabase } = locals
 	const { projectId } = params
@@ -61,7 +57,6 @@ export const load = async ({ locals, params }) => {
 		]
 	)
 
-	// Lines for the visible facturen
 	const invoiceIds = (invoices.data ?? [])
 		.map(({ id: invoiceId }) => invoiceId)
 		.filter((invoiceId) => invoiceId !== null)
@@ -73,7 +68,6 @@ export const load = async ({ locals, params }) => {
 				.order('position')
 		: { data: [] }
 
-	// Temporary download links for shared files and moodboard images
 	const boardList = boards.data ?? []
 	const fileList = files.data ?? []
 	const [fileUrls, imageUrls] = await Promise.all([

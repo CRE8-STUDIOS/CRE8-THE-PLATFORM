@@ -6,7 +6,7 @@
 	const { groups } = $props()
 </script>
 
-<section class="working-hours-list">
+<section class="working-hours-list card rough-edge">
 	<Heading>Working hours</Heading>
 	{#each groups as { kind, title, rows } (kind)}
 		<Heading level={3}>{title}</Heading>

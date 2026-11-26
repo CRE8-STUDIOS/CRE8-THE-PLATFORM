@@ -1,10 +1,7 @@
 <script>
 	import Notice from '#lib/atoms/Notice.svelte'
 
-	/**
-	 * Shows what a form action returned: an error message or a confirmation.
-	 * @type {{ form: { message?: string, success?: string } | null | undefined }}
-	 */
+	/** @type {{ form: { message?: string, success?: string } | null | undefined }} */
 	const { form } = $props()
 </script>
 

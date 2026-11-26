@@ -5,17 +5,17 @@
 	import FormNotice from '#lib/molecules/FormNotice.svelte'
 
 	/**
-	 * Create or edit a client. Without `client` the form is empty.
 	 * @type {{
 	 *   title: string, action: string, submitLabel: string,
 	 *   client?: { name: string, company: string | null, email: string | null, phone: string | null, street: string | null, postal_code: string | null, city: string | null, country: string, btw_number: string | null },
-	 *   form: { message?: string, success?: string } | null | undefined
+	 *   form: { message?: string, success?: string } | null | undefined,
+	 *   id?: string
 	 * }}
 	 */
-	const { title, action, submitLabel, client, form } = $props()
+	const { title, action, submitLabel, client, form, id } = $props()
 </script>
 
-<section class="client-form">
+<section {id} class="client-form card rough-edge">
 	<Heading>{title}</Heading>
 	<FormNotice {form} />
 	<form method="POST" {action}>

@@ -7,9 +7,14 @@
 	const { projects, clients, status, preselectedClient } = $derived(data)
 </script>
 
-<PageHeader title="Projects" />
+<PageHeader title="Projects">
+	{#snippet actions()}
+		<a class="button button-primary" href="#new-project">+ New project</a>
+	{/snippet}
+</PageHeader>
 <ProjectList {projects} {status} />
 <ProjectForm
+	id="new-project"
 	title="New project"
 	action="?/create"
 	submitLabel="Create project"

@@ -2,14 +2,11 @@
 	import Heading from '#lib/atoms/Heading.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * What you can do with a factuur: send/delete a draft; mark paid/unpaid or credit a sent one.
-	 * @type {{ status: string, isCredit: boolean }}
-	 */
+	/** @type {{ status: string, isCredit: boolean }} */
 	const { status, isCredit } = $props()
 </script>
 
-<section class="invoice-actions">
+<section class="invoice-actions card rough-edge">
 	{#if status === 'draft'}
 		<Heading>Send</Heading>
 		<ActionButton

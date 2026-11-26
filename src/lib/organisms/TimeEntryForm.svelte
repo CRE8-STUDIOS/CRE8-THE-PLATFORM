@@ -5,12 +5,11 @@
 	import SelectField from '#lib/molecules/SelectField.svelte'
 	import { TIME_CATEGORIES, toOptions } from '#lib/utils/constants.js'
 
-	/** Add hours afterwards, when you forgot to clock in. */
 	/** @type {{ projects: { value: string, label: string }[], projectId?: string }} */
 	const { projects, projectId } = $props()
 </script>
 
-<section class="time-entry-form">
+<section class="time-entry-form card rough-edge">
 	<Heading>Add hours afterwards</Heading>
 	<form method="POST" action="?/add">
 		<SelectField

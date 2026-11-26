@@ -4,14 +4,11 @@
 	import TextField from '#lib/molecules/TextField.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * People on an agenda item: people on set, meeting attendees.
-	 * @type {{ people: { id: string, name: string, role: string | null, email: string | null, phone: string | null }[] }}
-	 */
+	/** @type {{ people: { id: string, name: string, role: string | null, email: string | null, phone: string | null }[] }} */
 	const { people } = $props()
 </script>
 
-<section class="people-list">
+<section class="people-list card rough-edge">
 	<Heading>People</Heading>
 	<ul>
 		{#each people as { id, name, role, email, phone } (id)}

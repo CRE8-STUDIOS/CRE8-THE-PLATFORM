@@ -1,6 +1,5 @@
 import { text, number } from '#lib/server/form.js'
 
-/** Project fields from a create/edit form. */
 export const projectFromForm = (/** @type {FormData} */ formData) => ({
 	title: text(formData, 'title') ?? '',
 	client_id: text(formData, 'client_id'),
@@ -14,7 +13,6 @@ export const projectFromForm = (/** @type {FormData} */ formData) => ({
 	briefing: text(formData, 'briefing')
 })
 
-/** Clients as { value, label } options for a select. */
 export const clientOptions = async (/** @type {App.Locals['supabase']} */ supabase) => {
 	const { data } = await supabase
 		.from('clients')
@@ -24,7 +22,6 @@ export const clientOptions = async (/** @type {App.Locals['supabase']} */ supaba
 	return (data ?? []).map(({ id, name }) => ({ value: id, label: name }))
 }
 
-/** Open projects as { value, label } options for a select. */
 export const projectOptions = async (
 	/** @type {App.Locals['supabase']} */ supabase,
 	statuses = ['draft', 'active']

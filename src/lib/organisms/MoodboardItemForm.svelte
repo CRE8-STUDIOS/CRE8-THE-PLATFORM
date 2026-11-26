@@ -9,7 +9,7 @@
 	let type = $state('text')
 </script>
 
-<section class="moodboard-item-form">
+<section class="moodboard-item-form card rough-edge">
 	<Heading>Add an item</Heading>
 	<form method="POST" action="?/addItem" enctype="multipart/form-data">
 		<SelectField

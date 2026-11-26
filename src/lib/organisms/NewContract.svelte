@@ -8,7 +8,7 @@
 	const { templates } = $props()
 </script>
 
-<section class="new-contract">
+<section class="new-contract card rough-edge">
 	<Heading>Contract</Heading>
 	<p>This project has no contract yet.</p>
 	<form method="POST" action="?/create">

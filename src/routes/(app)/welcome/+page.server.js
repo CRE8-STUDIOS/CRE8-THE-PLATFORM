@@ -1,7 +1,4 @@
-/**
- * Welcome / clock-in screen: pick a project (or a non-project category) and start.
- * @type {import('./$types').PageServerLoad}
- */
+/** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals, parent }) => {
 	const { supabase, timezone } = locals
 	const [{ profile }, { data: projects }] = await Promise.all([

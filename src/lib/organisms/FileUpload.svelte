@@ -5,7 +5,7 @@
 	import CheckboxField from '#lib/molecules/CheckboxField.svelte'
 </script>
 
-<section class="file-upload">
+<section class="file-upload card rough-edge">
 	<Heading>Upload a file</Heading>
 	<form method="POST" action="?/upload" enctype="multipart/form-data">
 		<TextField label="File (max 50 MB)" name="file" type="file" required />

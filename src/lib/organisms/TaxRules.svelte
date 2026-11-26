@@ -8,36 +8,40 @@
 	const { rules, year } = $props()
 </script>
 
-<section class="tax-rules">
+<section class="tax-rules card rough-edge span-full">
 	<Heading>Tax rules (admin)</Heading>
 	<p>
 		Shared by all freelancers: zelfstandigenaftrek, startersaftrek, kor_limit, hours_criterion...
 		Update them every year.
 	</p>
-	<table>
-		<thead>
-			<tr>
-				<th scope="col">Year</th><th scope="col">Key</th><th scope="col">Value</th><th scope="col">
-					Description
-				</th><th scope="col"><span class="visually-hidden">Delete</span></th>
-			</tr>
-		</thead>
-		<tbody>
-			{#each rules as { id, year: ruleYear, key, value, description } (id)}
+	<div class="table-scroll">
+		<table>
+			<thead>
 				<tr>
-					<td>{ruleYear}</td>
-					<td>{key}</td>
-					<td>{value}</td>
-					<td>{description ?? ''}</td>
-					<td>
-						<ActionButton action="?/delete" label="Delete" variant="danger" fields={{ id }} />
-					</td>
+					<th scope="col">Year</th><th scope="col">Key</th><th scope="col" class="number">
+						Value
+					</th><th scope="col"> Description </th><th scope="col">
+						<span class="visually-hidden">Delete</span>
+					</th>
 				</tr>
-			{:else}
-				<tr><td colspan="5">No tax rules yet.</td></tr>
-			{/each}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{#each rules as { id, year: ruleYear, key, value, description } (id)}
+					<tr>
+						<td>{ruleYear}</td>
+						<td>{key}</td>
+						<td class="number">{value}</td>
+						<td>{description ?? ''}</td>
+						<td>
+							<ActionButton action="?/delete" label="Delete" variant="danger" fields={{ id }} />
+						</td>
+					</tr>
+				{:else}
+					<tr><td colspan="5">No tax rules yet.</td></tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
 
 	<Heading level={3}>Add or update</Heading>
 	<p>The same year and key updates the existing value.</p>

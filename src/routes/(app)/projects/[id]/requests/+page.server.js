@@ -1,6 +1,5 @@
 import { id, text, number, failMessage, failWith } from '#lib/server/form.js'
 
-/** Request fields from a create/edit form. */
 const requestFromForm = (/** @type {FormData} */ formData) => ({
 	title: text(formData, 'title') ?? '',
 	description: text(formData, 'description'),
@@ -41,7 +40,6 @@ export const actions = {
 		return { success: 'Request added as draft.' }
 	},
 
-	/** Update price/details (a draft, or a request the client asked for). */
 	update: async ({ request, locals }) => {
 		const formData = await request.formData()
 		const fields = requestFromForm(formData)

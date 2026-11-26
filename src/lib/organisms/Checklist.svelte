@@ -4,19 +4,20 @@
 	import TextField from '#lib/molecules/TextField.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * A checklist on an agenda item: gear and packing lists, sub-steps.
-	 * @type {{ items: { id: string, label: string, done: boolean }[] }}
-	 */
+	/** @type {{ items: { id: string, label: string, done: boolean }[] }} */
 	const { items } = $props()
 </script>
 
-<section class="checklist">
+<section class="checklist card rough-edge">
 	<Heading>Checklist</Heading>
 	<ul>
 		{#each items as { id, label, done } (id)}
 			<li>
-				<ActionButton action="?/toggleCheck" label={done ? 'Mark as not done' : 'Mark as done'} fields={{ id, done }} />
+				<ActionButton
+					action="?/toggleCheck"
+					label={done ? 'Mark as not done' : 'Mark as done'}
+					fields={{ id, done }}
+				/>
 				{label}
 				<ActionButton action="?/deleteCheck" label="Remove" fields={{ id }} />
 			</li>

@@ -2,10 +2,6 @@ import { text, number, checkbox, oneOf } from '#lib/server/form.js'
 import { toUtcIso } from '#lib/utils/dates.js'
 import { AGENDA_TYPES, ENERGY_TYPES } from '#lib/utils/constants.js'
 
-/**
- * Agenda item fields from the create or edit form. Times are read in the freelancer's time zone.
- * Fields that aren't in the form are left out, so the short "add" form doesn't wipe anything.
- */
 export const agendaItemFromForm = (
 	/** @type {FormData} */ formData,
 	/** @type {string} */ timeZone
@@ -29,7 +25,6 @@ export const agendaItemFromForm = (
 		is_protected: type === 'rest' && checkbox(formData, 'is_protected')
 	}
 
-	// Extra fields only in the full edit form
 	if (formData.has('energy')) {
 		const reminders = (text(formData, 'reminder_minutes') ?? '')
 			.split(',')

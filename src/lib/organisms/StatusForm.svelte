@@ -3,12 +3,11 @@
 	import Button from '#lib/atoms/Button.svelte'
 	import SelectField from '#lib/molecules/SelectField.svelte'
 
-	/** Change a status with the ?/status action. */
 	/** @type {{ status: string, options: { value: string, label: string }[] }} */
 	const { status, options } = $props()
 </script>
 
-<section class="status-form">
+<section class="status-form card rough-edge">
 	<Heading>Status</Heading>
 	<form method="POST" action="?/status">
 		<SelectField label="Status" name="status" {options} value={status} />

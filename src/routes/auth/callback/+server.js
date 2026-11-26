@@ -1,11 +1,7 @@
 import { redirect } from '@sveltejs/kit'
 import { safeRedirect } from '#lib/server/form.js'
 
-/**
- * The link in the confirmation email lands here.
- * Supports both link styles Supabase can send: ?code=... and ?token_hash=...&type=...
- * @type {import('./$types').RequestHandler}
- */
+/** @type {import('./$types').RequestHandler} */
 export const GET = async ({ url, locals }) => {
 	const { searchParams } = url
 	const code = searchParams.get('code')

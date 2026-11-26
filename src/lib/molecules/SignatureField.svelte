@@ -3,10 +3,7 @@
 	import Button from '#lib/atoms/Button.svelte'
 	import Input from '#lib/atoms/Input.svelte'
 
-	/**
-	 * Draw a signature; it is sent with the form as SVG text in a hidden input.
-	 * @type {{ label?: string, name?: string, width?: number, height?: number }}
-	 */
+	/** @type {{ label?: string, name?: string, width?: number, height?: number }} */
 	const { label = 'Draw your signature', name = 'signature', width = 400, height = 150 } = $props()
 
 	/** @type {string[]} */

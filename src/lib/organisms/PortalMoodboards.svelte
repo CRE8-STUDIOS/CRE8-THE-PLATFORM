@@ -6,7 +6,7 @@
 	const { boards } = $props()
 </script>
 
-<section class="portal-moodboards">
+<section class="portal-moodboards card rough-edge">
 	<Heading>Moodboards</Heading>
 	{#each boards as { id, title, items } (id)}
 		<MoodboardItems {items} {title} />

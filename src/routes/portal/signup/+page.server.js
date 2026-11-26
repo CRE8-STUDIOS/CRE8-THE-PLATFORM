@@ -2,11 +2,7 @@ import { text, failMessage } from '#lib/server/form.js'
 
 const USERNAME = /^[A-Za-z0-9_.-]{3,30}$/
 
-/**
- * Client signup. The database creates the client account and, once the email is
- * confirmed, links it to every project this email was invited to.
- * @type {import('./$types').Actions}
- */
+/** @type {import('./$types').Actions} */
 export const actions = {
 	default: async ({ request, locals, url }) => {
 		const formData = await request.formData()
@@ -35,7 +31,6 @@ export const actions = {
 			}
 		})
 		if (error) {
-			// The database refuses duplicate usernames and emails
 			const taken = error.message.toLowerCase().includes('database error')
 			return failMessage(taken ? 'That username or email is already in use.' : error.message, keep)
 		}

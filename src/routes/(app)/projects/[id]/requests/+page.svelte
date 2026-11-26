@@ -9,4 +9,4 @@
 
 <FormNotice {form} />
 <RequestList {requests} timeZone={timezone} />
-<RequestForm title="New request" action="?/create" submitLabel="Add request" />
+<RequestForm id="new-request" title="New request" action="?/create" submitLabel="Add request" />

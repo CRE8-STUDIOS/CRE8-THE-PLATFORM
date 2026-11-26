@@ -1,10 +1,7 @@
 <script>
 	import Select from '#lib/atoms/Select.svelte'
 
-	/**
-	 * A labelled dropdown.
-	 * @type {{ label: string, hint?: string, options: { value: string, label: string }[], value?: string | null, empty?: string } & import('svelte/elements').HTMLSelectAttributes}
-	 */
+	/** @type {{ label: string, hint?: string, options: { value: string, label: string }[], value?: string | null, empty?: string } & import('svelte/elements').HTMLSelectAttributes} */
 	const { label, hint, ...rest } = $props()
 </script>
 

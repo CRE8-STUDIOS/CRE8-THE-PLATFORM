@@ -5,14 +5,11 @@
 	import TextField from '#lib/molecules/TextField.svelte'
 	import TextareaField from '#lib/molecules/TextareaField.svelte'
 
-	/**
-	 * Create or edit a contract template.
-	 * @type {{ title: string, action: string, submitLabel: string, template?: { id: string, name: string, body: string } }}
-	 */
+	/** @type {{ title: string, action: string, submitLabel: string, template?: { id: string, name: string, body: string } }} */
 	const { title, action, submitLabel, template } = $props()
 </script>
 
-<section class="template-form">
+<section class="template-form" class:card={!template} class:rough-edge={!template}>
 	<Heading level={template ? 3 : 2}>{title}</Heading>
 	<form method="POST" {action}>
 		{#if template}<Input type="hidden" name="id" value={template.id} />{/if}

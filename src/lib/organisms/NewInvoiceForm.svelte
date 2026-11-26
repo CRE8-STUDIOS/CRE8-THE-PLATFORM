@@ -4,13 +4,11 @@
 	import SelectField from '#lib/molecules/SelectField.svelte'
 	import FormNotice from '#lib/molecules/FormNotice.svelte'
 
-	/**
-	 * @type {{ clients: { value: string, label: string }[], projects: { value: string, label: string }[], projectId: string | null, form: { message?: string } | null | undefined }}
-	 */
-	const { clients, projects, projectId, form } = $props()
+	/** @type {{ clients: { value: string, label: string }[], projects: { value: string, label: string }[], projectId: string | null, form: { message?: string } | null | undefined, id?: string }} */
+	const { clients, projects, projectId, form, id } = $props()
 </script>
 
-<section class="new-invoice-form">
+<section {id} class="new-invoice-form card rough-edge">
 	<Heading>New factuur</Heading>
 	<FormNotice {form} />
 	<form method="POST" action="?/createInvoice">

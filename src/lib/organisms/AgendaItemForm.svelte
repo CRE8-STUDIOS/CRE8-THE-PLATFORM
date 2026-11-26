@@ -9,17 +9,17 @@
 	import { AGENDA_TYPES, ENERGY_TYPES, toOptions } from '#lib/utils/constants.js'
 
 	/**
-	 * Add (short form) or edit (full form, when `item` is given) an agenda item.
 	 * @type {{
 	 *   title: string, action: string, submitLabel: string, timeZone: string,
 	 *   projects: { value: string, label: string }[],
-	 *   item?: import('#lib/database.types.js').Tables<'agenda_items'>
+	 *   item?: import('#lib/database.types.js').Tables<'agenda_items'>,
+	 *   id?: string
 	 * }}
 	 */
-	const { title, action, submitLabel, timeZone, projects, item } = $props()
+	const { title, action, submitLabel, timeZone, projects, item, id } = $props()
 </script>
 
-<section class="agenda-item-form">
+<section {id} class="agenda-item-form card rough-edge span-full">
 	<Heading>{title}</Heading>
 	<form method="POST" {action}>
 		<SelectField

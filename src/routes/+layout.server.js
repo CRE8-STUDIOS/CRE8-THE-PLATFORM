@@ -6,7 +6,6 @@ export const load = async ({ locals, cookies }) => {
 		user,
 		role,
 		timezone,
-		// the browser Supabase client needs the auth cookies during server rendering
 		cookies: cookies.getAll()
 	}
 }

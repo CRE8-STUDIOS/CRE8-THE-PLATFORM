@@ -2,14 +2,11 @@
 	import Heading from '#lib/atoms/Heading.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * Project files. With `editable`, files can be shared, made private and deleted.
-	 * @type {{ files: { id: string, name: string, size?: string, shared?: boolean, url: string | null }[], editable?: boolean, title?: string }}
-	 */
+	/** @type {{ files: { id: string, name: string, size?: string, shared?: boolean, url: string | null }[], editable?: boolean, title?: string }} */
 	const { files, editable = true, title = 'Files' } = $props()
 </script>
 
-<section class="file-list">
+<section class="file-list card rough-edge">
 	<Heading>{title}</Heading>
 	<ul>
 		{#each files as { id, name, size, shared, url } (id)}

@@ -8,14 +8,11 @@
 	import TextareaField from '#lib/molecules/TextareaField.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/**
-	 * Edit, send or withdraw a contract that isn't signed yet.
-	 * @type {{ contract: { title: string, body: string, status: string, sent_at: string | null }, timeZone: string, projectId: string, hasClient: boolean }}
-	 */
+	/** @type {{ contract: { title: string, body: string, status: string, sent_at: string | null }, timeZone: string, projectId: string, hasClient: boolean }} */
 	const { contract, timeZone, projectId, hasClient } = $props()
 </script>
 
-<section class="contract-editor">
+<section class="contract-editor card rough-edge">
 	<Heading>Contract</Heading>
 	<p>
 		<StatusLabel status={contract.status} />

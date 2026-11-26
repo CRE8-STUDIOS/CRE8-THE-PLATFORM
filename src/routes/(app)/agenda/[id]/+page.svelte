@@ -12,29 +12,35 @@
 	const { item, checklist, people, projects, canStart, timezone } = $derived(data)
 </script>
 
-<PageHeader title={item.title} back={{ href: '/agenda', text: 'Agenda' }} />
-<FormNotice {form} />
-{#if canStart}
-	<ActionButton
-		action="/clock?/in"
-		label="Start this block (clock in)"
-		variant="primary"
-		fields={{
-			agenda_item_id: item.id,
-			project_id: item.project_id,
-			started_by: 'manual',
-			redirectTo: page.url.pathname
-		}}
+<PageHeader title={item.title} back={{ href: '/agenda', text: 'Agenda' }}>
+	{#snippet actions()}
+		{#if canStart}
+			<ActionButton
+				action="/clock?/in"
+				label="Start this block (clock in)"
+				variant="primary"
+				fields={{
+					agenda_item_id: item.id,
+					project_id: item.project_id,
+					started_by: 'manual',
+					redirectTo: page.url.pathname
+				}}
+			/>
+		{/if}
+	{/snippet}
+</PageHeader>
+
+<div class="card-grid">
+	<FormNotice {form} />
+	<AgendaItemForm
+		title="Details"
+		action="?/update"
+		submitLabel="Save"
+		{item}
+		{projects}
+		timeZone={timezone}
 	/>
-{/if}
-<AgendaItemForm
-	title="Details"
-	action="?/update"
-	submitLabel="Save"
-	{item}
-	{projects}
-	timeZone={timezone}
-/>
-<Checklist items={checklist} />
-<PeopleList {people} />
-<ArchiveOrDelete what="agenda item" />
+	<Checklist items={checklist} />
+	<PeopleList {people} />
+	<ArchiveOrDelete what="agenda item" />
+</div>

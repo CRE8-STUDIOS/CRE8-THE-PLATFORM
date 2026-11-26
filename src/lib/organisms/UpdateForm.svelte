@@ -6,7 +6,7 @@
 	import CheckboxField from '#lib/molecules/CheckboxField.svelte'
 </script>
 
-<section class="update-form">
+<section class="update-form card rough-edge">
 	<Heading>Post an update</Heading>
 	<p>Progress posts. Visible ones appear in the client portal.</p>
 	<form method="POST" action="?/create">

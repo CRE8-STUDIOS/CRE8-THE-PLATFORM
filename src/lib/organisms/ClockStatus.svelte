@@ -5,7 +5,6 @@
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
 	/**
-	 * The running clock: status, clock out, the "still here" heartbeat and the "Still working?" question.
 	 * @type {{
 	 *   clock: { started_at: string, category: string, project_id: string | null, projects: { title: string } | null } | null,
 	 *   supabase: import('@supabase/supabase-js').SupabaseClient<import('#lib/database.types.js').Database>,
@@ -20,10 +19,9 @@
 	const ANSWER_WITHIN_MS = 10 * 60_000
 
 	let lastActivity = $state(Date.now())
-	/** @type {number | null} the moment "Still working?" was asked */
+	/** @type {number | null} */
 	let askedAt = $state(null)
 
-	// "Still here" signal every minute while CRE8 is open; without it the database stops the clock
 	$effect(() => {
 		if (!clock) return
 		const beat = () => supabase.rpc('clock_heartbeat')
@@ -32,7 +30,6 @@
 		return () => clearInterval(interval)
 	})
 
-	// Remember the last activity in CRE8
 	$effect(() => {
 		const events = ['pointerdown', 'keydown', 'scroll', 'focus']
 		const markActive = () => {
@@ -44,7 +41,6 @@
 		}
 	})
 
-	// Ask "Still working?" after a while; no answer stops the clock at the moment we asked
 	$effect(() => {
 		if (!clock) return
 		const limit = checkInAfterMinutes * 60_000
@@ -71,29 +67,80 @@
 
 <section class="clock-status" aria-label="Clock">
 	{#if clock}
-		<p>
-			Clocked in
-			{#if clock.projects}on <a href="/projects/{clock.project_id}">
-					{clock.projects.title}
-				</a>{:else}({clock.category.replaceAll('_', ' ')}){/if}
-			since <DateTime value={clock.started_at} {timeZone} show="time" />
+		<p class="clock-status-pill rough-edge">
+			<span class="clock-status-dot" aria-hidden="true"></span>
+			<span>
+				Clocked in
+				{#if clock.projects}on <a href="/projects/{clock.project_id}">
+						{clock.projects.title}
+					</a>{:else}({clock.category.replaceAll('_', ' ')}){/if}
+				since <DateTime value={clock.started_at} {timeZone} show="time" />
+			</span>
 		</p>
 		<ActionButton action="/clock?/out" label="Clock out" fields={{ redirectTo: current }} />
 
 		{#if askedAt !== null}
-			<div class="clock-status-question" role="alertdialog" aria-labelledby="still-working">
-				<p id="still-working">Still working on {clock.projects?.title ?? 'this'}?</p>
-				<Button type="button" variant="primary" onclick={keepWorking}>
-					Yes, keep the clock running
-				</Button>
-				<ActionButton
-					action="/clock?/out"
-					label="No, I stopped"
-					fields={{ redirectTo: current, at: new Date(askedAt).toISOString() }}
-				/>
+			<div
+				class="clock-status-question card rough-edge"
+				role="alertdialog"
+				aria-labelledby="still-working"
+			>
+				<p id="still-working" class="card-title">
+					Still working on {clock.projects?.title ?? 'this'}?
+				</p>
+				<div class="button-group">
+					<Button type="button" variant="primary" onclick={keepWorking}>
+						Yes, keep the clock running
+					</Button>
+					<ActionButton
+						action="/clock?/out"
+						label="No, I stopped"
+						fields={{ redirectTo: current, at: new Date(askedAt).toISOString() }}
+					/>
+				</div>
 			</div>
 		{/if}
 	{:else}
-		<p>Not clocked in · <a href="/welcome">Clock in</a></p>
+		<p>
+			<span class="visually-hidden">Not clocked in.</span>
+			<a class="button button-secondary button-small rough-edge" href="/welcome">Clock in</a>
+		</p>
 	{/if}
 </section>
+
+<style>
+	.clock-status {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-xs);
+	}
+
+	.clock-status-pill {
+		--rough-edge-background: var(--color-button-secondary);
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-xs);
+		padding-block: var(--space-xs);
+		padding-inline: var(--space-s);
+		border-radius: var(--radius-pill);
+		font-size: var(--font-size-small);
+		line-height: var(--line-height-heading);
+	}
+
+	.clock-status-dot {
+		inline-size: var(--space-xs);
+		block-size: var(--space-xs);
+		border-radius: 50%;
+		background-color: var(--color-status-paid-text);
+	}
+
+	.clock-status-question {
+		position: fixed;
+		inset-block-end: var(--space-m);
+		inset-inline: var(--space-m);
+		z-index: 20;
+		max-inline-size: var(--size-narrow);
+		margin-inline: auto;
+	}
+</style>

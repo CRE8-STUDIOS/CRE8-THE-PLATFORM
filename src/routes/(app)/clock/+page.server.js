@@ -2,13 +2,11 @@ import { redirect } from '@sveltejs/kit'
 import { text, oneOf, failWith, safeRedirect } from '#lib/server/form.js'
 import { TIME_CATEGORIES, CLOCK_START_SOURCES, CLOCK_STOP_REASONS } from '#lib/utils/constants.js'
 
-/** This route only has actions; visiting it goes to the time overview. */
 /** @type {import('./$types').PageServerLoad} */
 export const load = async () => redirect(303, '/time')
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	/** Clock in (a running clock on another project is stopped first). */
 	in: async ({ request, locals }) => {
 		const formData = await request.formData()
 
@@ -24,7 +22,6 @@ export const actions = {
 		redirect(303, safeRedirect(text(formData, 'redirectTo'), '/overview'))
 	},
 
-	/** Clock out, optionally at an earlier moment (unanswered "Still working?"). */
 	out: async ({ request, locals }) => {
 		const formData = await request.formData()
 
