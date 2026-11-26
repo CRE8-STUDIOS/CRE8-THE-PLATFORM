@@ -34,7 +34,7 @@
 
 <style>
 	.auth-page {
-		--auth-card-offset: 3rem;
+		--auth-card-offset: clamp(1rem, 30dvh - 8rem, 7.5rem);
 		--auth-heading-offset: 4.5rem;
 		--auth-notch: clamp(1.75rem, 1rem + 3.5vw, 3.5rem);
 		--auth-notch-depth: calc(var(--auth-notch) * 1.6);
@@ -133,7 +133,7 @@
 		position: absolute;
 		inset: 0;
 		z-index: -1;
-		filter: var(--rough-edge);
+		filter: var(--rough-edge-strong);
 	}
 
 	.auth-card-shape::before {
