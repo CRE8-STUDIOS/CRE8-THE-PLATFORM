@@ -2,12 +2,16 @@ import { redirect } from '@sveltejs/kit'
 import { todayIn } from '#lib/utils/dates.js'
 import { buildPlanningSummary } from '#lib/utils/planning.js'
 import { loadPlanningData } from '#lib/server/planning.js'
+import { markIntroSeen } from '#lib/server/intro.js'
 
 /** @type {import('./$types').PageServerLoad} */
-export const load = async ({ locals, parent, url }) => {
+export const load = async ({ locals, parent, url, cookies }) => {
 	const { supabase, timezone } = locals
 	const { profile, clock } = await parent()
 	if (clock) redirect(303, '/overview')
+
+	const today = todayIn(timezone)
+	markIntroSeen(cookies, today)
 
 	const hour = Number(
 		new Intl.DateTimeFormat('en-GB', {
@@ -21,10 +25,7 @@ export const load = async ({ locals, parent, url }) => {
 	const step = url.searchParams.get('step') === 'planning' ? 'planning' : 'greeting'
 	const summary =
 		step === 'planning'
-			? buildPlanningSummary(
-					await loadPlanningData(supabase, todayIn(timezone), timezone),
-					timezone
-				)
+			? buildPlanningSummary(await loadPlanningData(supabase, today, timezone), timezone)
 			: ''
 
 	return {
