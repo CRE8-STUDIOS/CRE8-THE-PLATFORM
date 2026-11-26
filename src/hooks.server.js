@@ -7,13 +7,20 @@ const PUBLIC_ROUTES = new Set([
 	'/',
 	'/login',
 	'/login/form',
+	'/login/forgot',
 	'/signup',
 	'/portal/signup',
 	'/auth/callback',
 	'/logout'
 ])
 
-const GUEST_ROUTES = new Set(['/login', '/login/form', '/signup', '/portal/signup'])
+const GUEST_ROUTES = new Set([
+	'/login',
+	'/login/form',
+	'/login/forgot',
+	'/signup',
+	'/portal/signup'
+])
 
 /** @type {import('@sveltejs/kit/hooks').Handle} */
 const supabase = async ({ event, resolve }) => {
