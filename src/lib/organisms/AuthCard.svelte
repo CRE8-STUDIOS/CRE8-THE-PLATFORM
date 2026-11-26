@@ -34,6 +34,8 @@
 
 <style>
 	.auth-page {
+		--auth-card-offset: 3rem;
+		--auth-heading-offset: 4.5rem;
 		--auth-notch: clamp(1.75rem, 1rem + 3.5vw, 3.5rem);
 		--auth-notch-depth: calc(var(--auth-notch) * 1.6);
 
@@ -57,7 +59,10 @@
 	}
 
 	.auth-peek {
-		--auth-mascot-size: min(clamp(24rem, 14rem + 30vw, 46rem), 100cqh / 0.49);
+		--auth-mascot-size: min(
+			clamp(24rem, 14rem + 30vw, 46rem),
+			(100cqh + var(--auth-card-offset)) / 0.43
+		);
 
 		position: relative;
 		flex: 1;
@@ -67,17 +72,19 @@
 	}
 
 	.auth-heading {
+		margin-block-start: var(--auth-heading-offset);
 		font-size: var(--font-size-page-heading);
 	}
 
 	.auth-stage {
 		position: relative;
+		translate: 0 var(--auth-card-offset);
 		inline-size: min(100%, var(--size-auth-card));
 	}
 
 	.auth-mascot {
 		position: absolute;
-		inset-block-end: calc(var(--auth-mascot-size) * -0.42);
+		inset-block-end: calc(-1 * (var(--auth-card-offset) + var(--auth-mascot-size) * 0.47));
 		inset-inline: 0;
 		z-index: 0;
 		display: flex;
@@ -168,6 +175,7 @@
 
 	.auth-after {
 		align-self: start;
+		translate: 0 var(--auth-card-offset);
 		padding-block-start: var(--space-m);
 		font-size: var(--font-size-small);
 	}
