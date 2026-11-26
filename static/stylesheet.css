@@ -125,6 +125,10 @@
 	--duration-fast: 150ms;
 	--duration-normal: 250ms;
 	--duration-pencil: 800ms;
+	--duration-auth-shock: 220ms;
+	--duration-auth-duck: 300ms;
+	--duration-auth-shake: 700ms;
+	--duration-auth-jump: 700ms;
 	--easing-standard: cubic-bezier(0.2, 0, 0, 1);
 
 	/* Focus */
