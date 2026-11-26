@@ -7,8 +7,8 @@
 	import Mascot from '#lib/atoms/Mascot.svelte'
 	import EraserWipe from '#lib/atoms/EraserWipe.svelte'
 
-	/** @type {{ title: string, intro?: string, alarm?: boolean, compact?: boolean, children: import('svelte').Snippet, bottom?: import('svelte').Snippet, after?: import('svelte').Snippet }} */
-	const { title, intro, alarm = false, compact = false, children, bottom, after } = $props()
+	/** @type {{ title: string, intro?: string, alarm?: number, compact?: boolean, children: import('svelte').Snippet, bottom?: import('svelte').Snippet, after?: import('svelte').Snippet }} */
+	const { title, intro, alarm = 0, compact = false, children, bottom, after } = $props()
 
 	/** @typedef {'idle' | 'look-right' | 'look-left' | 'shock' | 'duck' | 'erase' | 'naked' | 'draw' | 'jump'} Phase */
 	/** @type {Phase} */
@@ -17,6 +17,15 @@
 	let gaze = $state(null)
 	/** @type {ReturnType<typeof setInterval> | undefined} */
 	let searching
+	/** @type {HTMLDivElement | undefined} */
+	let stage = $state()
+
+	$effect(() => {
+		if (!alarm || !stage) return
+		stage.classList.remove('is-shaking')
+		void stage.offsetWidth
+		stage.classList.add('is-shaking')
+	})
 
 	const shocked = $derived(['shock', 'duck', 'erase', 'naked', 'draw'].includes(phase))
 	const naked = $derived(['naked', 'draw', 'jump'].includes(phase))
@@ -96,7 +105,7 @@
 			<div
 				class="auth-mascot is-{phase}"
 				class:is-shocked={shocked}
-				class:is-alarmed={alarm}
+				class:is-alarmed={alarm > 0}
 				aria-hidden="true"
 				onanimationend={(event) => {
 					if (event.target === event.currentTarget) phase = 'idle'
@@ -107,7 +116,7 @@
 		</div>
 	</div>
 
-	<div class="auth-stage is-{phase}">
+	<div class="auth-stage is-{phase}" bind:this={stage}>
 		<section class="auth-card" class:auth-card-split={bottom} aria-labelledby="auth-card-title">
 			<div class="auth-card-shape" aria-hidden="true"></div>
 			<div class="auth-card-half auth-card-half-top">
@@ -226,6 +235,32 @@
 
 	.auth-stage {
 		--eraser-duration: var(--duration-auth-erase);
+	}
+
+	.auth-stage:global(.is-shaking) {
+		animation: auth-shake var(--duration-auth-shake) ease-in-out;
+	}
+
+	@keyframes auth-shake {
+		0%,
+		100% {
+			transform: none;
+		}
+		15% {
+			transform: translateX(-0.75rem) rotate(-1.5deg);
+		}
+		30% {
+			transform: translateX(0.75rem) rotate(1.5deg);
+		}
+		45% {
+			transform: translateX(-0.5rem) rotate(-1deg);
+		}
+		60% {
+			transform: translateX(0.5rem) rotate(1deg);
+		}
+		80% {
+			transform: translateX(-0.2rem);
+		}
 	}
 
 	.auth-stage.is-draw {

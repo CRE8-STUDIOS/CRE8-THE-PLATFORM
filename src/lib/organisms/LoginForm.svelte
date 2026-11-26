@@ -1,4 +1,5 @@
 <script>
+	import { untrack } from 'svelte'
 	import { enhance } from '$app/forms'
 	import { goto } from '$app/navigation'
 	import EraserWipe from '#lib/atoms/EraserWipe.svelte'
@@ -13,6 +14,7 @@
 	const error = $derived(form?.message ?? '')
 	const describedby = $derived(error ? 'login-error' : undefined)
 	const invalid = $derived(error ? 'true' : undefined)
+	let attempts = $state(untrack(() => form?.message) ? 1 : 0)
 
 	let erasing = $state(false)
 
@@ -23,7 +25,11 @@
 	/** @type {import('$app/forms').SubmitFunction} */
 	const leaveWithEraser = () => {
 		return async ({ result, update }) => {
-			if (result.type !== 'redirect') return update()
+			if (result.type !== 'redirect') {
+				await update()
+				if (result.type === 'failure') attempts += 1
+				return
+			}
 
 			const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
 			if (!calm) {
@@ -36,7 +42,7 @@
 	}
 </script>
 
-<AuthCard title="Login" alarm={Boolean(error)} compact>
+<AuthCard title="Login" alarm={error ? attempts : 0} compact>
 	{#if notice && !error}<p class="auth-message" role="status">{notice}</p>{/if}
 	{#if error}
 		<p id="login-error" class="auth-message" role="alert">
