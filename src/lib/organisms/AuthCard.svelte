@@ -10,7 +10,7 @@
 
 	<div class="auth-stage">
 		<div class="auth-mascot" aria-hidden="true">
-			<Mascot size="var(--auth-mascot-size)" />
+			<Mascot size="var(--auth-mascot-size)" follow />
 		</div>
 
 		<section class="auth-card" class:auth-card-split={bottom} aria-labelledby="auth-card-title">
@@ -54,6 +54,8 @@
 	}
 
 	.auth-mascot {
+		--mascot-bob-height: 12%;
+
 		position: absolute;
 		inset-block-start: 0;
 		inset-inline-start: 50%;
