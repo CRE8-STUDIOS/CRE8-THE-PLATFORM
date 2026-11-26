@@ -103,7 +103,9 @@
 	{:else}
 		<p>
 			<span class="visually-hidden">Not clocked in.</span>
-			<a class="button button-secondary button-small rough-edge" href="/welcome">Clock in</a>
+			<a class="button button-secondary button-small rough-edge" href="/overview?clock=choose">
+				Clock in
+			</a>
 		</p>
 	{/if}
 </section>

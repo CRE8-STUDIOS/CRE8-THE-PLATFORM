@@ -16,18 +16,19 @@
 		projectLinks,
 		timezone,
 		clockInLater,
+		choosingProject,
 		clockProjects
 	} = $derived(data)
 </script>
 
 <PageHeader title="Overview" label={today}>
 	{#snippet actions()}
-		{#if !clock}<a class="button button-primary" href="/welcome">Clock in</a>{/if}
+		{#if !clock}<a class="button button-primary" href="/overview?clock=choose">Clock in</a>{/if}
 	{/snippet}
 </PageHeader>
 
-{#if !clock && !clockInLater}
-	<ClockInPrompt projects={clockProjects} />
+{#if !clock && (!clockInLater || choosingProject)}
+	<ClockInPrompt projects={clockProjects} choosing={choosingProject} />
 {/if}
 
 <CurrentWork {clock} />

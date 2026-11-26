@@ -333,6 +333,21 @@ ol:not([class]) {
 	background-color: var(--color-button-secondary-hover);
 }
 
+.button-text {
+	min-block-size: auto;
+	padding: var(--space-2xs) 0;
+	background-color: transparent;
+	color: var(--color-text-muted);
+	font-size: var(--font-size-small);
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+}
+
+.button-text:hover {
+	color: var(--color-text);
+	text-decoration: underline;
+}
+
 .button-danger {
 	--rough-edge-background: var(--color-button-secondary);
 	background-color: var(--rough-edge-background);

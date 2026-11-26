@@ -3,7 +3,7 @@ import { todayIn, dayRange } from '#lib/utils/dates.js'
 import { isSetToday, setForToday, CLOCK_IN_LATER } from '#lib/server/daily.js'
 
 /** @type {import('./$types').PageServerLoad} */
-export const load = async ({ locals, cookies }) => {
+export const load = async ({ locals, cookies, url }) => {
 	const { supabase, timezone } = locals
 	const today = todayIn(timezone)
 	const { start, end } = dayRange(today, timezone)
@@ -79,6 +79,7 @@ export const load = async ({ locals, cookies }) => {
 	return {
 		today,
 		clockInLater: isSetToday(cookies, CLOCK_IN_LATER, today),
+		choosingProject: url.searchParams.get('clock') === 'choose',
 		clockProjects: (projects.data ?? []).map(({ id, title, clients }) => ({
 			id,
 			title,
