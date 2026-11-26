@@ -1,26 +1,3 @@
-<script module>
-	const CHEERS = [
-		"You're back!",
-		'Exciting, here we go',
-		"Yeah, let's work",
-		'Look who is here',
-		'Ready, set, create',
-		'Back at it',
-		"Let's make something",
-		'Good to see you',
-		'Time to shine',
-		'The studio is open'
-	]
-
-	const pickCheer = () => {
-		const last = Number(sessionStorage.getItem('last-cheer') ?? -1)
-		let index = Math.floor(Math.random() * CHEERS.length)
-		if (index === last) index = (index + 1) % CHEERS.length
-		sessionStorage.setItem('last-cheer', String(index))
-		return CHEERS[index]
-	}
-</script>
-
 <script>
 	import { enhance } from '$app/forms'
 	import { goto } from '$app/navigation'
@@ -37,7 +14,6 @@
 	const describedby = $derived(error ? 'login-error' : undefined)
 	const invalid = $derived(error ? 'true' : undefined)
 
-	let cheer = $state('')
 	let erasing = $state(false)
 
 	const duration = (/** @type {string} */ name) =>
@@ -45,13 +21,11 @@
 	const wait = (/** @type {number} */ ms) => new Promise((done) => setTimeout(done, ms))
 
 	/** @type {import('$app/forms').SubmitFunction} */
-	const celebrate = () => {
+	const leaveWithEraser = () => {
 		return async ({ result, update }) => {
 			if (result.type !== 'redirect') return update()
 
 			const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
-			cheer = pickCheer()
-			await wait(duration('--duration-login-cheer'))
 			if (!calm) {
 				erasing = true
 				await wait(duration('--duration-eraser'))
@@ -62,7 +36,7 @@
 	}
 </script>
 
-<AuthCard title="Login" note={cheer} compact>
+<AuthCard title="Login" alarm={Boolean(error)} compact>
 	{#if notice && !error}<p class="auth-message" role="status">{notice}</p>{/if}
 	{#if error}
 		<p id="login-error" class="auth-message" role="alert">
@@ -73,7 +47,7 @@
 		</p>
 	{/if}
 
-	<form id="login-form" class="login-form" method="POST" use:enhance={celebrate}>
+	<form id="login-form" class="login-form" method="POST" use:enhance={leaveWithEraser}>
 		<Input type="hidden" name="redirectTo" value={redirectTo} />
 		<Input type="hidden" name="as" value={as} />
 		<AuthField

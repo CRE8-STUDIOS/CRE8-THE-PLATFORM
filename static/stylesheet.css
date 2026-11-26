@@ -128,9 +128,11 @@
 	--duration-pencil: 800ms;
 	--duration-auth-shock: 220ms;
 	--duration-auth-duck: 300ms;
-	--duration-auth-shake: 700ms;
+	--duration-auth-look: 380ms;
+	--duration-auth-erase: 750ms;
+	--duration-auth-naked: 1100ms;
+	--duration-auth-draw: 850ms;
 	--duration-auth-jump: 700ms;
-	--duration-login-cheer: 1100ms;
 	--duration-eraser: 1000ms;
 	--easing-standard: cubic-bezier(0.2, 0, 0, 1);
 
