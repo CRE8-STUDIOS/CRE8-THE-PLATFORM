@@ -47,11 +47,12 @@
 	--color-error: var(--color-accent);
 
 	/* Typography */
-	--font-family-display: 'Pointer', 'Arial Black', system-ui, sans-serif;
+	--font-family-body: 'Unbounded Variable', system-ui, sans-serif;
+	--font-family-display: var(--font-family-body);
 	--font-family-script: 'Maison des Pastel Script', 'Brush Script MT', cursive;
-	--font-family-body: 'Telegraf', system-ui, sans-serif;
 
 	--font-weight-regular: 400;
+	--font-weight-heading: 800;
 
 	--line-height-tight: 1;
 	--line-height-heading: 1.1;
@@ -188,7 +189,7 @@ h4,
 h5,
 h6 {
 	font-family: var(--font-family-display);
-	font-weight: var(--font-weight-regular);
+	font-weight: var(--font-weight-heading);
 	line-height: var(--line-height-heading);
 	letter-spacing: var(--letter-spacing-display);
 	text-transform: uppercase;
