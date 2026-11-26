@@ -1,5 +1,4 @@
 <script>
-	import favicon from '#lib/assets/favicon.svg'
 	import { invalidate } from '$app/navigation'
 
 	const { data, children } = $props()
@@ -14,7 +13,6 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
 	<title>CRE8</title>
 </svelte:head>
 
