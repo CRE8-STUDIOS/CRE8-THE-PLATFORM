@@ -1,6 +1,7 @@
 <script>
 	import NavLinks from '#lib/molecules/NavLinks.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
+	import Mascot from '#lib/atoms/Mascot.svelte'
 
 	/** @type {{ current: string, clock: import('svelte').Snippet }} */
 	const { current, clock } = $props()
@@ -30,7 +31,7 @@
 </script>
 
 <header class="sidebar" class:sidebar-collapsed={enhanced && !menuOpen}>
-	<a class="sidebar-logo" href="/overview">CRE8</a>
+	<a class="sidebar-logo" href="/overview"><Mascot /></a>
 
 	<div class="sidebar-clock">{@render clock()}</div>
 
@@ -72,12 +73,8 @@
 	}
 
 	.sidebar-logo {
+		display: flex;
 		grid-area: logo;
-		font-family: var(--font-family-display);
-		font-size: var(--font-size-project);
-		line-height: var(--line-height-tight);
-		letter-spacing: var(--letter-spacing-display);
-		text-decoration: none;
 	}
 
 	.sidebar-clock {
