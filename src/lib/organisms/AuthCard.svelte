@@ -1,13 +1,4 @@
 <script module>
-	const AUTH_ROUTES = new Set([
-		'/login',
-		'/login/form',
-		'/login/forgot',
-		'/login/reset',
-		'/signup',
-		'/portal/signup'
-	])
-
 	const BITS = [
 		{ side: 'start', dx: '-5rem', dy: '-2.5rem', r: '-140deg' },
 		{ side: 'start', dx: '-6.5rem', dy: '0.5rem', r: '-60deg' },
@@ -46,10 +37,11 @@
 	})
 
 	onNavigate((navigation) => {
-		const target = navigation.to?.route.id ?? ''
+		const fromChoice =
+			navigation.from?.route.id === '/login' && navigation.to?.route.id === '/login/form'
 		if (
 			!document.startViewTransition ||
-			!AUTH_ROUTES.has(target) ||
+			!fromChoice ||
 			matchMedia('(prefers-reduced-motion: reduce)').matches
 		)
 			return
