@@ -1,8 +1,8 @@
 <script>
 	import Mascot from '#lib/atoms/Mascot.svelte'
 
-	/** @type {{ title: string, intro?: string, children: import('svelte').Snippet, after?: import('svelte').Snippet }} */
-	const { title, intro, children, after } = $props()
+	/** @type {{ title: string, intro?: string, children: import('svelte').Snippet, bottom?: import('svelte').Snippet, after?: import('svelte').Snippet }} */
+	const { title, intro, children, bottom, after } = $props()
 </script>
 
 <main id="content" class="auth-page">
@@ -13,11 +13,14 @@
 			<Mascot size="var(--auth-mascot-size)" />
 		</div>
 
-		<section class="auth-card" aria-labelledby="auth-card-title">
+		<section class="auth-card" class:auth-card-split={bottom} aria-labelledby="auth-card-title">
 			<div class="auth-card-shape" aria-hidden="true"></div>
-			<h2 id="auth-card-title" class="auth-card-title">{title}</h2>
-			{#if intro}<p class="auth-card-intro">{intro}</p>{/if}
-			{@render children()}
+			<div class="auth-card-half">
+				<h2 id="auth-card-title" class="auth-card-title">{title}</h2>
+				{#if intro}<p class="auth-card-intro">{intro}</p>{/if}
+				{@render children()}
+			</div>
+			{#if bottom}<div class="auth-card-half">{@render bottom()}</div>{/if}
 		</section>
 	</div>
 
@@ -26,7 +29,7 @@
 
 <style>
 	.auth-page {
-		--auth-mascot-size: clamp(10rem, 7rem + 10vw, 15rem);
+		--auth-mascot-size: clamp(14rem, 10rem + 14vw, 21rem);
 		--auth-notch: clamp(1rem, 0.6rem + 2vw, 2rem);
 
 		display: grid;
@@ -46,7 +49,7 @@
 	.auth-stage {
 		position: relative;
 		inline-size: min(100%, var(--size-auth-card));
-		padding-block-start: calc(var(--auth-mascot-size) * 0.68);
+		padding-block-start: calc(var(--auth-mascot-size) * 0.58);
 	}
 
 	.auth-mascot {
@@ -65,11 +68,29 @@
 		z-index: 1;
 		isolation: isolate;
 		display: grid;
-		justify-items: center;
-		gap: var(--space-s);
-		padding-block: var(--space-xl);
+		padding-block: var(--space-2xl);
 		padding-inline: calc(var(--auth-notch) + var(--space-l));
 		color: var(--color-auth-card-text);
+	}
+
+	.auth-card-half {
+		display: grid;
+		justify-items: center;
+		align-content: center;
+		gap: var(--space-s);
+	}
+
+	.auth-card-split {
+		grid-template-rows: 1fr 1fr;
+		row-gap: var(--space-l);
+	}
+
+	.auth-card-split .auth-card-half:first-of-type {
+		align-content: end;
+	}
+
+	.auth-card-split .auth-card-half:last-of-type {
+		align-content: start;
 	}
 
 	.auth-card-shape {

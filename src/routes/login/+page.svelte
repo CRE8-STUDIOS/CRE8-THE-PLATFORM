@@ -13,17 +13,15 @@
 
 <AuthCard title="Login as" intro="choose the one that applies to you">
 	{#if error}<p class="auth-message" role="alert">{error}</p>{/if}
-	<div class="login-choice">
-		<a class="button button-light" href={formLink('freelancer')}>Freelancer</a>
-		<a class="button button-light" href={formLink('client')}>Client</a>
-	</div>
+	<a class="button button-light login-choice" href={formLink('freelancer')}>Freelancer</a>
+
+	{#snippet bottom()}
+		<a class="button button-light login-choice" href={formLink('client')}>Client</a>
+	{/snippet}
 </AuthCard>
 
 <style>
 	.login-choice {
-		display: grid;
-		gap: var(--space-xs);
 		inline-size: min(100%, var(--size-choice-button));
-		margin-block-start: var(--space-xs);
 	}
 </style>
