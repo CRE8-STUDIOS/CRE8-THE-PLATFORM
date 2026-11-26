@@ -18,12 +18,12 @@
 	<div class="auth-stage">
 		<section class="auth-card" class:auth-card-split={bottom} aria-labelledby="auth-card-title">
 			<div class="auth-card-shape" aria-hidden="true"></div>
-			<div class="auth-card-half">
+			<div class="auth-card-half auth-card-half-top">
 				<h2 id="auth-card-title" class="auth-card-title">{title}</h2>
 				{#if intro}<p class="auth-card-intro">{intro}</p>{/if}
 				{@render children()}
 			</div>
-			{#if bottom}<div class="auth-card-half">{@render bottom()}</div>{/if}
+			{#if bottom}<div class="auth-card-half auth-card-half-bottom">{@render bottom()}</div>{/if}
 		</section>
 	</div>
 
@@ -35,8 +35,8 @@
 <style>
 	.auth-page {
 		--auth-card-width: var(--size-auth-card);
-		--auth-card-offset: clamp(1rem, 30dvh - 8rem, 7.5rem);
-		--auth-heading-offset: 4.5rem;
+		--auth-card-offset: clamp(0rem, 50dvh - 20rem, 7.5rem);
+		--auth-heading-offset: clamp(0rem, 20dvh - 6rem, 4.5rem);
 		--auth-notch: clamp(1.75rem, 1rem + 3.5vw, 3.5rem);
 		--auth-notch-depth: calc(var(--auth-notch) * 1.6);
 
@@ -51,7 +51,9 @@
 	}
 
 	.auth-page-compact {
-		--auth-card-width: var(--size-auth-card-compact);
+		--auth-notch: clamp(1rem, 0.6rem + 2vw, 2rem);
+		--auth-split-gap: 0px;
+		--auth-card-padding: var(--space-l);
 	}
 
 	.auth-top {
@@ -110,7 +112,7 @@
 		z-index: 1;
 		isolation: isolate;
 		display: grid;
-		padding-block: var(--space-xl);
+		padding-block: var(--auth-card-padding, var(--space-xl));
 		padding-inline: calc(var(--auth-notch-depth) + var(--space-s));
 		color: var(--color-auth-card-text);
 	}
@@ -124,14 +126,14 @@
 
 	.auth-card-split {
 		grid-template-rows: 1fr 1fr;
-		row-gap: var(--space-l);
+		row-gap: var(--auth-split-gap, var(--space-l));
 	}
 
-	.auth-card-split .auth-card-half:first-of-type {
+	.auth-card-split .auth-card-half-top {
 		align-content: end;
 	}
 
-	.auth-card-split .auth-card-half:last-of-type {
+	.auth-card-split .auth-card-half-bottom {
 		align-content: start;
 	}
 
