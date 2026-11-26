@@ -118,6 +118,8 @@
 	--border-width-thin: 1px;
 	--border-width-thick: 2px;
 
+	--rough-edge: url('#rough');
+
 	--shadow-card: 0 0.25rem 1rem rgb(0 0 0 / 0.05);
 
 	/* Motion */
@@ -288,12 +290,13 @@ ol:not([class]) {
 }
 
 .button-primary {
-	background-color: var(--color-button-primary);
+	--rough-edge-background: var(--color-button-primary);
+	background-color: var(--rough-edge-background);
 	color: var(--color-button-primary-text);
 }
 
 .button-primary:hover {
-	background-color: var(--color-button-primary-hover);
+	--rough-edge-background: var(--color-button-primary-hover);
 	transform: translateY(-1px);
 }
 
@@ -326,7 +329,7 @@ ol:not([class]) {
 
 .button-primary:disabled:hover,
 .button-primary[aria-disabled='true']:hover {
-	background-color: var(--color-button-primary);
+	--rough-edge-background: var(--color-button-primary);
 }
 
 .button-secondary:disabled:hover,
@@ -1026,14 +1029,16 @@ select:focus-visible {
 }
 
 /* Rough edge */
-.rough-edge {
+.rough-edge,
+.button-primary {
 	position: relative;
 	isolation: isolate;
 	background-color: transparent;
 	box-shadow: none;
 }
 
-.rough-edge::before {
+.rough-edge::before,
+.button-primary::before {
 	content: '';
 	position: absolute;
 	inset: 0;
@@ -1041,6 +1046,6 @@ select:focus-visible {
 	border-radius: inherit;
 	background-color: var(--rough-edge-background, var(--color-surface));
 	box-shadow: var(--rough-edge-shadow, none);
-	filter: url('#rough-edge');
+	filter: var(--rough-edge);
 	transition: background-color var(--duration-fast) var(--easing-standard);
 }
