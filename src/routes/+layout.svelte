@@ -1,4 +1,5 @@
 <script>
+	import '@fontsource-variable/unbounded'
 	import { invalidate } from '$app/navigation'
 
 	const { data, children } = $props()
