@@ -1,7 +1,9 @@
+import { redirect } from '@sveltejs/kit'
 import { todayIn, dayRange } from '#lib/utils/dates.js'
+import { isSetToday, setForToday, CLOCK_IN_LATER } from '#lib/server/daily.js'
 
 /** @type {import('./$types').PageServerLoad} */
-export const load = async ({ locals }) => {
+export const load = async ({ locals, cookies }) => {
 	const { supabase, timezone } = locals
 	const today = todayIn(timezone)
 	const { start, end } = dayRange(today, timezone)
@@ -31,7 +33,7 @@ export const load = async ({ locals }) => {
 			.order('due_date'),
 		supabase
 			.from('projects')
-			.select('id, title, deadline')
+			.select('id, title, deadline, clients(name, company)')
 			.eq('status', 'active')
 			.order('deadline'),
 		supabase
@@ -76,6 +78,12 @@ export const load = async ({ locals }) => {
 
 	return {
 		today,
+		clockInLater: isSetToday(cookies, CLOCK_IN_LATER, today),
+		clockProjects: (projects.data ?? []).map(({ id, title, clients }) => ({
+			id,
+			title,
+			client: clients?.company || clients?.name || null
+		})),
 		agenda: agenda.data ?? [],
 		dueTasks: dueTasks.data ?? [],
 		projectLinks: (projects.data ?? []).map(({ id, title, deadline }) => ({
@@ -85,5 +93,13 @@ export const load = async ({ locals }) => {
 		})),
 		toDo,
 		tiles: tiles.data ?? []
+	}
+}
+
+/** @type {import('./$types').Actions} */
+export const actions = {
+	later: async ({ locals, cookies }) => {
+		setForToday(cookies, CLOCK_IN_LATER, todayIn(locals.timezone))
+		redirect(303, '/overview')
 	}
 }

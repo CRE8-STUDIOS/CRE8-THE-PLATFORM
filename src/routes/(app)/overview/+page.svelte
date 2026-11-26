@@ -4,9 +4,20 @@
 	import CurrentWork from '#lib/organisms/CurrentWork.svelte'
 	import TodayAgenda from '#lib/organisms/TodayAgenda.svelte'
 	import LinkList from '#lib/organisms/LinkList.svelte'
+	import ClockInPrompt from '#lib/organisms/ClockInPrompt.svelte'
 
 	const { data } = $props()
-	const { today, clock, agenda, dueTasks, toDo, projectLinks, timezone } = $derived(data)
+	const {
+		today,
+		clock,
+		agenda,
+		dueTasks,
+		toDo,
+		projectLinks,
+		timezone,
+		clockInLater,
+		clockProjects
+	} = $derived(data)
 </script>
 
 <PageHeader title="Overview" label={today}>
@@ -14,6 +25,10 @@
 		{#if !clock}<a class="button button-primary" href="/welcome">Clock in</a>{/if}
 	{/snippet}
 </PageHeader>
+
+{#if !clock && !clockInLater}
+	<ClockInPrompt projects={clockProjects} />
+{/if}
 
 <CurrentWork {clock} />
 

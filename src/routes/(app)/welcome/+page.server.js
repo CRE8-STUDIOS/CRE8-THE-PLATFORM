@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit'
 import { todayIn } from '#lib/utils/dates.js'
 import { buildPlanningSummary } from '#lib/utils/planning.js'
 import { loadPlanningData } from '#lib/server/planning.js'
-import { markIntroSeen } from '#lib/server/intro.js'
+import { setForToday, INTRO_SEEN } from '#lib/server/daily.js'
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals, parent, url, cookies }) => {
@@ -11,7 +11,7 @@ export const load = async ({ locals, parent, url, cookies }) => {
 	if (clock) redirect(303, '/overview')
 
 	const today = todayIn(timezone)
-	markIntroSeen(cookies, today)
+	setForToday(cookies, INTRO_SEEN, today)
 
 	const hour = Number(
 		new Intl.DateTimeFormat('en-GB', {
