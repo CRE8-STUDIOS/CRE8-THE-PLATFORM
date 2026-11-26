@@ -60,7 +60,7 @@
 
 	--letter-spacing-display: 0.04em;
 
-	--font-size-welcome: clamp(2.25rem, 1.893rem + 1.786vw, 3.5rem);
+	--font-size-welcome: clamp(1.75rem, 1.25rem + 2.5vw, 3.5rem);
 	--font-size-page-heading: clamp(1.5rem, 1.286rem + 1.071vw, 2.25rem);
 	--font-size-project: clamp(1.25rem, 1.071rem + 0.8929vw, 1.875rem);
 	--font-size-script: clamp(1.375rem, 1.196rem + 0.8929vw, 2rem);
