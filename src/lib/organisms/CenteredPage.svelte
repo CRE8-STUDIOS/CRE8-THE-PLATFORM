@@ -1,11 +1,13 @@
 <script>
+	import Mascot from '#lib/atoms/Mascot.svelte'
+
 	/** @type {{ children: import('svelte').Snippet }} */
 	const { children } = $props()
 </script>
 
 <main id="content" class="centered-page">
 	<div class="centered-page-inner">
-		<a class="centered-page-logo" href="/">CRE8</a>
+		<a class="centered-page-logo" href="/"><Mascot size="4rem" /></a>
 		{@render children()}
 	</div>
 </main>
@@ -25,10 +27,7 @@
 	}
 
 	.centered-page-logo {
+		display: flex;
 		justify-self: center;
-		font-family: var(--font-family-display);
-		font-size: var(--font-size-project);
-		letter-spacing: var(--letter-spacing-display);
-		text-decoration: none;
 	}
 </style>

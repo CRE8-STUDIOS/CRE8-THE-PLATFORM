@@ -1,6 +1,7 @@
 <script>
 	import ClockInForm from '#lib/organisms/ClockInForm.svelte'
 	import Notice from '#lib/atoms/Notice.svelte'
+	import Mascot from '#lib/atoms/Mascot.svelte'
 
 	const { data } = $props()
 	const { greeting, projects, clock } = $derived(data)
@@ -8,7 +9,7 @@
 </script>
 
 <div class="welcome">
-	<p class="welcome-logo" aria-hidden="true">CRE8</p>
+	<Mascot size="5rem" />
 	<h1 class="welcome-title">
 		{partOfDay}{#if name.length},<br />{name.join(', ')}{/if}
 	</h1>
@@ -33,12 +34,6 @@
 		gap: var(--space-m);
 		max-inline-size: var(--size-narrow);
 		text-align: center;
-	}
-
-	.welcome-logo {
-		font-family: var(--font-family-display);
-		font-size: var(--font-size-project);
-		letter-spacing: var(--letter-spacing-display);
 	}
 
 	.welcome-title {
