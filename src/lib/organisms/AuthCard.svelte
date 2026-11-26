@@ -78,7 +78,7 @@
 
 	.auth-heading {
 		margin-block-start: var(--auth-heading-offset);
-		font-size: calc(min(100vw - 2 * var(--space-m), var(--auth-card-width) + 6rem) / 14.4);
+		font-size: calc(min(100vw - 2 * var(--space-m), var(--auth-card-width)) / 14.4);
 		line-height: var(--line-height-tight);
 	}
 
