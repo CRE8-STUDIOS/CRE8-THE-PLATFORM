@@ -29,7 +29,7 @@
 
 <style>
 	.auth-page {
-		--auth-mascot-size: clamp(18rem, 12rem + 18vw, 28rem);
+		--auth-mascot-size: clamp(20rem, 12rem + 24vw, 36rem);
 		--auth-notch: clamp(1.75rem, 1rem + 3.5vw, 3.5rem);
 		--auth-notch-depth: calc(var(--auth-notch) * 1.6);
 
@@ -54,14 +54,16 @@
 	}
 
 	.auth-mascot {
-		--mascot-bob-height: 12%;
-
 		position: absolute;
 		inset-block-start: 0;
 		inset-inline-start: 50%;
 		z-index: 0;
 		display: flex;
 		translate: -50% 0;
+	}
+
+	.auth-mascot :global(.mascot) {
+		animation: none;
 	}
 
 	.auth-card {
