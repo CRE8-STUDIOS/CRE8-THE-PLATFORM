@@ -2,7 +2,7 @@
 	import Button from '#lib/atoms/Button.svelte'
 	import AuthField from '#lib/molecules/AuthField.svelte'
 
-	/** @type {{ kind: 'freelancer' | 'client', form: { message?: string, success?: string, email?: string | null, username?: string | null, display_name?: string | null } | null | undefined }} */
+	/** @type {{ kind: 'freelancer' | 'client', form: { message?: string, success?: string, email?: string | null } | null | undefined }} */
 	const { kind, form } = $props()
 
 	const error = $derived(form?.message ?? '')
@@ -27,26 +27,6 @@
 			aria-invalid={invalid}
 			required
 		/>
-		{#if kind === 'client'}
-			<AuthField
-				label="Username"
-				id="signup-username"
-				name="username"
-				autocomplete="username"
-				value={form?.username ?? ''}
-				pattern={'[A-Za-z0-9_.\\-]{3,30}'}
-				hint="3 to 30 characters: letters, numbers, dots, dashes and underscores"
-				aria-describedby={describedby}
-				aria-invalid={invalid}
-				required
-			/>
-			<AuthField
-				label="Your name or company"
-				id="signup-display-name"
-				name="display_name"
-				value={form?.display_name ?? ''}
-			/>
-		{/if}
 		<AuthField
 			label="Password"
 			id="signup-password"
