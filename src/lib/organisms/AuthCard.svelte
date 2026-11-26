@@ -17,8 +17,8 @@
 	import { onNavigate } from '$app/navigation'
 	import Mascot from '#lib/atoms/Mascot.svelte'
 
-	/** @type {{ title: string, intro?: string, compact?: boolean, children: import('svelte').Snippet, bottom?: import('svelte').Snippet, after?: import('svelte').Snippet }} */
-	const { title, intro, compact = false, children, bottom, after } = $props()
+	/** @type {{ title: string, intro?: string, note?: string, compact?: boolean, children: import('svelte').Snippet, bottom?: import('svelte').Snippet, after?: import('svelte').Snippet }} */
+	const { title, intro, note = '', compact = false, children, bottom, after } = $props()
 
 	/** @type {'idle' | 'shock' | 'duck' | 'hidden' | 'jump'} */
 	let mood = $state(arriving ? 'hidden' : 'idle')
@@ -81,6 +81,9 @@
 	</div>
 
 	<div class="auth-stage">
+		<p class="auth-note" role="status">
+			{#if note}<span class="auth-note-text">{note}</span>{/if}
+		</p>
 		<section class="auth-card" class:auth-card-split={bottom} aria-labelledby="auth-card-title">
 			<div class="auth-card-shape" aria-hidden="true"></div>
 			{#if burst}
@@ -167,6 +170,40 @@
 		translate: 0 var(--auth-card-offset);
 		inline-size: min(100%, var(--auth-card-width));
 		view-transition-name: auth-card;
+	}
+
+	.auth-note {
+		position: absolute;
+		inset-block-start: 100%;
+		inset-inline-start: var(--space-s);
+		z-index: 3;
+		max-inline-size: 90%;
+		margin-block-start: var(--space-m);
+		rotate: -4deg;
+		text-align: start;
+		pointer-events: none;
+	}
+
+	.auth-note-text {
+		display: inline-block;
+		color: transparent;
+		font-family: var(--font-family-display);
+		font-size: var(--font-size-page-heading);
+		font-weight: var(--font-weight-heading);
+		line-height: var(--line-height-heading);
+		text-transform: uppercase;
+		-webkit-text-stroke: calc(var(--border-width-thin) * 1.5) var(--color-pencil);
+		filter: var(--rough-edge);
+		animation: auth-write var(--duration-login-cheer) ease-out both;
+	}
+
+	@keyframes auth-write {
+		from {
+			clip-path: inset(-10% 100% -10% -2%);
+		}
+		to {
+			clip-path: inset(-10% -2% -10% -2%);
+		}
 	}
 
 	.auth-mascot {

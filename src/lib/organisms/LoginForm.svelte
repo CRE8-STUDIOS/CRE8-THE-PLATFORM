@@ -64,7 +64,7 @@
 	}
 </script>
 
-<AuthCard title={cheer || 'Login'} compact>
+<AuthCard title="Login" note={cheer} compact>
 	{#if notice && !error}<p class="auth-message" role="status">{notice}</p>{/if}
 	{#if error}
 		<p id="login-error" class="auth-message" role="alert">
