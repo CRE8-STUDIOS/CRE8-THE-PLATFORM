@@ -108,6 +108,7 @@
 	--border-width-thick: 2px;
 
 	--rough-edge: url('#rough');
+	--rough-edge-strong: url('#rough-strong');
 
 	--color-auth-card: var(--color-text);
 	--color-auth-card-text: var(--color-text-inverse);
