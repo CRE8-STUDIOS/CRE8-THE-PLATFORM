@@ -18,7 +18,6 @@
 		<Notice>You're already clocked in.</Notice>
 		<a class="button button-primary" href="/overview">Go to your overview</a>
 	{:else}
-		<p class="text-script">ready to clock in?</p>
 		<ClockInForm {projects}>
 			{#snippet secondary()}
 				<a class="button button-secondary rough-edge" href="/overview">No, just checking</a>
