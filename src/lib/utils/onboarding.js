@@ -19,3 +19,13 @@ export const stepIndex = (id) =>
 /** @param {number} index */
 export const stepHref = (index) =>
 	`/assistant?step=${ONBOARDING_STEPS[Math.max(0, Math.min(ONBOARDING_STEPS.length - 1, index))].id}`
+
+/** @type {['wash' | 'scream' | 'scared' | 'hmm' | 'poof' | 'ready', number][]} */
+export const INTRO = [
+	['wash', 0],
+	['scream', 3400],
+	['scared', 4700],
+	['hmm', 6300],
+	['poof', 8000],
+	['ready', 8800]
+]

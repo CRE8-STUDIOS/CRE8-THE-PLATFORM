@@ -1,5 +1,6 @@
 <script>
 	import { ONBOARDING_STEPS, stepHref } from '#lib/utils/onboarding.js'
+	import StepHello from './StepHello.svelte'
 
 	/** @typedef {{ name: string | null, color: string, shape: string, matchWorkspace: boolean }} Assistant */
 	/** @type {{ step: number, userName: string | null, assistant: Assistant, form?: unknown }} */
@@ -33,7 +34,11 @@
 
 	<main id="content" class="onboarding-main">
 		{#key step}
-			<p class="onboarding-line">{ONBOARDING_STEPS[step].label}</p>
+			{#if step === 0}
+				<StepHello shape={assistant.shape} next={stepHref(1)} />
+			{:else}
+				<p class="onboarding-line">{ONBOARDING_STEPS[step].label}</p>
+			{/if}
 		{/key}
 	</main>
 </div>
@@ -110,7 +115,39 @@
 		padding-block-start: var(--space-l);
 	}
 
-	/* Shared text styles for the steps */
+	/* Shared layout and text styles for the steps */
+	.onboarding :global(.step) {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-l);
+		inline-size: 100%;
+	}
+
+	/* With JavaScript the animated steps wait for their first frame, without it they show the end state */
+	:global(html.js) .onboarding :global([data-started='false']) {
+		visibility: hidden;
+	}
+
+	.onboarding :global(.rise) {
+		animation: rise 0.45s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.onboarding :global(.rise) {
+			animation: none;
+		}
+	}
+
+	@keyframes rise {
+		0% {
+			transform: scale(0) rotate(-20deg);
+		}
+		100% {
+			transform: scale(1) rotate(0);
+		}
+	}
+
 	.onboarding :global(.onboarding-title) {
 		font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.25rem);
 		line-height: 1.08;

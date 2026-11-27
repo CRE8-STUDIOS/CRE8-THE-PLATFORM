@@ -3,8 +3,17 @@
 	import { mascotShapes } from '#lib/utils/mascot-shapes.js'
 	import { ASSISTANT_DEFAULT_NAME } from '#lib/utils/constants.js'
 
-	/** @type {{ size?: string, shape?: string, face?: boolean, animate?: boolean, follow?: boolean, gaze?: { x: number, y: number } | null, label?: string }} */
-	const { size, shape, face = true, animate = true, follow = false, gaze = null, label } = $props()
+	/** @type {{ size?: string, shape?: string, eyes?: string, face?: boolean, animate?: boolean, follow?: boolean, gaze?: { x: number, y: number } | null, label?: string }} */
+	const {
+		size,
+		shape,
+		eyes,
+		face = true,
+		animate = true,
+		follow = false,
+		gaze = null,
+		label
+	} = $props()
 
 	const assistant = $derived(page.data.assistant)
 	const outline = $derived(
@@ -58,7 +67,7 @@
 >
 	<path class="body" d={outline} />
 	{#if face}
-		<g class="look" style:transform="translate({offset.x}px, {offset.y}px)">
+		<g class="look" style:transform={eyes ?? `translate(${offset.x}px, ${offset.y}px)`}>
 			<g class="eyes">
 				<ellipse cx="80" cy="106" rx="15" ry="22" />
 				<ellipse cx="120" cy="106" rx="15" ry="22" />
