@@ -49,7 +49,7 @@ export const loadAgendaRange = async (supabase, from, to, timeZone) => {
 }
 
 /**
- * Project deadlines between two local dates, shaped like agenda deadlines.
+ * Deadlines of projects that are not archived, between two local dates, shaped like agenda deadlines.
  * @param {import('@supabase/supabase-js').SupabaseClient<import('#lib/database.types.js').Database>} supabase
  * @param {string} from
  * @param {string} to
@@ -58,6 +58,7 @@ export const loadProjectDeadlines = async (supabase, from, to) => {
 	const { data, error } = await supabase
 		.from('projects')
 		.select('id, title, deadline')
+		.neq('status', 'archived')
 		.gte('deadline', from)
 		.lt('deadline', to)
 	if (error) throw error
