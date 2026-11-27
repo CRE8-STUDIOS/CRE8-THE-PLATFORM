@@ -24,7 +24,7 @@
 
 {#if bare}
 	{#if clock}<div class="bare-clock">{@render clockStatus()}</div>{/if}
-	<main id="content" class="bare-main">
+	<main id="content" class="bare-main" class:flush={Boolean(page.data.onboarding)}>
 		{@render children()}
 	</main>
 {:else}
@@ -69,6 +69,12 @@
 		place-items: center;
 		min-block-size: 100dvh;
 		padding: var(--space-xl) var(--space-m);
+	}
+
+	/* The onboarding fills the screen itself */
+	.bare-main.flush {
+		display: block;
+		padding: 0;
 	}
 
 	.bare-clock {

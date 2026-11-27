@@ -68,7 +68,7 @@
 		</div>
 	</header>
 
-	<main id="content" class="onboarding-main">
+	<div class="onboarding-main">
 		{#if result?.message}<p class="onboarding-error" role="alert">{result.message}</p>{/if}
 		{#key step}
 			{#if step === 0}
@@ -124,7 +124,7 @@
 				/>
 			{/if}
 		{/key}
-	</main>
+	</div>
 </div>
 
 <style>
@@ -132,7 +132,8 @@
 		display: flex;
 		flex-direction: column;
 		inline-size: 100%;
-		min-block-size: 100dvh;
+		block-size: 100dvh;
+		overflow: hidden;
 		padding: var(--space-m) var(--space-m) var(--space-xl);
 		text-align: center;
 	}
@@ -221,8 +222,9 @@
 		flex: 1;
 		flex-direction: column;
 		align-items: center;
-		justify-content: flex-start;
-		gap: var(--space-m);
+		justify-content: safe center;
+		gap: clamp(0.5rem, 2dvh, 1.5rem);
+		min-block-size: 0;
 		inline-size: 100%;
 		max-inline-size: 41.25rem;
 		margin-inline: auto;
@@ -234,7 +236,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: var(--space-m);
+		gap: clamp(0.5rem, 2dvh, 1.5rem);
 		inline-size: 100%;
 	}
 
@@ -251,7 +253,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: var(--space-m);
+		gap: clamp(0.5rem, 2dvh, 1.5rem);
 		inline-size: 100%;
 	}
 

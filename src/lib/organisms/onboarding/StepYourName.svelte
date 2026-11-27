@@ -111,7 +111,7 @@
 <div class="step" data-started={started}>
 	<div class="speaker" style:--mascot-color={COSTUME_FILL[costume]}>
 		<MascotStage
-			size="min(220px, 55vw)"
+			size="min(220px, 55vw, 26dvh)"
 			{shape}
 			motion={phase === 'tape' ? 'scrub' : 'bob'}
 			label="{assistantName || 'The CRE8 assistant'}, {color} {shape}"
@@ -177,7 +177,7 @@
 		flex-direction: column;
 		align-items: center;
 		gap: var(--space-xs);
-		min-block-size: 110px;
+		min-block-size: 0;
 		max-inline-size: 32.5rem;
 	}
 

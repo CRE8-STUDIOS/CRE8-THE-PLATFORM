@@ -13,7 +13,7 @@
 </script>
 
 <div class="step" data-assistant-color={color}>
-	<MascotStage size="min(220px, 55vw)" {shape} label="{name}, {color} {shape}" />
+	<MascotStage size="min(220px, 45vw, 18dvh)" {shape} label="{name}, {color} {shape}" />
 
 	<h1 class="onboarding-title">What's my color?</h1>
 	<p class="onboarding-text">
@@ -52,12 +52,12 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
-		gap: 14px;
+		gap: 10px;
 	}
 
 	.swatch {
-		inline-size: 52px;
-		block-size: 52px;
+		inline-size: clamp(44px, 6dvh, 52px);
+		block-size: clamp(44px, 6dvh, 52px);
 		border: 3px solid transparent;
 		border-radius: var(--radius-pill);
 		background-color: var(--mascot-color);

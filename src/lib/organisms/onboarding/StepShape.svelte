@@ -14,7 +14,7 @@
 </script>
 
 <div class="step" data-assistant-color={color}>
-	<MascotStage size="min(220px, 55vw)" {shape} label="{name}, {color} {shape}" />
+	<MascotStage size="min(220px, 45vw, 18dvh)" {shape} label="{name}, {color} {shape}" />
 
 	<h1 class="onboarding-title">Pick my shape.</h1>
 	<p class="onboarding-text">
@@ -36,7 +36,7 @@
 						onchange={sounds.squish}
 					/>
 					<span aria-hidden="true">
-						<Mascot size="44px" shape={option} face={false} animate={false} />
+						<Mascot size="clamp(28px, 5dvh, 44px)" shape={option} face={false} animate={false} />
 					</span>
 					<span>{SHAPE_LINES[option].name}</span>
 				</label>
@@ -65,8 +65,8 @@
 		flex-direction: column;
 		align-items: center;
 		gap: 6px;
-		min-inline-size: 84px;
-		padding: 12px 10px;
+		min-inline-size: 72px;
+		padding: 8px;
 		border: 1.5px dashed var(--color-border);
 		border-radius: var(--radius-card);
 		font-family: var(--font-family-display);

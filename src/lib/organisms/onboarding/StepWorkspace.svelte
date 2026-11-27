@@ -9,7 +9,7 @@
 </script>
 
 <div class="step" data-assistant-color={color}>
-	<MascotStage size="min(220px, 55vw)" {shape} {label} />
+	<MascotStage size="min(220px, 45vw, 18dvh)" {shape} {label} />
 
 	<h1 class="onboarding-title">Looking good. Us, I mean.</h1>
 	<p class="onboarding-text">
@@ -47,7 +47,7 @@
 		display: flex;
 		inline-size: 100%;
 		max-inline-size: 420px;
-		block-size: 170px;
+		block-size: clamp(90px, 18dvh, 170px);
 		overflow: hidden;
 		border: 1.5px solid var(--color-text);
 		border-radius: var(--radius-card);

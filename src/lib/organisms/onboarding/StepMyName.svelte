@@ -13,7 +13,7 @@
 </script>
 
 <div class="step">
-	<MascotStage size="min(220px, 55vw)" {shape} {label} />
+	<MascotStage size="min(220px, 55vw, 26dvh)" {shape} {label} />
 
 	<h1 class="onboarding-title">Nice to meet you, {who}.</h1>
 	{#if !userName?.trim()}

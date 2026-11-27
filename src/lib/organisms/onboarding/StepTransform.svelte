@@ -40,13 +40,13 @@
 	<div class="theatre">
 		{#if phase === 'boom'}
 			<div data-assistant-color={color}>
-				<MascotStage size="min(260px, 60vw)" {shape} {label} motion="pop">
+				<MascotStage size="min(260px, 60vw, 30dvh)" {shape} {label} motion="pop">
 					<Sparkles />
 				</MascotStage>
 			</div>
 		{:else}
 			<div data-assistant-color="ink">
-				<MascotStage size="min(240px, 55vw)" shape="splat" label="The original blob" />
+				<MascotStage size="min(240px, 55vw, 28dvh)" shape="splat" label="The original blob" />
 			</div>
 		{/if}
 		<Curtains closed={phase === 'drum'} />
@@ -76,7 +76,7 @@
 		justify-content: center;
 		inline-size: 440px;
 		max-inline-size: 100%;
-		block-size: 360px;
+		block-size: min(360px, 40dvh);
 		overflow: hidden;
 		border: 1.5px solid var(--color-text);
 		border-radius: 18px;
@@ -88,7 +88,7 @@
 		flex-direction: column;
 		align-items: center;
 		gap: var(--space-s);
-		min-block-size: 150px;
+		min-block-size: 0;
 	}
 
 	.boom {
