@@ -81,7 +81,7 @@
 			change its name, link or icon.
 		</p>
 	{:else}
-		<CalmSection id="tools-heading" heading="Tools">
+		<CalmSection id="tools-heading" heading="Tools" data-tour="tools">
 			<ul class="workspace-tools">
 				{#each data.tools as tool (tool.name)}
 					<li><ToolCard {...tool} /></li>
@@ -90,7 +90,7 @@
 		</CalmSection>
 	{/if}
 
-	<CalmSection id="apps-heading" heading="My apps">
+	<CalmSection id="apps-heading" heading="My apps" data-tour="apps">
 		{#snippet aside()}
 			{#if data.edit}
 				<span>{data.apps.length} {data.apps.length === 1 ? 'app' : 'apps'}</span>
@@ -105,7 +105,7 @@
 		{/if}
 	</CalmSection>
 
-	<CalmSection id="links-heading" heading="Important links">
+	<CalmSection id="links-heading" heading="Important links" data-tour="links">
 		{#snippet aside()}
 			<a href="/workspace/links/new" onclick={openPanel}>+ Add link</a>
 		{/snippet}

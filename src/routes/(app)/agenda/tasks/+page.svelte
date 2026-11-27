@@ -23,7 +23,7 @@
 </div>
 <MascotBar />
 
-<div class="tasks">
+<div class="tasks" data-tour="columns">
 	<TaskColumn heading="Today" day={data.today.date} open={data.today.open} done={data.today.done} />
 	<TaskColumn
 		heading="Tomorrow"

@@ -47,6 +47,7 @@
 		<AgendaTabs current={page.url.pathname} />
 		<OutlineButton
 			href="/agenda/add"
+			data-tour="add"
 			aria-label="Add to agenda"
 			onclick={(/** @type {MouseEvent} */ event) => openAdd(event, '/agenda/add')}
 		>

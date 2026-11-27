@@ -1118,3 +1118,9 @@ select:focus-visible {
 	filter: var(--rough-edge);
 	transition: background-color var(--duration-fast) var(--easing-standard);
 }
+
+/* Wrappers that mark a place for the app tour keep the layout of what is inside */
+div[data-tour] {
+	display: grid;
+	min-inline-size: 0;
+}

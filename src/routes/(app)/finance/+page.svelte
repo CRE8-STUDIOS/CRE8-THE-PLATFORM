@@ -18,7 +18,7 @@
 </FinanceHeader>
 
 <div class="card-grid">
-	<InvoiceList {invoices} />
-	{#if !projectId}<BtwGuidance {quarter} />{/if}
+	<div data-tour="invoices"><InvoiceList {invoices} /></div>
+	{#if !projectId}<div data-tour="tax"><BtwGuidance {quarter} /></div>{/if}
 	<NewInvoiceForm id="new-factuur" {clients} {projects} {projectId} {form} />
 </div>

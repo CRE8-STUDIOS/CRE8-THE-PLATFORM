@@ -8,12 +8,12 @@
 	 *   aside?: import('svelte').Snippet,
 	 *   class?: string,
 	 *   children: import('svelte').Snippet
-	 * }}
+	 * } & Record<string, unknown>}
 	 */
-	const { id, heading, aside, class: extra, children } = $props()
+	const { id, heading, aside, class: extra, children, ...rest } = $props()
 </script>
 
-<section class={['calm-section', extra]} aria-labelledby={id}>
+<section class={['calm-section', extra]} aria-labelledby={id} {...rest}>
 	<div class="calm-section-heading">
 		<h2 {id}>{heading}</h2>
 		{#if aside}<div class="calm-section-aside">{@render aside()}</div>{/if}

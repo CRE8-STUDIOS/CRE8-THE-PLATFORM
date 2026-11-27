@@ -12,7 +12,7 @@
 		<a class="button button-primary" href="#new-project">+ New project</a>
 	{/snippet}
 </PageHeader>
-<ProjectList {projects} {status} />
+<div data-tour="list"><ProjectList {projects} {status} /></div>
 <ProjectForm
 	id="new-project"
 	title="New project"

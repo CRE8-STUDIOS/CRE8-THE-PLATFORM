@@ -18,5 +18,7 @@
 	previous={{ href: `/agenda?date=${data.previous}`, label: 'Previous day' }}
 	next={{ href: `/agenda?date=${data.next}`, label: 'Next day' }}
 />
-<MascotBar message={data.added} />
-<Timeline rows={data.rows} allDay={data.allDay} timeZone={data.timezone} label={data.title} />
+<div data-tour="assistant-bar"><MascotBar message={data.added} /></div>
+<div data-tour="day">
+	<Timeline rows={data.rows} allDay={data.allDay} timeZone={data.timezone} label={data.title} />
+</div>
