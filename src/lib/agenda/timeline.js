@@ -15,6 +15,8 @@ const PLANNED_TYPES = new Set(['work', 'meeting', 'shoot', 'errand', 'task'])
  *   ends_at: string | null,
  *   all_day?: boolean | null,
  *   due_date?: string | null,
+ *   status?: string | null,
+ *   href?: string,
  *   is_protected?: boolean | null,
  *   energy?: string | null,
  *   location_name?: string | null,

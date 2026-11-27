@@ -1,5 +1,6 @@
 import { text, number, checkbox, oneOf } from '#lib/server/form.js'
 import { toUtcIso } from '#lib/utils/dates.js'
+import { expandItem } from '#lib/agenda/recurrence.js'
 import { AGENDA_TYPES, ENERGY_TYPES } from '#lib/utils/constants.js'
 
 export const agendaItemFromForm = (
@@ -50,4 +51,77 @@ export const agendaItemFromForm = (
 	}
 
 	return item
+}
+
+const ITEM_COLUMNS =
+	'id, type, title, starts_at, ends_at, all_day, due_date, status, is_protected, energy, location_name, closes_at, travel_before_minutes, travel_after_minutes, recurrence_rule, recurrence_until, projects(title)'
+
+/**
+ * Agenda items between two local dates, repeating items expanded, sorted by start.
+ * Items without a time (deadlines with only a date) are included by their due date.
+ * @param {import('@supabase/supabase-js').SupabaseClient<import('#lib/database.types.js').Database>} supabase
+ * @param {string} from first local date, YYYY-MM-DD
+ * @param {string} to local date after the range
+ * @param {string} timeZone
+ */
+export const loadAgendaRange = async (supabase, from, to, timeZone) => {
+	const fromIso = /** @type {string} */ (toUtcIso(from, timeZone))
+	const toIso = /** @type {string} */ (toUtcIso(to, timeZone))
+
+	const [single, repeating, dated] = await Promise.all([
+		supabase
+			.from('agenda_items')
+			.select(ITEM_COLUMNS)
+			.is('recurrence_rule', null)
+			.gte('starts_at', fromIso)
+			.lt('starts_at', toIso),
+		supabase
+			.from('agenda_items')
+			.select(ITEM_COLUMNS)
+			.not('recurrence_rule', 'is', null)
+			.lt('starts_at', toIso)
+			.or(`recurrence_until.is.null,recurrence_until.gte.${from}`),
+		supabase
+			.from('agenda_items')
+			.select(ITEM_COLUMNS)
+			.is('starts_at', null)
+			.eq('type', 'deadline')
+			.gte('due_date', from)
+			.lt('due_date', to)
+	])
+
+	const error = single.error ?? repeating.error ?? dated.error
+	if (error) throw error
+
+	const timed = [...(single.data ?? []), ...(repeating.data ?? [])].flatMap((item) =>
+		expandItem(item, from, to, timeZone)
+	)
+	timed.sort((a, b) => String(a.starts_at).localeCompare(String(b.starts_at)))
+
+	return [...(dated.data ?? []).map((item) => ({ ...item, occurrence: null })), ...timed]
+}
+
+/**
+ * Project deadlines between two local dates, shaped like agenda deadlines.
+ * @param {import('@supabase/supabase-js').SupabaseClient<import('#lib/database.types.js').Database>} supabase
+ * @param {string} from
+ * @param {string} to
+ */
+export const loadProjectDeadlines = async (supabase, from, to) => {
+	const { data, error } = await supabase
+		.from('projects')
+		.select('id, title, deadline')
+		.gte('deadline', from)
+		.lt('deadline', to)
+	if (error) throw error
+	return (data ?? []).map((project) => ({
+		id: project.id,
+		href: `/projects/${project.id}`,
+		type: 'deadline',
+		title: `Deadline ${project.title}`,
+		starts_at: null,
+		ends_at: null,
+		due_date: project.deadline,
+		occurrence: null
+	}))
 }
