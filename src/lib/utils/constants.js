@@ -1,6 +1,4 @@
 export const AGENDA_TYPES = ['meeting', 'work', 'shoot', 'deadline', 'rest', 'task', 'errand']
-/** Types offered in version 1. Shoots stay in the database but are not offered yet. */
-export const OFFERED_AGENDA_TYPES = AGENDA_TYPES.filter((type) => type !== 'shoot')
 export const ENERGY_TYPES = ['creative', 'admin', 'other']
 export const PROJECT_STATUSES = ['draft', 'active', 'done', 'archived']
 export const TIME_CATEGORIES = ['client_work', 'admin', 'acquisition', 'training']
