@@ -5,7 +5,9 @@
 
 	const { data, children } = $props()
 	const { clock, supabase, timezone, profile } = $derived(data)
-	const bare = $derived(page.route.id?.endsWith('/welcome') ?? false)
+	const bare = $derived(
+		(page.route.id?.endsWith('/welcome') ?? false) || Boolean(page.data.onboarding)
+	)
 </script>
 
 {#snippet clockStatus()}
