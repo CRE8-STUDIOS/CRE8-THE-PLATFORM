@@ -81,8 +81,9 @@ function* datesOf(rule, first) {
 /**
  * Expands a repeating item into the occurrences that start in [from, to).
  * Times stay the same on the wall clock, also across daylight saving changes.
+ * Dates in recurrence_exceptions are skipped (removed or changed one by one).
  * Items without a rule come back unchanged when they start in the range.
- * @template {{ starts_at: string | null, ends_at: string | null, recurrence_rule?: string | null, recurrence_until?: string | null }} T
+ * @template {{ starts_at: string | null, ends_at: string | null, recurrence_rule?: string | null, recurrence_until?: string | null, recurrence_exceptions?: string[] | null }} T
  * @param {T} item
  * @param {string} from first local date, YYYY-MM-DD
  * @param {string} to local date after the range, YYYY-MM-DD
@@ -109,7 +110,7 @@ export const expandItem = (item, from, to, timeZone) => {
 		if (date >= to || (until && date > until) || made >= SAFETY_LIMIT) break
 		if (rule.count !== null && made >= rule.count) break
 		made += 1
-		if (date < from) continue
+		if (date < from || item.recurrence_exceptions?.includes(date)) continue
 
 		const startsAt = /** @type {string} */ (toUtcIso(`${date}T${time}`, timeZone))
 		occurrences.push({

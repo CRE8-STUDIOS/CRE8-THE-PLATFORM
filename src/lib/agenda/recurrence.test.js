@@ -93,3 +93,15 @@ describe('expandItem', () => {
 		expect(days.map((day) => day.occurrence)).toEqual(['2027-01-31', '2027-03-31'])
 	})
 })
+
+describe('recurrence exceptions', () => {
+	it('skips dates that were taken out one by one', () => {
+		const days = expandItem(
+			{ ...item({ recurrence_rule: 'FREQ=DAILY' }), recurrence_exceptions: ['2026-11-06'] },
+			'2026-11-05',
+			'2026-11-08',
+			zone
+		)
+		expect(days.map((day) => day.occurrence)).toEqual(['2026-11-05', '2026-11-07'])
+	})
+})
