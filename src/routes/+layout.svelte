@@ -17,7 +17,13 @@
 	<title>CRE8</title>
 </svelte:head>
 
-{@render children()}
+<div
+	class="app-root"
+	data-assistant-color={data.assistant.color}
+	data-workspace-match={String(data.assistant.matchWorkspace)}
+>
+	{@render children()}
+</div>
 
 <svg class="visually-hidden" aria-hidden="true" focusable="false">
 	<filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
@@ -41,3 +47,9 @@
 		/>
 	</filter>
 </svg>
+
+<style>
+	.app-root {
+		display: contents;
+	}
+</style>
