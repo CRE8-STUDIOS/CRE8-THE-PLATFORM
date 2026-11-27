@@ -10,16 +10,14 @@ import {
 	minutesBetween,
 	nextStep,
 	projectStage,
-	upNext
+	upNext,
+	DEADLINE_DAYS
 } from '#lib/overview/helpers.js'
 
 /**
  * @typedef {import('#lib/server/guide.js').Supabase} Supabase
  * @typedef {import('#lib/overview/helpers.js').Card} Card
  */
-
-/** How far ahead the deadlines card looks */
-export const DEADLINE_DAYS = 14
 
 /** Group rows by a key */
 const groupBy = (/** @type {any[]} */ rows, /** @type {string} */ key) => {

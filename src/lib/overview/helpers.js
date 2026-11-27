@@ -8,6 +8,9 @@ import { amount } from '#lib/agenda/fit.js'
 
 const MINUTE = 60_000
 
+/** How far ahead the deadlines card looks */
+export const DEADLINE_DAYS = 14
+
 /** Items with a start and end time, not tasks or deadlines */
 const timed = (/** @type {AgendaItem[]} */ items) =>
 	items

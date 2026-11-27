@@ -4,6 +4,9 @@
 	import RightNow from '#lib/organisms/overview/RightNow.svelte'
 	import UpNext from '#lib/organisms/overview/UpNext.svelte'
 	import MeetingsCard from '#lib/organisms/overview/MeetingsCard.svelte'
+	import TasksCard from '#lib/organisms/overview/TasksCard.svelte'
+	import DeadlinesCard from '#lib/organisms/overview/DeadlinesCard.svelte'
+	import { DEADLINE_DAYS } from '#lib/overview/helpers.js'
 
 	const { data } = $props()
 
@@ -41,6 +44,8 @@
 
 	<div class="overview-cards">
 		<MeetingsCard meetings={data.meetings} toSend={data.toSend} />
+		<TasksCard tasks={data.tasks} today={data.today} />
+		<DeadlinesCard deadlines={data.deadlines} days={DEADLINE_DAYS} />
 	</div>
 </div>
 

@@ -4,9 +4,9 @@
 	/**
 	 * A task: a check button, title, time as a quiet line, and the priority word.
 	 * The check is a form, so it works without JavaScript.
-	 * @type {{ task: import('#lib/agenda/lists.js').Task }}
+	 * @type {{ task: import('#lib/agenda/lists.js').Task, back?: string }}
 	 */
-	const { task } = $props()
+	const { task, back } = $props()
 
 	const done = $derived(task.status === 'done')
 	const PRIORITY = /** @type {Record<string, string>} */ ({
@@ -20,6 +20,7 @@
 <li class="task-row" class:done>
 	<form method="POST" action="/agenda/tasks?/done">
 		<input type="hidden" name="id" value={task.id} />
+		{#if back}<input type="hidden" name="redirectTo" value={back} />{/if}
 		<button
 			class="task-check"
 			name="status"
