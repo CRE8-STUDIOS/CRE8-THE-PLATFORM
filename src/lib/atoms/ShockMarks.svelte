@@ -11,8 +11,6 @@
 		class="shock-drop shock-drop-late"
 		d="M162 76C158 84 155 90 160 94C165 97 170 92 168 86C167 82 164 79 162 76Z"
 	/>
-	<path class="shock-shine" d="M74 150C66 141 66 130 70 122" />
-	<circle class="shock-shine-dot" cx="80" cy="161" r="3" />
 </svg>
 
 <style>
@@ -70,17 +68,6 @@
 
 	.shock-drop-late {
 		animation-delay: calc(var(--duration-auth-look) * 0.8);
-	}
-
-	.shock-shine {
-		fill: none;
-		stroke: var(--color-surface);
-		stroke-width: 5;
-		stroke-linecap: round;
-	}
-
-	.shock-shine-dot {
-		fill: var(--color-surface);
 	}
 
 	@keyframes shock-draw {
