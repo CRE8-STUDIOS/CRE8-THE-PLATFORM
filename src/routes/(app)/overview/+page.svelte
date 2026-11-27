@@ -1,6 +1,8 @@
 <script>
 	import ClockInPrompt from '#lib/organisms/ClockInPrompt.svelte'
 	import ClockControl from '#lib/organisms/overview/ClockControl.svelte'
+	import RightNow from '#lib/organisms/overview/RightNow.svelte'
+	import UpNext from '#lib/organisms/overview/UpNext.svelte'
 
 	const { data } = $props()
 
@@ -30,6 +32,11 @@
 			/>
 		</div>
 	</header>
+
+	<div class="overview-now">
+		<RightNow now={data.rightNow} />
+		<div data-tour="planning"><UpNext suggestions={data.upNext} /></div>
+	</div>
 </div>
 
 {#if showPrompt}
@@ -66,6 +73,19 @@
 	.overview-date {
 		color: var(--color-text-calm);
 		font-size: var(--font-size-agenda-meta);
+	}
+
+	.overview-now {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
+		gap: var(--space-m);
+		align-items: stretch;
+	}
+
+	@media (width >= 60rem) {
+		.overview-now {
+			grid-template-columns: 1.4fr 1fr;
+		}
 	}
 
 	h1 {
