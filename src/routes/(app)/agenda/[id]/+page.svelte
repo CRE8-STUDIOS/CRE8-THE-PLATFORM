@@ -9,7 +9,10 @@
 	import PeopleList from '#lib/organisms/PeopleList.svelte'
 
 	const { data, form } = $props()
-	const { item, checklist, people, canStart, timezone, backHref, confirmDelete } = $derived(data)
+	const { item, checklist, people, canStart, timezone, backHref, confirmDelete, occurrence } =
+		$derived(data)
+	const on = $derived(occurrence ? `on=${occurrence}` : '')
+	const self = $derived(`/agenda/${item.id}${on ? `?${on}` : ''}`)
 </script>
 
 <PageHeader title={item.title} back={{ href: backHref, text: 'Agenda' }}>
@@ -37,17 +40,28 @@
 <PeopleList {people} />
 
 {#if confirmDelete}
-	<form class="item-confirm" method="POST" action="?/delete">
-		<p>Delete <strong>{item.title}</strong> for good? This cannot be undone.</p>
-		<div class="item-actions">
-			<OutlineButton href="/agenda/{item.id}">Cancel</OutlineButton>
-			<OutlineButton strong>Delete</OutlineButton>
-		</div>
+	<form class="item-confirm" method="POST" action="?{on ? `${on}&` : ''}/delete">
+		{#if item.recurrence_rule && occurrence}
+			<p>
+				Delete <strong>{item.title}</strong>, only this one or all of them? This cannot be undone.
+			</p>
+			<div class="item-actions">
+				<OutlineButton href={self}>Cancel</OutlineButton>
+				<OutlineButton name="scope" value="one">Only this one</OutlineButton>
+				<OutlineButton strong name="scope" value="all">All of them</OutlineButton>
+			</div>
+		{:else}
+			<p>Delete <strong>{item.title}</strong> for good? This cannot be undone.</p>
+			<div class="item-actions">
+				<OutlineButton href={self}>Cancel</OutlineButton>
+				<OutlineButton strong name="scope" value="all">Delete</OutlineButton>
+			</div>
+		{/if}
 	</form>
 {:else}
 	<div class="item-actions">
-		<OutlineButton href="/agenda/{item.id}?delete">Delete</OutlineButton>
-		<OutlineButton href="/agenda/{item.id}/edit" strong>Edit</OutlineButton>
+		<OutlineButton href="{self}{on ? '&' : '?'}delete">Delete</OutlineButton>
+		<OutlineButton href="/agenda/{item.id}/edit{on ? `?${on}` : ''}" strong>Edit</OutlineButton>
 	</div>
 {/if}
 

@@ -27,6 +27,9 @@ export const load = async ({ locals, params, url }) => {
 	return {
 		backHref: `/agenda?date=${day}`,
 		confirmDelete: url.searchParams.has('delete'),
+		occurrence: /^\d{4}-\d{2}-\d{2}$/.test(url.searchParams.get('on') ?? '')
+			? url.searchParams.get('on')
+			: null,
 		item,
 		checklist: checklist ?? [],
 		people: people ?? [],
@@ -36,7 +39,25 @@ export const load = async ({ locals, params, url }) => {
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	delete: async ({ locals, params }) => {
+	delete: async ({ request, locals, params, url }) => {
+		const scope = text(await request.formData(), 'scope')
+		const on = url.searchParams.get('on')
+
+		if (scope === 'one' && on && /^\d{4}-\d{2}-\d{2}$/.test(on)) {
+			const { data: item } = await locals.supabase
+				.from('agenda_items')
+				.select('recurrence_exceptions')
+				.eq('id', params.id)
+				.maybeSingle()
+			const exceptions = [...new Set([...(item?.recurrence_exceptions ?? []), on])]
+			const { error: updateError } = await locals.supabase
+				.from('agenda_items')
+				.update({ recurrence_exceptions: exceptions })
+				.eq('id', params.id)
+			if (updateError) return failWith(updateError)
+			redirect(303, `/agenda?date=${on}`)
+		}
+
 		const { error: deleteError } = await locals.supabase
 			.from('agenda_items')
 			.delete()
