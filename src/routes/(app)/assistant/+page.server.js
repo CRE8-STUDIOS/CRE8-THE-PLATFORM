@@ -46,5 +46,20 @@ export const actions = {
 		const name = nameField(await request.formData(), 'name')
 		if (name === undefined) return failMessage(TOO_LONG)
 		return saveAndGo(locals, { name }, stepHref(2))
+	},
+
+	myName: async ({ request, locals }) => {
+		const formData = await request.formData()
+		const pleaded = formData.get('plea') === 'yes'
+
+		if (formData.get('intent') === 'skip') {
+			if (!pleaded) return { plea: true }
+			return saveAndGo(locals, { assistant_name: null }, stepHref(3))
+		}
+
+		const name = nameField(formData, 'assistant_name')
+		if (name === undefined) return failMessage(TOO_LONG)
+		if (name === null) return { plea: true }
+		return saveAndGo(locals, { assistant_name: name }, stepHref(3))
 	}
 }

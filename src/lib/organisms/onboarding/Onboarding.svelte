@@ -2,12 +2,18 @@
 	import { ONBOARDING_STEPS, stepHref } from '#lib/utils/onboarding.js'
 	import StepHello from './StepHello.svelte'
 	import StepYourName from './StepYourName.svelte'
+	import StepMyName from './StepMyName.svelte'
+	import { ASSISTANT_DEFAULT_NAME } from '#lib/utils/constants.js'
 
 	/** @typedef {{ name: string | null, color: string, shape: string, matchWorkspace: boolean }} Assistant */
 	/** @type {{ step: number, userName: string | null, assistant: Assistant, form?: unknown }} */
 	const { step, userName, assistant, form } = $props()
 
 	const canSkip = $derived(step > 0 && step < 6)
+	const buddyName = $derived(
+		assistant.name || (step > 2 ? ASSISTANT_DEFAULT_NAME : 'The CRE8 assistant')
+	)
+	const buddyLabel = $derived(`${buddyName}, ${assistant.color} ${assistant.shape}`)
 	const result = $derived(
 		/** @type {{ message?: string, plea?: boolean } | null | undefined} */ (form)
 	)
@@ -48,6 +54,14 @@
 					assistantName={assistant.name}
 					{userName}
 					back={stepHref(0)}
+				/>
+			{:else if step === 2}
+				<StepMyName
+					shape={assistant.shape}
+					label={buddyLabel}
+					{userName}
+					assistantName={assistant.name}
+					plea={Boolean(result?.plea)}
 				/>
 			{:else}
 				<p class="onboarding-line">{ONBOARDING_STEPS[step].label}</p>
