@@ -132,3 +132,7 @@ export const plannedHours = (items) => {
 		)
 	return Math.round((minutes / 60) * 2) / 2
 }
+
+/** Link to an item's details; repeating items carry the date that was clicked */
+export const itemHref = (/** @type {AgendaItem} */ item) =>
+	item.href ?? `/agenda/${item.id}${item.occurrence ? `?on=${item.occurrence}` : ''}`

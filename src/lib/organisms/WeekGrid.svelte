@@ -1,5 +1,5 @@
 <script>
-	import { isFocus } from '#lib/agenda/timeline.js'
+	import { isFocus, itemHref } from '#lib/agenda/timeline.js'
 	import { formatTime } from '#lib/utils/dates.js'
 
 	/**
@@ -37,7 +37,7 @@
 				<ul class="week-all-day" style:grid-column={index + 2}>
 					{#each day.allDay as item (item.id)}
 						<li class:deadline={item.type === 'deadline'}>
-							<a href={item.href ?? `/agenda/${item.id}`}>
+							<a href={itemHref(item)}>
 								{item.title}
 							</a>
 						</li>
@@ -56,7 +56,7 @@
 					class="week-item"
 					class:focus={isFocus(item)}
 					class:quiet={item.type === 'rest'}
-					href="/agenda/{item.id}"
+					href={itemHref(item)}
 					style:grid-column={index + 2}
 					style:grid-row="{FIRST_SLOT_ROW + row - 1} / span {span}"
 				>

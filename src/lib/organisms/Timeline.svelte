@@ -1,7 +1,7 @@
 <script>
 	import AgendaRow from '#lib/molecules/AgendaRow.svelte'
 	import AgendaGapRow from '#lib/molecules/AgendaGapRow.svelte'
-	import { isFocus, subLine, typeLabel } from '#lib/agenda/timeline.js'
+	import { isFocus, itemHref, subLine, typeLabel } from '#lib/agenda/timeline.js'
 	import { formatTime } from '#lib/utils/dates.js'
 
 	/**
@@ -30,7 +30,7 @@
 					title={item.title}
 					sub={subLine(item, timeZone)}
 					label={typeLabel(item)}
-					href={item.href ?? `/agenda/${item.id}`}
+					href={itemHref(item)}
 					done={item.status === 'done'}
 				/>
 			{/each}
@@ -42,7 +42,7 @@
 						title={item.title}
 						sub={subLine(item, timeZone)}
 						label={typeLabel(item)}
-						href="/agenda/{item.id}"
+						href={itemHref(item)}
 						focus={isFocus(item)}
 						quiet={item.type === 'rest'}
 						done={item.status === 'done'}

@@ -1,4 +1,6 @@
 <script>
+	import { itemHref } from '#lib/agenda/timeline.js'
+
 	/**
 	 * @type {{
 	 *   cells: ReturnType<typeof import('#lib/agenda/grid.js').monthCells>,
@@ -27,11 +29,7 @@
 					{cell.day}
 				</a>
 				{#each cell.items as item (`${item.id}${item.starts_at}`)}
-					<a
-						class="month-item"
-						class:deadline={item.type === 'deadline'}
-						href={item.href ?? `/agenda/${item.id}`}
-					>
+					<a class="month-item" class:deadline={item.type === 'deadline'} href={itemHref(item)}>
 						{item.title}
 					</a>
 				{/each}
