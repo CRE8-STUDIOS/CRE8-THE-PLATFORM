@@ -53,8 +53,7 @@ export const agendaItemFromForm = (
 	return item
 }
 
-const ITEM_COLUMNS =
-	'id, type, title, starts_at, ends_at, all_day, due_date, status, is_protected, energy, location_name, closes_at, travel_before_minutes, travel_after_minutes, recurrence_rule, recurrence_until, projects(title)'
+const ITEM_COLUMNS = '*, projects(title)'
 
 /**
  * Agenda items between two local dates, repeating items expanded, sorted by start.
