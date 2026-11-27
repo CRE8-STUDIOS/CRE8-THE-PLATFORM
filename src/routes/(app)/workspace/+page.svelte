@@ -1,88 +1,58 @@
-<!-- Placeholder page: the data is connected later. -->
 <script>
-	import PageHeader from '#lib/molecules/PageHeader.svelte'
-	import Card from '#lib/molecules/Card.svelte'
-	import AppTile from '#lib/molecules/AppTile.svelte'
+	import CalmSection from '#lib/molecules/CalmSection.svelte'
+	import ToolCard from '#lib/molecules/ToolCard.svelte'
 
-	const quickActions = [
-		{ href: '/projects#new-project', text: '+ New project' },
-		{ href: '/finance#new-factuur', text: '+ New factuur' },
-		{ href: '/projects', text: '+ New request' },
-		{ href: '/notes#new-note', text: '+ New note' }
-	]
-	const apps = ['[App name]', '[App name]', '[App name]', '[App name]']
+	const { data } = $props()
 </script>
 
-<PageHeader title="Workspace">
-	{#snippet actions()}
-		<form class="workspace-search" role="search">
-			<label class="field">
-				<span class="visually-hidden">Search your workspace</span>
-				<input type="search" name="q" placeholder="Search [projects, notes, files]" />
-			</label>
-		</form>
-	{/snippet}
-</PageHeader>
+<svelte:head><title>Workspace · CRE8</title></svelte:head>
 
-<nav aria-label="Quick actions">
-	<ul class="pill-list">
-		{#each quickActions as { href, text } (text)}
-			<li><a class="pill-link" {href}>{text}</a></li>
-		{/each}
-	</ul>
-</nav>
+<div class="workspace">
+	<div class="workspace-heading">
+		<h1>Workspace</h1>
+	</div>
 
-<Card title="My apps">
-	<ul class="app-grid">
-		{#each apps as name, index (index)}
-			<li><AppTile {name} /></li>
-		{/each}
-		<li>
-			<a class="app-grid-add" href="/settings/tiles">
-				<span class="app-grid-add-icon" aria-hidden="true">+</span>
-				Add app
-			</a>
-		</li>
-	</ul>
-</Card>
+	<CalmSection id="tools-heading" heading="Tools">
+		<ul class="workspace-tools">
+			{#each data.tools as tool (tool.name)}
+				<li><ToolCard {...tool} /></li>
+			{/each}
+		</ul>
+	</CalmSection>
+</div>
 
 <style>
-	.workspace-search {
-		inline-size: min(100%, var(--size-grid-2xl));
+	.workspace {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xl);
+		max-inline-size: var(--agenda-max-width);
 	}
 
-	.app-grid {
+	.workspace-heading {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-m);
+	}
+
+	h1 {
+		font-size: var(--font-size-agenda-heading);
+		line-height: 1;
+		text-transform: uppercase;
+	}
+
+	.workspace-tools {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(var(--size-grid-tile), 1fr));
-		gap: var(--space-s);
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+		gap: var(--space-m);
+		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
 
-	.app-grid-add {
+	.workspace-tools li {
 		display: grid;
-		justify-items: center;
-		align-content: center;
-		gap: var(--space-xs);
-		block-size: 100%;
-		padding: var(--space-m);
-		border: var(--border-width-thick) dashed var(--color-border);
-		border-radius: var(--radius-card);
-		color: var(--color-text-muted);
-		font-family: var(--font-family-display);
-		font-size: var(--font-size-label);
-		letter-spacing: var(--letter-spacing-display);
-		text-transform: uppercase;
-		text-decoration: none;
-	}
-
-	.app-grid-add:hover {
-		border-color: var(--color-text);
-		color: var(--color-text);
-	}
-
-	.app-grid-add-icon {
-		font-size: var(--font-size-project);
-		line-height: var(--line-height-tight);
 	}
 </style>
