@@ -6,7 +6,7 @@
 
 	const TABS = [
 		{ href: '/guide', text: 'Start', match: /^\/guide$/ },
-		{ href: '/guide/app', text: 'How CRE8 works', match: /^\/guide\/app/ },
+		{ href: '/guide/app', text: 'How the platform works', match: /^\/guide\/app/ },
 		{ href: '/guide/money', text: 'Money basics', match: /^\/guide\/money/ },
 		{ href: '/guide/words', text: 'Words', match: /^\/guide\/words/ }
 	]

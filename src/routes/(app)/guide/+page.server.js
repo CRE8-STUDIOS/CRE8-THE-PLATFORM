@@ -25,7 +25,7 @@ export const load = async ({ locals, url }) => {
 		tracks: [
 			{
 				href: app.next ? `/guide/app/${app.next.slug}` : '/guide/app',
-				title: 'How CRE8 works',
+				title: 'How the platform works',
 				line: 'A tour through the app. I walk you past every page and show what it does.',
 				done: app.done,
 				total: app.total,
