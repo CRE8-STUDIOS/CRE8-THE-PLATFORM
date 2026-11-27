@@ -5,7 +5,6 @@
 <script>
 	import { onNavigate } from '$app/navigation'
 	import Mascot from '#lib/atoms/Mascot.svelte'
-	import EraserWipe from '#lib/atoms/EraserWipe.svelte'
 	import ShockMarks from '#lib/atoms/ShockMarks.svelte'
 	import MascotBack from '#lib/atoms/MascotBack.svelte'
 
@@ -14,7 +13,7 @@
 
 	/** @typedef {'idle' | 'duck' | 'erase' | 'back' | 'turn' | 'shock' | 'draw' | 'jump'} Phase */
 	let phase = $state(/** @type {Phase} */ (arriving ? 'shock' : 'idle'))
-	const caught = $derived(['back', 'turn', 'shock', 'draw'].includes(phase))
+	const caught = $derived(['erase', 'back', 'turn', 'shock', 'draw'].includes(phase))
 	const facing = $derived(phase === 'shock' || phase === 'draw')
 	/** @type {{ x: number, y: number } | null} */
 	let gaze = $state(null)
@@ -30,9 +29,33 @@
 		stage.classList.add('is-shaking')
 	})
 
+	const ZIGZAG =
+		'M-10 3L110 9L-10 17L110 25L-10 33L110 41L-10 49L110 57L-10 65L110 73L-10 81L110 89L-10 97L110 105'
+
+	/** @param {'erase' | 'draw'} mode @param {number} ms */
+	const strokeMask = (mode, ms) => {
+		const stroke = `<path pathLength='1' d='${ZIGZAG}' fill='none' stroke='black' stroke-width='17' stroke-linecap='round' stroke-linejoin='round' filter='url(#r)'/>`
+		const rough = `<filter id='r' x='-10%' y='-10%' width='120%' height='120%'><feTurbulence type='fractalNoise' baseFrequency='0.08' numOctaves='3' seed='${Date.now() % 97}'/><feDisplacementMap in='SourceGraphic' scale='2.5'/></filter>`
+		const motion = `<style>path{stroke-dasharray:1;stroke-dashoffset:1;animation:m ${ms}ms ease-in-out forwards}@keyframes m{to{stroke-dashoffset:0}}</style>`
+		const body =
+			mode === 'erase'
+				? `<defs>${rough}<mask id='h'><rect x='-10' y='-10' width='120' height='120' fill='white'/>${stroke}</mask></defs><rect x='-10' y='-10' width='120' height='120' mask='url(#h)'/>`
+				: `<defs>${rough}</defs>${stroke}`
+		const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'>${motion}${body}</svg>`
+		return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`
+	}
+
 	const duration = (/** @type {string} */ name) =>
 		parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0
 	const wait = (/** @type {number} */ ms) => new Promise((done) => setTimeout(done, ms))
+
+	const cardMask = $derived(
+		phase === 'erase'
+			? strokeMask('erase', duration('--duration-auth-erase'))
+			: phase === 'draw'
+				? strokeMask('draw', duration('--duration-auth-draw'))
+				: undefined
+	)
 
 	const startSearching = () => {
 		let side = 1
@@ -114,7 +137,12 @@
 	</div>
 
 	<div class="auth-stage is-{phase}" bind:this={stage}>
-		<section class="auth-card" class:auth-card-split={bottom} aria-labelledby="auth-card-title">
+		<section
+			class="auth-card"
+			class:auth-card-split={bottom}
+			style:mask-image={cardMask}
+			aria-labelledby="auth-card-title"
+		>
 			<div class="auth-card-shape" aria-hidden="true"></div>
 			<div class="auth-card-half auth-card-half-top">
 				<h2 id="auth-card-title" class="auth-card-title">{title}</h2>
@@ -136,8 +164,6 @@
 				</div>
 			</div>
 		{/if}
-		{#if phase === 'erase'}<EraserWipe contained />{/if}
-		{#if phase === 'draw'}<EraserWipe mode="draw" contained />{/if}
 	</div>
 
 	<div class="auth-after">
@@ -251,12 +277,14 @@
 	}
 
 	.auth-stage {
-		--eraser-duration: var(--duration-auth-erase);
 		--auth-caught-size: min(22rem, 70vw, 55dvh);
 	}
 
-	.auth-stage.is-draw {
-		--eraser-duration: var(--duration-auth-draw);
+	.auth-stage.is-erase .auth-card,
+	.auth-stage.is-draw .auth-card {
+		mask-size: calc(100% + 3rem) calc(100% + 3rem);
+		mask-position: center;
+		mask-repeat: no-repeat;
 	}
 
 	.auth-stage.is-back .auth-card,
@@ -294,6 +322,7 @@
 		scale: 1.45;
 	}
 
+	.auth-caught.is-erase .auth-caught-actor,
 	.auth-caught.is-back .auth-caught-actor {
 		animation: auth-wiggle calc(var(--duration-auth-back) / 3) ease-in-out infinite alternate;
 	}
