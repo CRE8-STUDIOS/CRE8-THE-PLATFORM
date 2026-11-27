@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit'
 import { text, failMessage, failWith } from '#lib/server/form.js'
-import { ASSISTANT_COLORS, ASSISTANT_NAME_MAX } from '#lib/utils/constants.js'
+import { ASSISTANT_COLORS, ASSISTANT_NAME_MAX, ASSISTANT_SHAPES } from '#lib/utils/constants.js'
 import { stepHref, stepIndex } from '#lib/utils/onboarding.js'
 
 /** @type {import('./$types').PageServerLoad} */
@@ -68,5 +68,12 @@ export const actions = {
 		const color = ASSISTANT_COLORS.find((option) => option === value)
 		if (!color) return failMessage('Pick one of the colors.')
 		return saveAndGo(locals, { assistant_color: color }, stepHref(4))
+	},
+
+	shape: async ({ request, locals }) => {
+		const value = (await request.formData()).get('assistant_shape')
+		const shape = ASSISTANT_SHAPES.find((option) => option === value)
+		if (!shape) return failMessage('Pick one of the shapes.')
+		return saveAndGo(locals, { assistant_shape: shape }, stepHref(5))
 	}
 }

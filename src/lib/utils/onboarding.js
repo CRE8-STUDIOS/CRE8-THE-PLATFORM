@@ -68,3 +68,12 @@ export const COLOR_LINES = {
 	orange: { name: 'Orange', line: 'orange. loud. the neighbours will know.' },
 	lilac: { name: 'Lilac', line: 'lilac. dramatic. a little extra. same.' }
 }
+
+/** @type {Record<string, { name: string, line: string }>} */
+export const SHAPE_LINES = {
+	splat: { name: 'Splat', line: 'the original splash. a classic never dies.' },
+	bubble: { name: 'Bubble', line: 'round, soft, emotionally available.' },
+	star: { name: 'Star', line: 'a star. obviously. you saw it too.' },
+	cloud: { name: 'Cloud', line: 'fluffy, with a 90% chance of deadlines.' },
+	flower: { name: 'Flower', line: 'blooming under pressure. literally.' }
+}
