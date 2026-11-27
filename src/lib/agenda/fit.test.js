@@ -184,3 +184,30 @@ describe('fit', () => {
 		).toBe('Fotolab is closed then. It is open 09:00 to 17:00.')
 	})
 })
+
+describe('itemToAnswers', () => {
+	it('fills the form back in from a saved item', async () => {
+		const { itemToAnswers } = await import('./answers.js')
+		const saved = /** @type {any} */ ({
+			type: 'meeting',
+			title: 'Brief',
+			starts_at: '2026-11-28T11:00:00.000Z',
+			ends_at: '2026-11-28T12:00:00.000Z',
+			due_date: null,
+			meeting_url: null,
+			location_name: null,
+			address: 'NDSM 12',
+			travel_before_minutes: 30,
+			reminder_minutes: [],
+			recurrence_rule: 'FREQ=WEEKLY'
+		})
+		expect(itemToAnswers(saved, { today, timeZone })).toMatchObject({
+			day: 'tomorrow',
+			from: '12:00',
+			to: '13:00',
+			where: 'in_person',
+			travel: '30',
+			repeat: 'weekly'
+		})
+	})
+})

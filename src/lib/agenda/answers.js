@@ -1,4 +1,4 @@
-import { addDays, mondayOf, toUtcIso } from '#lib/utils/dates.js'
+import { addDays, mondayOf, toLocalInput, toUtcIso } from '#lib/utils/dates.js'
 
 /** Types that can be added in version 1, in the order of step 1 */
 export const ADD_TYPES = ['task', 'meeting', 'work', 'errand', 'deadline', 'rest']
@@ -262,4 +262,107 @@ export const readExtras = (formData) => {
 		.filter((person) => person.name)
 
 	return { checklist, people }
+}
+
+/**
+ * The type a saved item is edited as. Older types fall back to the closest one.
+ * @param {string} type
+ */
+export const formTypeOf = (type) => (ADD_TYPES.includes(type) ? type : 'work')
+
+/**
+ * Fills the answers of the add form from a saved item, for editing.
+ * @param {import('#lib/database.types.js').Tables<'agenda_items'>} item
+ * @param {{ today: string, timeZone: string }} context
+ * @returns {Answers}
+ */
+export const itemToAnswers = (item, { today, timeZone }) => {
+	const local = (/** @type {string | null} */ iso) => (iso ? toLocalInput(iso, timeZone) : '')
+	const start = local(item.starts_at)
+	const day = start.slice(0, 10) || item.due_date || ''
+	const dayAnswer = !day
+		? 'none'
+		: day === today
+			? 'today'
+			: day === addDays(today, 1)
+				? 'tomorrow'
+				: 'pick'
+	const minutes = item.estimated_minutes ? String(item.estimated_minutes) : ''
+	const rule = item.recurrence_rule ?? ''
+	const type = formTypeOf(item.type)
+
+	/** @type {Answers} */
+	const answers = {
+		title: item.title,
+		project_id: item.project_id ?? '',
+		notes: item.description ?? '',
+		reminder:
+			item.reminder_minutes?.length && type !== 'deadline' ? String(item.reminder_minutes[0]) : '',
+		repeat: /DAILY/.test(rule)
+			? 'daily'
+			: /WEEKLY/.test(rule)
+				? 'weekly'
+				: /MONTHLY/.test(rule)
+					? 'monthly'
+					: '',
+		day: dayAnswer,
+		date: day,
+		from: start.slice(11, 16),
+		to: local(item.ends_at).slice(11, 16)
+	}
+
+	if (type === 'task') {
+		Object.assign(answers, {
+			priority: item.priority ?? 'should',
+			duration: !minutes ? '' : TASK_MINUTES.includes(minutes) ? minutes : 'other',
+			minutes
+		})
+	}
+	if (type === 'meeting') {
+		const where =
+			item.meeting_url || item.location_name === 'Online'
+				? 'online'
+				: item.location_name === 'Phone'
+					? 'phone'
+					: 'in_person'
+		Object.assign(answers, {
+			where,
+			address: item.address ?? '',
+			meeting_url: item.meeting_url ?? '',
+			travel: String(item.travel_before_minutes ?? 0)
+		})
+	}
+	if (type === 'work') {
+		Object.assign(answers, {
+			kind: item.energy ?? 'other',
+			protect: item.is_protected ? 'on' : '',
+			clock_in: /** @type {{ clock_in_prompt?: boolean }} */ (item).clock_in_prompt ? 'on' : ''
+		})
+	}
+	if (type === 'errand') {
+		Object.assign(answers, {
+			location: item.location_name ?? '',
+			opens: item.opens_at?.slice(0, 5) ?? '',
+			closes: item.closes_at?.slice(0, 5) ?? '',
+			duration: minutes || '30',
+			timing: item.starts_at ? 'pick' : 'find'
+		})
+	}
+	if (type === 'deadline') {
+		const days = item.reminder_minutes?.[0]
+			? String(Math.round(item.reminder_minutes[0] / 1440))
+			: '3'
+		Object.assign(answers, { due: 'pick', heads_up: HEADS_UP_DAYS.includes(days) ? days : '3' })
+	}
+	if (type === 'rest') {
+		const kind = item.all_day
+			? item.title.toLowerCase().includes('holiday')
+				? 'holiday'
+				: 'day_off'
+			: item.title.toLowerCase().includes('lunch')
+				? 'lunch'
+				: 'break'
+		Object.assign(answers, { kind, lock: item.is_protected ? 'on' : '' })
+	}
+	return answers
 }
