@@ -25,7 +25,7 @@
 			{@render back()}
 		</svg>
 	{/if}
-	<Mascot size="100%" {shape} {label} {face} {eyes} animate={motion === 'bob'} />
+	<Mascot size="100%" {shape} {label} {face} {eyes} animate={motion !== 'still'} bob={false} />
 	{#if front}
 		<svg class="mascot-layer" viewBox="0 0 200 200" aria-hidden="true">
 			{@render front()}
@@ -56,7 +56,12 @@
 		z-index: -1;
 	}
 
+	/* The whole stage moves, so costumes and props stay on the body */
 	@media (prefers-reduced-motion: no-preference) {
+		.bob {
+			animation: bob var(--mascot-bob-speed) ease-in-out infinite;
+		}
+
 		.scrub {
 			animation: scrub 0.45s ease-in-out infinite;
 		}
@@ -73,6 +78,19 @@
 
 		.pop {
 			animation: pop 0.7s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+		}
+	}
+
+	@keyframes bob {
+		0%,
+		100% {
+			transform: translateY(0) scale(1, 1);
+		}
+		45% {
+			transform: translateY(calc(-1 * var(--mascot-bob-height))) scale(0.97, 1.03);
+		}
+		80% {
+			transform: translateY(0) scale(1.04, 0.95);
 		}
 	}
 

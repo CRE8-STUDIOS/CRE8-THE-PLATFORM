@@ -3,13 +3,14 @@
 	import { mascotShapes } from '#lib/utils/mascot-shapes.js'
 	import { ASSISTANT_DEFAULT_NAME } from '#lib/utils/constants.js'
 
-	/** @type {{ size?: string, shape?: string, eyes?: string, face?: boolean, animate?: boolean, follow?: boolean, gaze?: { x: number, y: number } | null, label?: string }} */
+	/** @type {{ size?: string, shape?: string, eyes?: string, face?: boolean, animate?: boolean, bob?: boolean, follow?: boolean, gaze?: { x: number, y: number } | null, label?: string }} */
 	const {
 		size,
 		shape,
 		eyes,
 		face = true,
 		animate = true,
+		bob = true,
 		follow = false,
 		gaze = null,
 		label
@@ -60,6 +61,7 @@
 	bind:this={svg}
 	class="mascot"
 	class:animate
+	class:bob={animate && bob}
 	viewBox="0 0 200 200"
 	style:--mascot-size={size}
 	role="img"
@@ -102,7 +104,7 @@
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
-		.animate {
+		.bob {
 			animation: bob var(--mascot-bob-speed) ease-in-out infinite;
 		}
 
