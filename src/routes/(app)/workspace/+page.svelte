@@ -1,4 +1,8 @@
 <script>
+	import { page } from '$app/state'
+	import { goto, invalidateAll, preloadData, pushState } from '$app/navigation'
+	import SidePanel from '#lib/organisms/SidePanel.svelte'
+	import WorkspaceTileForm from '#lib/organisms/WorkspaceTileForm.svelte'
 	import CalmSection from '#lib/molecules/CalmSection.svelte'
 	import ToolCard from '#lib/molecules/ToolCard.svelte'
 	import WorkspaceTile from '#lib/molecules/WorkspaceTile.svelte'
@@ -6,6 +10,44 @@
 	import WorkspaceEmpty from '#lib/molecules/WorkspaceEmpty.svelte'
 
 	const { data } = $props()
+
+	/** @type {HTMLElement | null} */
+	let opener = null
+
+	/**
+	 * Opens an add or change form in the side panel. Without JavaScript, or
+	 * when the data cannot be loaded, the link goes to its own page.
+	 * @param {MouseEvent} event
+	 */
+	const openPanel = async (event) => {
+		if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return
+		const link = /** @type {HTMLAnchorElement} */ (event.currentTarget)
+		event.preventDefault()
+		opener = link
+		const href = link.getAttribute('href') ?? ''
+		const result = await preloadData(href)
+		if (result.type !== 'loaded' || result.status !== 200) return goto(href)
+		pushState(href, { tile: { href, data: result.data.form } })
+	}
+
+	/** Closes the panel and puts focus back on what opened it */
+	const closePanel = () => {
+		const back = opener
+		opener = null
+		addEventListener('popstate', () => requestAnimationFrame(() => back?.focus()), { once: true })
+		history.back()
+	}
+
+	/** The form props the panel shows, kept as plain data in the history state */
+	const panelForm = $derived(
+		/** @type {import('svelte').ComponentProps<typeof WorkspaceTileForm>} */ (page.state.tile?.data)
+	)
+
+	/** After saving: close the panel and show the new data */
+	const donePanel = () => {
+		addEventListener('popstate', () => invalidateAll(), { once: true })
+		closePanel()
+	}
 </script>
 
 <svelte:head><title>Workspace · CRE8</title></svelte:head>
@@ -33,20 +75,20 @@
 					<li><WorkspaceTile name={app.name} iconUrl={app.iconUrl} href={app.url} /></li>
 				{/each}
 				<li>
-					<a class="workspace-add-app" href="/workspace/apps/new">
+					<a class="workspace-add-app" href="/workspace/apps/new" onclick={openPanel}>
 						<span class="workspace-add-app-icon" aria-hidden="true">+</span>
 						<span>Add app</span>
 					</a>
 				</li>
 			</ul>
 		{:else}
-			<WorkspaceEmpty href="/workspace/apps/new" />
+			<WorkspaceEmpty href="/workspace/apps/new" onclick={openPanel} />
 		{/if}
 	</CalmSection>
 
-	<CalmSection id="links-heading" heading="Important links" class="workspace-links-section">
+	<CalmSection id="links-heading" heading="Important links">
 		{#snippet aside()}
-			<a href="/workspace/links/new">+ Add link</a>
+			<a href="/workspace/links/new" onclick={openPanel}>+ Add link</a>
 		{/snippet}
 		{#if data.links.length}
 			<WorkspaceLinks links={data.links} />
@@ -58,6 +100,19 @@
 		{/if}
 	</CalmSection>
 </div>
+
+{#if page.state.tile}
+	<SidePanel label={page.state.tile.data.heading} onclose={closePanel}>
+		<WorkspaceTileForm
+			{...panelForm}
+			onclose={(event) => {
+				event.preventDefault()
+				closePanel()
+			}}
+			ondone={donePanel}
+		/>
+	</SidePanel>
+{/if}
 
 <style>
 	.workspace {
@@ -136,9 +191,5 @@
 		padding-block: var(--space-xs);
 		color: var(--color-text-calm);
 		font-size: var(--font-size-agenda-meta);
-	}
-
-	.workspace :global(.workspace-links-section) {
-		max-inline-size: 47.5rem;
 	}
 </style>

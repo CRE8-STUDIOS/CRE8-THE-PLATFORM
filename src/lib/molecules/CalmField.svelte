@@ -1,12 +1,13 @@
 <script>
 	/**
 	 * A labelled input in the calm style: a line, no fill.
-	 * @type {{ label: string, name: string, error?: string, optional?: boolean, big?: boolean } & import('svelte/elements').HTMLInputAttributes}
+	 * @type {{ label: string, name: string, error?: string, hint?: string, optional?: boolean, big?: boolean } & import('svelte/elements').HTMLInputAttributes}
 	 */
 	const {
 		label,
 		name,
 		error,
+		hint,
 		optional = false,
 		big = false,
 		id = `field-${name}`,
@@ -22,9 +23,11 @@
 		{id}
 		{name}
 		aria-invalid={error ? 'true' : undefined}
-		aria-describedby={error ? `${id}-error` : undefined}
+		aria-describedby={[hint && `${id}-hint`, error && `${id}-error`].filter(Boolean).join(' ') ||
+			undefined}
 		{...rest}
 	/>
+	{#if hint}<p id="{id}-hint" class="calm-field-hint">{hint}</p>{/if}
 	{#if error}<p id="{id}-error" class="calm-field-error">{error}</p>{/if}
 </div>
 
@@ -65,6 +68,11 @@
 		border-radius: 0;
 		font-size: 1.25rem;
 		font-weight: 700;
+	}
+
+	.calm-field-hint {
+		color: var(--color-text-calm);
+		font-size: var(--font-size-agenda-meta);
 	}
 
 	.calm-field-error {
