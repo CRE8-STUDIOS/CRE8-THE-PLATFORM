@@ -28,15 +28,19 @@
 />
 <div class="card-grid">
 	<FormNotice {form} />
-	<HoursSummary {project} {year} {totalHours} {hoursCriterion} {criterionPercentage} />
-	<TimeEntryList
-		{entries}
-		{monday}
-		{previousWeek}
-		{nextWeek}
-		{weekHours}
-		projectId={project?.id}
-		timeZone={timezone}
-	/>
-	<TimeEntryForm {projects} projectId={project?.id} />
+	<div data-tour="criterion">
+		<HoursSummary {project} {year} {totalHours} {hoursCriterion} {criterionPercentage} />
+	</div>
+	<div data-tour="week">
+		<TimeEntryList
+			{entries}
+			{monday}
+			{previousWeek}
+			{nextWeek}
+			{weekHours}
+			projectId={project?.id}
+			timeZone={timezone}
+		/>
+	</div>
+	<div data-tour="clock"><TimeEntryForm {projects} projectId={project?.id} /></div>
 </div>

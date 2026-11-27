@@ -24,7 +24,11 @@
 	<h2 id="tasks-{day}">{heading} <span>{dayLabel}</span></h2>
 	<p class="task-column-label">Todo</p>
 	<ul class="task-column-list">
-		<li><a class="task-column-add" href="/agenda/add/task?date={day}">+ Add task</a></li>
+		<li>
+			<a class="task-column-add" href="/agenda/add/task?date={day}" data-tour="quick-add">
+				+ Add task
+			</a>
+		</li>
 		{#each open as task (task.id)}
 			<TaskRow {task} />
 		{/each}

@@ -21,20 +21,23 @@
 	} = $derived(data)
 </script>
 
-<PageHeader title="Overview" label={today}>
-	{#snippet actions()}
-		{#if !clock}<a class="button button-primary" href="/overview?clock=choose">Clock in</a>{/if}
-	{/snippet}
-</PageHeader>
+<div data-tour="greeting">
+	<PageHeader title="Overview" label={today}>
+		{#snippet actions()}
+			{#if !clock}<a class="button button-primary" href="/overview?clock=choose">Clock in</a>{/if}
+		{/snippet}
+	</PageHeader>
+</div>
 
-{#if !clock && (!clockInLater || choosingProject)}
-	<ClockInPrompt projects={clockProjects} choosing={choosingProject} />
-{/if}
-
-<CurrentWork {clock} />
+<div data-tour="clock-in">
+	{#if !clock && (!clockInLater || choosingProject)}
+		<ClockInPrompt projects={clockProjects} choosing={choosingProject} />
+	{/if}
+	<CurrentWork {clock} />
+</div>
 
 <div class="card-grid">
-	<TodayAgenda items={agenda} {dueTasks} timeZone={timezone} />
+	<div data-tour="planning"><TodayAgenda items={agenda} {dueTasks} timeZone={timezone} /></div>
 	<LinkList title="To send or answer" links={toDo} empty="Nothing waiting." />
 </div>
 

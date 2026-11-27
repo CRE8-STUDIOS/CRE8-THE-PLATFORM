@@ -2,6 +2,7 @@
 	import { page } from '$app/state'
 	import Sidebar from '#lib/organisms/Sidebar.svelte'
 	import ClockStatus from '#lib/organisms/ClockStatus.svelte'
+	import TourCallout from '#lib/organisms/guide/TourCallout.svelte'
 
 	const { data, children } = $props()
 	const { clock, supabase, timezone, profile } = $derived(data)
@@ -31,6 +32,10 @@
 	<div class="app-shell">
 		<Sidebar current={page.url.pathname} clock={clockStatus} />
 		<main id="content" class="app-main">
+			{#if data.tour?.inApp}{#key data.tour.inApp.here}<TourCallout
+						tour={data.tour}
+						inApp={data.tour.inApp}
+					/>{/key}{/if}
 			{@render children()}
 		</main>
 	</div>
@@ -54,6 +59,7 @@
 	}
 
 	.app-main {
+		position: relative;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		align-content: start;

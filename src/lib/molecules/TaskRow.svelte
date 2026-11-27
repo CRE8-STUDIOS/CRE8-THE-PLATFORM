@@ -40,7 +40,7 @@
 			</span>{/if}
 	</a>
 	{#if task.priority}
-		<span class="task-priority" class:must={task.priority === 'must'}>
+		<span class="task-priority" data-tour="priority" class:must={task.priority === 'must'}>
 			{PRIORITY[task.priority]}
 		</span>
 	{/if}
