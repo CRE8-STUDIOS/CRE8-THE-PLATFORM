@@ -15,7 +15,9 @@
 
 <OverviewCard id="up-next-heading" heading="Up next" class="up-next">
 	{#snippet lead()}
-		<span class="up-next-face overview-card-lead" aria-hidden="true"><Mascot size="3rem" animate={false} /></span>
+		<span class="up-next-face overview-card-lead" aria-hidden="true">
+			<Mascot size="3rem" animate={false} />
+		</span>
 	{/snippet}
 	{#if first}
 		<p class="up-next-title">{first.title}</p>

@@ -3,6 +3,7 @@
 	import ClockControl from '#lib/organisms/overview/ClockControl.svelte'
 	import RightNow from '#lib/organisms/overview/RightNow.svelte'
 	import UpNext from '#lib/organisms/overview/UpNext.svelte'
+	import MeetingsCard from '#lib/organisms/overview/MeetingsCard.svelte'
 
 	const { data } = $props()
 
@@ -36,6 +37,10 @@
 	<div class="overview-now">
 		<RightNow now={data.rightNow} />
 		<div data-tour="planning"><UpNext suggestions={data.upNext} /></div>
+	</div>
+
+	<div class="overview-cards">
+		<MeetingsCard meetings={data.meetings} toSend={data.toSend} />
 	</div>
 </div>
 
@@ -86,6 +91,13 @@
 		.overview-now {
 			grid-template-columns: 1.4fr 1fr;
 		}
+	}
+
+	.overview-cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+		gap: var(--space-m);
+		align-items: start;
 	}
 
 	h1 {
