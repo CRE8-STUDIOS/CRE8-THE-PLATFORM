@@ -1,15 +1,43 @@
 <script>
-	import PageHeader from '#lib/molecules/PageHeader.svelte'
-	import Notice from '#lib/atoms/Notice.svelte'
-	import LoginForm from '#lib/organisms/LoginForm.svelte'
-	import CenteredPage from '#lib/organisms/CenteredPage.svelte'
+	import AuthCard from '#lib/organisms/AuthCard.svelte'
+	import PencilUnderline from '#lib/atoms/PencilUnderline.svelte'
 
-	const { data, form } = $props()
+	const { data } = $props()
 	const { redirectTo, error } = $derived(data)
+
+	const formLink = (/** @type {'freelancer' | 'client'} */ as) => {
+		const params = new URLSearchParams({ as })
+		if (redirectTo) params.set('redirectTo', redirectTo)
+		return `/login/form?${params}`
+	}
 </script>
 
-<CenteredPage>
-	<PageHeader title="Log in to CRE8" />
-	{#if error}<Notice type="error">{error}</Notice>{/if}
-	<LoginForm {form} {redirectTo} />
-</CenteredPage>
+<AuthCard title="Login as" intro="choose the one that applies to you">
+	{#if error}<p class="auth-message" role="alert">{error}</p>{/if}
+	<a
+		class="button button-light login-choice login-choice-first has-pencil"
+		href={formLink('freelancer')}
+	>
+		Freelancer<PencilUnderline />
+	</a>
+
+	{#snippet bottom()}
+		<a class="button button-light login-choice has-pencil" href={formLink('client')}>
+			Client<PencilUnderline />
+		</a>
+	{/snippet}
+</AuthCard>
+
+<style>
+	.login-choice {
+		inline-size: min(100%, var(--size-choice-button));
+	}
+
+	.login-choice:hover {
+		--rough-edge-background: var(--color-surface);
+	}
+
+	.login-choice-first {
+		margin-block-start: var(--space-m);
+	}
+</style>

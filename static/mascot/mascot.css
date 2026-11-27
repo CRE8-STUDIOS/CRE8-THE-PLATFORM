@@ -1,8 +1,10 @@
 :root {
 	--mascot-color: var(--color-text);
 	--mascot-eye: var(--color-surface);
+	--mascot-eye-border: 3;
 	--mascot-size: 3rem;
 	--mascot-bob-height: 6%;
 	--mascot-bob-speed: 2.6s;
 	--mascot-blink-speed: 4.5s;
+	--mascot-look-distance: 9;
 }

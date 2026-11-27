@@ -1,6 +1,9 @@
 import { text, failMessage } from '#lib/server/form.js'
 
-const USERNAME = /^[A-Za-z0-9_.-]{3,30}$/
+const usernameFrom = (/** @type {string} */ email) => {
+	const base = (email.split('@')[0] ?? '').replace(/[^A-Za-z0-9_.-]/g, '').slice(0, 20)
+	return `${base.length >= 3 ? base : 'client'}-${crypto.randomUUID().slice(0, 6)}`
+}
 
 /** @type {import('./$types').Actions} */
 export const actions = {
@@ -8,17 +11,10 @@ export const actions = {
 		const formData = await request.formData()
 		const email = text(formData, 'email')
 		const password = text(formData, 'password')
-		const username = text(formData, 'username')
-		const display_name = text(formData, 'display_name')
-		const keep = { email, username, display_name }
+		const keep = { email }
 
-		if (!email || !password || !username) return failMessage('Fill in all fields.', keep)
-		if (!USERNAME.test(username)) {
-			return failMessage(
-				'Username: 3 to 30 characters, only letters, numbers, dots, dashes and underscores.',
-				keep
-			)
-		}
+		if (!email || !password) return failMessage('Fill in all fields.', keep)
+		const username = usernameFrom(email)
 		if (password.length < 8)
 			return failMessage('Use at least 8 characters for your password.', keep)
 
@@ -26,13 +22,13 @@ export const actions = {
 			email,
 			password,
 			options: {
-				data: { account_type: 'client', username, display_name: display_name ?? username },
+				data: { account_type: 'client', username, display_name: username },
 				emailRedirectTo: `${url.origin}/auth/callback?next=/portal`
 			}
 		})
 		if (error) {
 			const taken = error.message.toLowerCase().includes('database error')
-			return failMessage(taken ? 'That username or email is already in use.' : error.message, keep)
+			return failMessage(taken ? 'That email is already in use.' : error.message, keep)
 		}
 
 		return {

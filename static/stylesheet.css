@@ -82,6 +82,9 @@
 	--size-container: 90rem;
 	--size-content: 75rem;
 	--size-narrow: 40rem;
+	--size-auth-card: 46rem;
+	--size-choice-button: 14rem;
+	--size-auth-form: 28.5rem;
 	--size-portal: 56rem;
 	--size-signature: 9.375rem;
 	--size-checkbox: 1.25rem;
@@ -106,16 +109,34 @@
 	--border-width-thick: 2px;
 
 	--rough-edge: url('#rough');
+	--rough-edge-strong: url('#rough-strong');
+
+	--color-pencil: var(--color-text-muted);
+	--color-auth-card: var(--color-text);
+	--color-auth-card-text: var(--color-text-inverse);
 
 	--color-backdrop: color-mix(in oklab, var(--color-text) 45%, transparent);
 	--backdrop-blur: 6px;
 	--layer-modal: 100;
+	--layer-eraser: 1000;
 
 	--shadow-card: 0 0.25rem 1rem rgb(0 0 0 / 0.05);
 
 	/* Motion */
 	--duration-fast: 150ms;
 	--duration-normal: 250ms;
+	--duration-pencil: 800ms;
+	--duration-auth-duck: 220ms;
+	--duration-auth-look: 380ms;
+	--duration-auth-hide: 350ms;
+	--duration-auth-shake: 500ms;
+	--duration-auth-erase: 550ms;
+	--duration-auth-back: 300ms;
+	--duration-auth-turn: 180ms;
+	--duration-auth-startle: 350ms;
+	--duration-auth-draw: 550ms;
+	--duration-auth-jump: 550ms;
+	--duration-eraser: 1000ms;
 	--easing-standard: cubic-bezier(0.2, 0, 0, 1);
 
 	/* Focus */
@@ -325,6 +346,16 @@ ol:not([class]) {
 
 .button-secondary:disabled:hover,
 .button-secondary[aria-disabled='true']:hover {
+	--rough-edge-background: var(--color-button-secondary);
+}
+
+.button-light {
+	--rough-edge-background: var(--color-surface);
+	background-color: var(--rough-edge-background);
+	color: var(--color-text);
+}
+
+.button-light:hover {
 	--rough-edge-background: var(--color-button-secondary);
 }
 
@@ -1039,7 +1070,8 @@ select:focus-visible {
 
 /* Rough edge */
 .rough-edge,
-.button-primary {
+.button-primary,
+.button-light {
 	position: relative;
 	isolation: isolate;
 	background-color: transparent;
@@ -1047,7 +1079,8 @@ select:focus-visible {
 }
 
 .rough-edge::before,
-.button-primary::before {
+.button-primary::before,
+.button-light::before {
 	content: '';
 	position: absolute;
 	inset: 0;
