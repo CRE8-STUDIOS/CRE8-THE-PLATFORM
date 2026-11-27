@@ -71,7 +71,6 @@
 		flex-direction: column;
 		gap: var(--space-xl);
 		min-inline-size: 0;
-		max-inline-size: var(--agenda-max-width);
 	}
 
 	.overview-header {
