@@ -5,6 +5,7 @@
 	import EraserWipe from '#lib/atoms/EraserWipe.svelte'
 	import Button from '#lib/atoms/Button.svelte'
 	import Input from '#lib/atoms/Input.svelte'
+	import PasswordInput from '#lib/atoms/PasswordInput.svelte'
 	import AuthField from '#lib/molecules/AuthField.svelte'
 	import AuthCard from '#lib/organisms/AuthCard.svelte'
 
@@ -72,15 +73,13 @@
 
 	{#snippet bottom()}
 		<div class="login-form">
-			<AuthField
+			<PasswordInput
 				label="Password"
 				id="login-password"
 				name="password"
-				type="password"
 				autocomplete="current-password"
 				form="login-form"
-				aria-describedby={describedby}
-				aria-invalid={invalid}
+				error={describedby}
 				required
 			/>
 			<a class="login-forgot" href="/login/forgot">Forgot password?</a>

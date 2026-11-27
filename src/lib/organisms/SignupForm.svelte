@@ -1,5 +1,6 @@
 <script>
 	import Button from '#lib/atoms/Button.svelte'
+	import PasswordInput from '#lib/atoms/PasswordInput.svelte'
 	import AuthField from '#lib/molecules/AuthField.svelte'
 
 	/** @type {{ kind: 'freelancer' | 'client', form: { message?: string, success?: string, email?: string | null } | null | undefined }} */
@@ -27,16 +28,14 @@
 			aria-invalid={invalid}
 			required
 		/>
-		<AuthField
+		<PasswordInput
 			label="Password"
 			id="signup-password"
 			name="password"
-			type="password"
 			autocomplete="new-password"
 			minlength={8}
 			hint="At least 8 characters"
-			aria-describedby={describedby}
-			aria-invalid={invalid}
+			error={describedby}
 			required
 		/>
 		<Button variant="light">
