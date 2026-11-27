@@ -24,3 +24,4 @@ vite.config.ts.timestamp-*
 
 # Design references, kept out of the repo
 static/agenda-design/
+static/workspace-design/
