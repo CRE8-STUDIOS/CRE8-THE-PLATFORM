@@ -1,4 +1,7 @@
-import { stepIndex } from '#lib/utils/onboarding.js'
+import { redirect } from '@sveltejs/kit'
+import { text, failMessage, failWith } from '#lib/server/form.js'
+import { ASSISTANT_NAME_MAX } from '#lib/utils/constants.js'
+import { stepHref, stepIndex } from '#lib/utils/onboarding.js'
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals, parent, url }) => {
@@ -12,5 +15,36 @@ export const load = async ({ locals, parent, url }) => {
 			userName: profile?.name ?? null,
 			assistant
 		}
+	}
+}
+
+/** @param {FormData} formData @param {string} key */
+const nameField = (formData, key) => {
+	const value = text(formData, key)
+	return value && [...value].length > ASSISTANT_NAME_MAX ? undefined : value
+}
+
+/**
+ * @param {App.Locals} locals
+ * @param {import('#lib/database.types.js').TablesUpdate<'profiles'>} values
+ * @param {string} next
+ */
+const saveAndGo = async (locals, values, next) => {
+	const { error } = await locals.supabase
+		.from('profiles')
+		.update(values)
+		.eq('id', locals.user?.id ?? '')
+	if (error) return failWith(error)
+	redirect(303, next)
+}
+
+const TOO_LONG = `Keep it to ${ASSISTANT_NAME_MAX} characters, please.`
+
+/** @type {import('./$types').Actions} */
+export const actions = {
+	yourName: async ({ request, locals }) => {
+		const name = nameField(await request.formData(), 'name')
+		if (name === undefined) return failMessage(TOO_LONG)
+		return saveAndGo(locals, { name }, stepHref(2))
 	}
 }

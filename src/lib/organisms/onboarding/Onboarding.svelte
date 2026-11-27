@@ -1,12 +1,16 @@
 <script>
 	import { ONBOARDING_STEPS, stepHref } from '#lib/utils/onboarding.js'
 	import StepHello from './StepHello.svelte'
+	import StepYourName from './StepYourName.svelte'
 
 	/** @typedef {{ name: string | null, color: string, shape: string, matchWorkspace: boolean }} Assistant */
 	/** @type {{ step: number, userName: string | null, assistant: Assistant, form?: unknown }} */
 	const { step, userName, assistant, form } = $props()
 
 	const canSkip = $derived(step > 0 && step < 6)
+	const result = $derived(
+		/** @type {{ message?: string, plea?: boolean } | null | undefined} */ (form)
+	)
 </script>
 
 <div class="onboarding" data-assistant-color={assistant.color}>
@@ -33,9 +37,18 @@
 	</header>
 
 	<main id="content" class="onboarding-main">
+		{#if result?.message}<p class="onboarding-error" role="alert">{result.message}</p>{/if}
 		{#key step}
 			{#if step === 0}
 				<StepHello shape={assistant.shape} next={stepHref(1)} />
+			{:else if step === 1}
+				<StepYourName
+					shape={assistant.shape}
+					color={assistant.color}
+					assistantName={assistant.name}
+					{userName}
+					back={stepHref(0)}
+				/>
 			{:else}
 				<p class="onboarding-line">{ONBOARDING_STEPS[step].label}</p>
 			{/if}
@@ -127,6 +140,52 @@
 	/* With JavaScript the animated steps wait for their first frame, without it they show the end state */
 	:global(html.js) .onboarding :global([data-started='false']) {
 		visibility: hidden;
+	}
+
+	.onboarding-error {
+		color: var(--color-error);
+	}
+
+	.onboarding :global(.step-form) {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-m);
+		inline-size: 100%;
+	}
+
+	.onboarding :global(.onboarding-field) {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		inline-size: 100%;
+		max-inline-size: 23.75rem;
+		font-family: var(--font-family-display);
+		font-size: var(--font-size-label);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.onboarding :global(.onboarding-field input) {
+		min-block-size: 3.25rem;
+		padding-inline: var(--space-m);
+		border: 1.5px solid var(--color-text);
+		border-radius: var(--radius-pill);
+		font-size: 1rem;
+		letter-spacing: normal;
+		text-align: center;
+		text-transform: none;
+	}
+
+	.onboarding :global(.onboarding-link) {
+		min-block-size: 2.75rem;
+		padding: 0;
+		border: none;
+		background: none;
+		color: var(--color-text-muted);
+		font-size: var(--font-size-small);
+		text-decoration: underline;
+		cursor: pointer;
 	}
 
 	.onboarding :global(.rise) {
