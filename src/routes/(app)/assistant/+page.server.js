@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit'
 import { text, failMessage, failWith } from '#lib/server/form.js'
-import { ASSISTANT_NAME_MAX } from '#lib/utils/constants.js'
+import { ASSISTANT_COLORS, ASSISTANT_NAME_MAX } from '#lib/utils/constants.js'
 import { stepHref, stepIndex } from '#lib/utils/onboarding.js'
 
 /** @type {import('./$types').PageServerLoad} */
@@ -61,5 +61,12 @@ export const actions = {
 		if (name === undefined) return failMessage(TOO_LONG)
 		if (name === null) return { plea: true }
 		return saveAndGo(locals, { assistant_name: name }, stepHref(3))
+	},
+
+	color: async ({ request, locals }) => {
+		const value = (await request.formData()).get('assistant_color')
+		const color = ASSISTANT_COLORS.find((option) => option === value)
+		if (!color) return failMessage('Pick one of the colors.')
+		return saveAndGo(locals, { assistant_color: color }, stepHref(4))
 	}
 }

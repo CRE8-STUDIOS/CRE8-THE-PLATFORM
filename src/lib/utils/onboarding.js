@@ -58,3 +58,13 @@ export const typingPause = (text, index) => {
 	if (char === ',' || char === ':') return 350
 	return 0
 }
+
+/** @type {Record<string, { name: string, line: string }>} */
+export const COLOR_LINES = {
+	ink: { name: 'Ink', line: 'ink. the original. never out of print.' },
+	pink: { name: 'Pink', line: 'pink? oh I am SO pink. pink is my love language.' },
+	blue: { name: 'Blue', line: 'blue. calm. the exact opposite of your inbox.' },
+	green: { name: 'Green', line: 'green. fresh. like I ate a salad. I did not.' },
+	orange: { name: 'Orange', line: 'orange. loud. the neighbours will know.' },
+	lilac: { name: 'Lilac', line: 'lilac. dramatic. a little extra. same.' }
+}

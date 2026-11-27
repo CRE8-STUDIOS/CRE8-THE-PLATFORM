@@ -3,6 +3,7 @@
 	import StepHello from './StepHello.svelte'
 	import StepYourName from './StepYourName.svelte'
 	import StepMyName from './StepMyName.svelte'
+	import StepColor from './StepColor.svelte'
 	import { ASSISTANT_DEFAULT_NAME } from '#lib/utils/constants.js'
 
 	/** @typedef {{ name: string | null, color: string, shape: string, matchWorkspace: boolean }} Assistant */
@@ -62,6 +63,13 @@
 					{userName}
 					assistantName={assistant.name}
 					plea={Boolean(result?.plea)}
+				/>
+			{:else if step === 3}
+				<StepColor
+					shape={assistant.shape}
+					name={buddyName}
+					color={assistant.color}
+					back={stepHref(2)}
 				/>
 			{:else}
 				<p class="onboarding-line">{ONBOARDING_STEPS[step].label}</p>
