@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { redirect } from '@sveltejs/kit'
+import { dev } from '$app/env'
 import { sequence } from '@sveltejs/kit/hooks'
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY } from '$app/env/public'
 
@@ -80,6 +81,17 @@ const identify = async ({ event, resolve }) => {
 	return resolve(event)
 }
 
+/** TEMPORARY TEST RESET, dev only, do not commit */
+/** @type {import('@sveltejs/kit/hooks').Handle} */
+const resetOnboarding = async ({ event, resolve }) => {
+	const { supabase, user, role } = event.locals
+	if (dev && user && role === 'freelancer' && event.url.searchParams.has('reset-onboarding')) {
+		await supabase.from('profiles').update({ assistant_onboarded_at: null }).eq('id', user.id)
+		redirect(303, '/assistant')
+	}
+	return resolve(event)
+}
+
 /** @type {import('@sveltejs/kit/hooks').Handle} */
 const guard = async ({ event, resolve }) => {
 	const routeId = event.route.id
@@ -114,4 +126,4 @@ const guard = async ({ event, resolve }) => {
 	return resolve(event)
 }
 
-export const handle = sequence(supabase, identify, guard)
+export const handle = sequence(supabase, identify, resetOnboarding, guard)
