@@ -13,7 +13,7 @@
 
 <MascotSays big>
 	<p>
-		Hi{data.firstName ? ` ${data.firstName}` : ''}. I will show you how CRE8 works, and how
+		Hi{data.firstName ? ` ${data.firstName}` : ''}. I will show you how the platform works, and how
 		freelancing works with money. Short lessons, no difficult words. Where do you want to start?
 	</p>
 </MascotSays>
