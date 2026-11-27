@@ -66,7 +66,12 @@ export type Database = {
         Row: {
           address: string | null
           all_day: boolean
+          board_status: Database["public"]["Enums"]["board_status"] | null
           call_time: string | null
+          client_feedback: string | null
+          client_review_status:
+            | Database["public"]["Enums"]["client_review_status"]
+            | null
           closes_at: string | null
           color: string | null
           completed_at: string | null
@@ -83,11 +88,14 @@ export type Database = {
           longitude: number | null
           meeting_url: string | null
           opens_at: string | null
+          priority: Database["public"]["Enums"]["task_priority"] | null
           project_id: string | null
           recurrence_rule: string | null
           recurrence_until: string | null
           reminder_minutes: number[]
           request_id: string | null
+          review_sent_at: string | null
+          reviewed_at: string | null
           source: Database["public"]["Enums"]["agenda_source"]
           source_id: string | null
           starts_at: string | null
@@ -98,11 +106,17 @@ export type Database = {
           type: Database["public"]["Enums"]["agenda_item_type"]
           updated_at: string
           user_id: string
+          wrap_at: string | null
         }
         Insert: {
           address?: string | null
           all_day?: boolean
+          board_status?: Database["public"]["Enums"]["board_status"] | null
           call_time?: string | null
+          client_feedback?: string | null
+          client_review_status?:
+            | Database["public"]["Enums"]["client_review_status"]
+            | null
           closes_at?: string | null
           color?: string | null
           completed_at?: string | null
@@ -119,11 +133,14 @@ export type Database = {
           longitude?: number | null
           meeting_url?: string | null
           opens_at?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"] | null
           project_id?: string | null
           recurrence_rule?: string | null
           recurrence_until?: string | null
           reminder_minutes?: number[]
           request_id?: string | null
+          review_sent_at?: string | null
+          reviewed_at?: string | null
           source?: Database["public"]["Enums"]["agenda_source"]
           source_id?: string | null
           starts_at?: string | null
@@ -134,11 +151,17 @@ export type Database = {
           type?: Database["public"]["Enums"]["agenda_item_type"]
           updated_at?: string
           user_id?: string
+          wrap_at?: string | null
         }
         Update: {
           address?: string | null
           all_day?: boolean
+          board_status?: Database["public"]["Enums"]["board_status"] | null
           call_time?: string | null
+          client_feedback?: string | null
+          client_review_status?:
+            | Database["public"]["Enums"]["client_review_status"]
+            | null
           closes_at?: string | null
           color?: string | null
           completed_at?: string | null
@@ -155,11 +178,14 @@ export type Database = {
           longitude?: number | null
           meeting_url?: string | null
           opens_at?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"] | null
           project_id?: string | null
           recurrence_rule?: string | null
           recurrence_until?: string | null
           reminder_minutes?: number[]
           request_id?: string | null
+          review_sent_at?: string | null
+          reviewed_at?: string | null
           source?: Database["public"]["Enums"]["agenda_source"]
           source_id?: string | null
           starts_at?: string | null
@@ -170,6 +196,7 @@ export type Database = {
           type?: Database["public"]["Enums"]["agenda_item_type"]
           updated_at?: string
           user_id?: string
+          wrap_at?: string | null
         }
         Relationships: [
           {
@@ -1041,6 +1068,8 @@ export type Database = {
           assistant_shape: Database["public"]["Enums"]["assistant_shape"]
           booking_days_ahead: number
           booking_notice_hours: number
+          break_after_minutes: number
+          break_minutes: number
           btw_number: string | null
           business_name: string | null
           business_type: Database["public"]["Enums"]["business_type"]
@@ -1049,6 +1078,8 @@ export type Database = {
           clock_in_mode: Database["public"]["Enums"]["clock_in_mode"]
           country: string
           created_at: string
+          day_ends_at: string
+          deadline_headsup_days: number
           default_hourly_rate: number | null
           iban: string | null
           id: string
@@ -1067,6 +1098,7 @@ export type Database = {
           timezone: string
           updated_at: string
           uses_kor: boolean
+          week_target_hours: number
           workspace_matches_assistant: boolean
         }
         Insert: {
@@ -1076,6 +1108,8 @@ export type Database = {
           assistant_shape?: Database["public"]["Enums"]["assistant_shape"]
           booking_days_ahead?: number
           booking_notice_hours?: number
+          break_after_minutes?: number
+          break_minutes?: number
           btw_number?: string | null
           business_name?: string | null
           business_type?: Database["public"]["Enums"]["business_type"]
@@ -1084,6 +1118,8 @@ export type Database = {
           clock_in_mode?: Database["public"]["Enums"]["clock_in_mode"]
           country?: string
           created_at?: string
+          day_ends_at?: string
+          deadline_headsup_days?: number
           default_hourly_rate?: number | null
           iban?: string | null
           id: string
@@ -1102,6 +1138,7 @@ export type Database = {
           timezone?: string
           updated_at?: string
           uses_kor?: boolean
+          week_target_hours?: number
           workspace_matches_assistant?: boolean
         }
         Update: {
@@ -1111,6 +1148,8 @@ export type Database = {
           assistant_shape?: Database["public"]["Enums"]["assistant_shape"]
           booking_days_ahead?: number
           booking_notice_hours?: number
+          break_after_minutes?: number
+          break_minutes?: number
           btw_number?: string | null
           business_name?: string | null
           business_type?: Database["public"]["Enums"]["business_type"]
@@ -1119,6 +1158,8 @@ export type Database = {
           clock_in_mode?: Database["public"]["Enums"]["clock_in_mode"]
           country?: string
           created_at?: string
+          day_ends_at?: string
+          deadline_headsup_days?: number
           default_hourly_rate?: number | null
           iban?: string | null
           id?: string
@@ -1137,6 +1178,7 @@ export type Database = {
           timezone?: string
           updated_at?: string
           uses_kor?: boolean
+          week_target_hours?: number
           workspace_matches_assistant?: boolean
         }
         Relationships: []
@@ -1868,6 +1910,17 @@ export type Database = {
           title: string
         }[]
       }
+      portal_review_items: {
+        Args: { p_project_id: string }
+        Returns: {
+          client_feedback: string
+          client_review_status: Database["public"]["Enums"]["client_review_status"]
+          id: string
+          review_sent_at: string
+          reviewed_at: string
+          title: string
+        }[]
+      }
       portal_touch: { Args: { p_project_id: string }; Returns: undefined }
       request_meeting: {
         Args: { p_message?: string; p_project_id: string; p_starts_at: string }
@@ -1945,6 +1998,10 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      respond_to_review: {
+        Args: { p_approve: boolean; p_feedback?: string; p_item_id: string }
+        Returns: undefined
+      }
       sign_contract: {
         Args: { p_contract_id: string; p_signature: string }
         Returns: {
@@ -1984,7 +2041,9 @@ export type Database = {
       agenda_source: "manual" | "system"
       assistant_color: "ink" | "pink" | "blue" | "green" | "orange" | "lilac"
       assistant_shape: "splat" | "bubble" | "star" | "cloud" | "flower"
+      board_status: "todo" | "in_progress" | "in_review" | "done"
       business_type: "eenmanszaak" | "bv" | "not_registered" | "abroad"
+      client_review_status: "waiting" | "changes_requested" | "approved"
       clock_in_mode: "ask" | "auto" | "off"
       clock_start_source: "manual" | "prompt" | "auto"
       clock_stop_reason: "manual" | "switch" | "no_answer" | "inactive"
@@ -1996,6 +2055,7 @@ export type Database = {
       price_type: "fixed" | "hourly"
       project_status: "draft" | "active" | "done" | "archived"
       request_status: "requested" | "draft" | "sent" | "approved" | "declined"
+      task_priority: "must" | "should" | "could" | "wont"
       time_category: "client_work" | "admin" | "acquisition" | "training"
       vat_treatment: "standard" | "kor" | "reverse_charge" | "outside_eu"
       working_hours_kind: "work" | "creative" | "meetings"
@@ -2139,7 +2199,9 @@ export const Constants = {
       agenda_source: ["manual", "system"],
       assistant_color: ["ink", "pink", "blue", "green", "orange", "lilac"],
       assistant_shape: ["splat", "bubble", "star", "cloud", "flower"],
+      board_status: ["todo", "in_progress", "in_review", "done"],
       business_type: ["eenmanszaak", "bv", "not_registered", "abroad"],
+      client_review_status: ["waiting", "changes_requested", "approved"],
       clock_in_mode: ["ask", "auto", "off"],
       clock_start_source: ["manual", "prompt", "auto"],
       clock_stop_reason: ["manual", "switch", "no_answer", "inactive"],
@@ -2151,6 +2213,7 @@ export const Constants = {
       price_type: ["fixed", "hourly"],
       project_status: ["draft", "active", "done", "archived"],
       request_status: ["requested", "draft", "sent", "approved", "declined"],
+      task_priority: ["must", "should", "could", "wont"],
       time_category: ["client_work", "admin", "acquisition", "training"],
       vat_treatment: ["standard", "kor", "reverse_charge", "outside_eu"],
       working_hours_kind: ["work", "creative", "meetings"],
