@@ -1,33 +1,22 @@
 <script>
-	import PageHeader from '#lib/molecules/PageHeader.svelte'
-	import FormNotice from '#lib/molecules/FormNotice.svelte'
-	import MeetingRequests from '#lib/organisms/MeetingRequests.svelte'
-	import AgendaWeek from '#lib/organisms/AgendaWeek.svelte'
-	import AgendaInbox from '#lib/organisms/AgendaInbox.svelte'
-	import AgendaItemForm from '#lib/organisms/AgendaItemForm.svelte'
+	import AgendaHeading from '#lib/molecules/AgendaHeading.svelte'
+	import MascotBar from '#lib/molecules/MascotBar.svelte'
+	import Timeline from '#lib/organisms/Timeline.svelte'
 
-	const { data, form } = $props()
-	const { monday, previousWeek, nextWeek, week, inbox, meetings, projects, timezone } =
-		$derived(data)
+	const { data } = $props()
 </script>
 
-<PageHeader title="Agenda">
-	{#snippet actions()}
-		<a class="button button-primary" href="#add-to-agenda">+ Add to agenda</a>
-	{/snippet}
-</PageHeader>
-
-<div class="card-grid">
-	<FormNotice {form} />
-	<MeetingRequests {meetings} timeZone={timezone} />
-	<AgendaWeek {monday} {previousWeek} {nextWeek} {week} timeZone={timezone} />
-	<AgendaInbox items={inbox} />
-	<AgendaItemForm
-		id="add-to-agenda"
-		title="Add to agenda"
-		action="?/create"
-		submitLabel="Add"
-		{projects}
-		timeZone={timezone}
-	/>
-</div>
+<AgendaHeading
+	title={data.title}
+	meta={data.meta}
+	view="day"
+	views={{
+		day: `/agenda?date=${data.date}`,
+		week: `/agenda/week?date=${data.date}`,
+		month: `/agenda/month?month=${data.date.slice(0, 7)}`
+	}}
+	previous={{ href: `/agenda?date=${data.previous}`, label: 'Previous day' }}
+	next={{ href: `/agenda?date=${data.next}`, label: 'Next day' }}
+/>
+<MascotBar />
+<Timeline rows={data.rows} allDay={data.allDay} timeZone={data.timezone} label={data.title} />
