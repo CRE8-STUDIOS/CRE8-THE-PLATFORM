@@ -1,5 +1,5 @@
 <script>
-	/** @type {{ label: string, id: string, name: string, autocomplete?: import('svelte/elements').FullAutoFill, error?: string, hint?: string } & Omit<import('svelte/elements').HTMLInputAttributes, 'type'>} */
+	/** @type {{ label: string, id: string, name: string, autocomplete?: 'current-password' | 'new-password', error?: string, hint?: string } & Omit<import('svelte/elements').HTMLInputAttributes, 'type'>} */
 	const {
 		label,
 		id,
