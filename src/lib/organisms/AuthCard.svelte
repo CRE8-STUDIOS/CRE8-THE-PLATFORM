@@ -15,10 +15,6 @@
 	let phase = $state(/** @type {Phase} */ (arriving ? 'shock' : 'idle'))
 	const caught = $derived(['erase', 'back', 'turn', 'shock', 'draw'].includes(phase))
 	const facing = $derived(phase === 'shock' || phase === 'draw')
-	/** @type {{ x: number, y: number } | null} */
-	let gaze = $state(null)
-	/** @type {ReturnType<typeof setInterval> | undefined} */
-	let searching
 	/** @type {HTMLDivElement | undefined} */
 	let stage = $state()
 
@@ -57,32 +53,11 @@
 				: undefined
 	)
 
-	const startSearching = () => {
-		let side = 1
-		gaze = { x: side * 0.6, y: -0.2 }
-		searching = setInterval(() => {
-			side *= -1
-			gaze = { x: side * 0.6, y: -0.2 }
-		}, duration('--duration-auth-look'))
-	}
-
-	const stopSearching = () => {
-		clearInterval(searching)
-		gaze = null
-	}
-
 	$effect(() => {
 		if (!arriving) return
 		arriving = false
-		startSearching()
-		wait(duration('--duration-auth-naked') * 0.5)
-			.then(() => {
-				stopSearching()
-				phase = 'draw'
-				return wait(duration('--duration-auth-draw'))
-			})
-			.then(() => (phase = 'jump'))
-		return stopSearching
+		phase = 'draw'
+		wait(duration('--duration-auth-draw')).then(() => (phase = 'jump'))
 	})
 
 	onNavigate((navigation) => {
@@ -109,11 +84,6 @@
 				return wait(duration('--duration-auth-startle'))
 			})
 			.then(() => {
-				startSearching()
-				return wait(duration('--duration-auth-naked'))
-			})
-			.then(() => {
-				stopSearching()
 				arriving = true
 			})
 	})
@@ -155,7 +125,7 @@
 			<div class="auth-caught is-{phase}" aria-hidden="true">
 				<div class="auth-caught-actor">
 					{#if facing}
-						<Mascot size="var(--auth-caught-size)" {gaze} />
+						<Mascot size="var(--auth-caught-size)" />
 						{#if phase === 'shock'}<ShockMarks />{/if}
 					{:else}
 						<Mascot size="var(--auth-caught-size)" face={false} />
@@ -332,10 +302,7 @@
 	}
 
 	.auth-caught.is-shock .auth-caught-actor {
-		animation:
-			auth-startle var(--duration-auth-startle) cubic-bezier(0.3, 1.4, 0.5, 1),
-			auth-search calc(var(--duration-auth-look) * 2) ease-in-out var(--duration-auth-startle)
-				infinite;
+		animation: auth-startle var(--duration-auth-startle) cubic-bezier(0.3, 1.4, 0.5, 1);
 	}
 
 	@keyframes auth-wiggle {
@@ -377,26 +344,6 @@
 
 	.auth-caught.is-draw .auth-caught-actor {
 		animation: auth-dive var(--duration-auth-hide) cubic-bezier(0.6, 0, 0.9, 0.4) forwards;
-	}
-
-	@keyframes auth-search {
-		0%,
-		100% {
-			rotate: 0deg;
-			translate: 0 0;
-		}
-		25% {
-			rotate: -9deg;
-			translate: -6% -3%;
-		}
-		50% {
-			rotate: 0deg;
-			translate: 0 0;
-		}
-		75% {
-			rotate: 9deg;
-			translate: 6% -3%;
-		}
 	}
 
 	@keyframes auth-dive {
