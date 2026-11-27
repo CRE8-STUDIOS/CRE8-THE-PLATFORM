@@ -126,17 +126,17 @@
 	--duration-fast: 150ms;
 	--duration-normal: 250ms;
 	--duration-pencil: 800ms;
-	--duration-auth-duck: 300ms;
+	--duration-auth-duck: 220ms;
 	--duration-auth-look: 380ms;
 	--duration-auth-hide: 350ms;
 	--duration-auth-shake: 500ms;
-	--duration-auth-erase: 750ms;
-	--duration-auth-back: 900ms;
-	--duration-auth-turn: 220ms;
-	--duration-auth-startle: 500ms;
-	--duration-auth-naked: 400ms;
-	--duration-auth-draw: 850ms;
-	--duration-auth-jump: 700ms;
+	--duration-auth-erase: 550ms;
+	--duration-auth-back: 450ms;
+	--duration-auth-turn: 180ms;
+	--duration-auth-startle: 350ms;
+	--duration-auth-naked: 200ms;
+	--duration-auth-draw: 550ms;
+	--duration-auth-jump: 550ms;
 	--duration-eraser: 1000ms;
 	--easing-standard: cubic-bezier(0.2, 0, 0, 1);
 
