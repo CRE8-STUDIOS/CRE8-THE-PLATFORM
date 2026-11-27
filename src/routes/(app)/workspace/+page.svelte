@@ -3,6 +3,7 @@
 	import ToolCard from '#lib/molecules/ToolCard.svelte'
 	import WorkspaceTile from '#lib/molecules/WorkspaceTile.svelte'
 	import WorkspaceLinks from '#lib/organisms/WorkspaceLinks.svelte'
+	import WorkspaceEmpty from '#lib/molecules/WorkspaceEmpty.svelte'
 
 	const { data } = $props()
 </script>
@@ -24,26 +25,37 @@
 
 	<CalmSection id="apps-heading" heading="My apps">
 		{#snippet aside()}
-			<a href="/workspace?edit">Edit</a>
+			{#if data.apps.length}<a href="/workspace?edit">Edit</a>{/if}
 		{/snippet}
-		<ul class="workspace-apps">
-			{#each data.apps as app (app.id)}
-				<li><WorkspaceTile name={app.name} iconUrl={app.iconUrl} href={app.url} /></li>
-			{/each}
-			<li>
-				<a class="workspace-add-app" href="/workspace/apps/new">
-					<span class="workspace-add-app-icon" aria-hidden="true">+</span>
-					<span>Add app</span>
-				</a>
-			</li>
-		</ul>
+		{#if data.apps.length}
+			<ul class="workspace-apps">
+				{#each data.apps as app (app.id)}
+					<li><WorkspaceTile name={app.name} iconUrl={app.iconUrl} href={app.url} /></li>
+				{/each}
+				<li>
+					<a class="workspace-add-app" href="/workspace/apps/new">
+						<span class="workspace-add-app-icon" aria-hidden="true">+</span>
+						<span>Add app</span>
+					</a>
+				</li>
+			</ul>
+		{:else}
+			<WorkspaceEmpty href="/workspace/apps/new" />
+		{/if}
 	</CalmSection>
 
 	<CalmSection id="links-heading" heading="Important links" class="workspace-links-section">
 		{#snippet aside()}
 			<a href="/workspace/links/new">+ Add link</a>
 		{/snippet}
-		<WorkspaceLinks links={data.links} />
+		{#if data.links.length}
+			<WorkspaceLinks links={data.links} />
+		{:else}
+			<p class="workspace-quiet">
+				No links yet. Save the pages you keep looking for, like the Belastingdienst or your price
+				list.
+			</p>
+		{/if}
 	</CalmSection>
 </div>
 
@@ -118,6 +130,12 @@
 		border-radius: 1.375rem;
 		font-size: 1.75rem;
 		font-weight: 400;
+	}
+
+	.workspace-quiet {
+		padding-block: var(--space-xs);
+		color: var(--color-text-calm);
+		font-size: var(--font-size-agenda-meta);
 	}
 
 	.workspace :global(.workspace-links-section) {
