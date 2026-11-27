@@ -26,7 +26,7 @@
 		<ol class="timeline-rows">
 			{#each allDay as item (item.id)}
 				<AgendaRow
-					time="All day"
+					time={item.type === 'task' && !item.starts_at ? 'To do' : 'All day'}
 					title={item.title}
 					sub={subLine(item, timeZone)}
 					label={typeLabel(item)}

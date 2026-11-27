@@ -5,7 +5,7 @@ const ITEM_COLUMNS = '*, projects(title)'
 
 /**
  * Agenda items between two local dates, repeating items expanded, sorted by start.
- * Items without a time (deadlines with only a date) are included by their due date.
+ * Items without a time (deadlines and tasks with only a date) are included by their due date.
  * @param {import('@supabase/supabase-js').SupabaseClient<import('#lib/database.types.js').Database>} supabase
  * @param {string} from first local date, YYYY-MM-DD
  * @param {string} to local date after the range
@@ -32,7 +32,7 @@ export const loadAgendaRange = async (supabase, from, to, timeZone) => {
 			.from('agenda_items')
 			.select(ITEM_COLUMNS)
 			.is('starts_at', null)
-			.eq('type', 'deadline')
+			.in('type', ['deadline', 'task'])
 			.gte('due_date', from)
 			.lt('due_date', to)
 	])
