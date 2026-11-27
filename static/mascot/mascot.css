@@ -1,5 +1,18 @@
 :root {
-	--mascot-color: var(--color-text);
+	--mascot-ink: var(--color-text);
+	--mascot-ink-tint: #edebe6;
+	--mascot-pink: #ee6f9f;
+	--mascot-pink-tint: #fce4ee;
+	--mascot-blue: #3f6fd8;
+	--mascot-blue-tint: #e1eafb;
+	--mascot-green: #23905c;
+	--mascot-green-tint: #ddf2e7;
+	--mascot-orange: #e8641f;
+	--mascot-orange-tint: #fde6d9;
+	--mascot-lilac: #8c6ad8;
+	--mascot-lilac-tint: #ece5fa;
+
+	--mascot-color: var(--mascot-ink);
 	--mascot-eye: var(--color-surface);
 	--mascot-eye-border: 3;
 	--mascot-size: 3rem;
@@ -7,4 +20,46 @@
 	--mascot-bob-speed: 2.6s;
 	--mascot-blink-speed: 4.5s;
 	--mascot-look-distance: 9;
+}
+
+/* Assistant colour, on the app root, a preview or a swatch */
+[data-assistant-color='ink'] {
+	--mascot-color: var(--mascot-ink);
+	--assistant-tint: var(--mascot-ink-tint);
+}
+
+[data-assistant-color='pink'],
+:root:has([data-workspace-match='true'][data-assistant-color='pink']) {
+	--mascot-color: var(--mascot-pink);
+	--assistant-tint: var(--mascot-pink-tint);
+}
+
+[data-assistant-color='blue'],
+:root:has([data-workspace-match='true'][data-assistant-color='blue']) {
+	--mascot-color: var(--mascot-blue);
+	--assistant-tint: var(--mascot-blue-tint);
+}
+
+[data-assistant-color='green'],
+:root:has([data-workspace-match='true'][data-assistant-color='green']) {
+	--mascot-color: var(--mascot-green);
+	--assistant-tint: var(--mascot-green-tint);
+}
+
+[data-assistant-color='orange'],
+:root:has([data-workspace-match='true'][data-assistant-color='orange']) {
+	--mascot-color: var(--mascot-orange);
+	--assistant-tint: var(--mascot-orange-tint);
+}
+
+[data-assistant-color='lilac'],
+:root:has([data-workspace-match='true'][data-assistant-color='lilac']) {
+	--mascot-color: var(--mascot-lilac);
+	--assistant-tint: var(--mascot-lilac-tint);
+}
+
+/* Workspace follows the assistant, ink keeps the original look */
+:root:has([data-workspace-match='true']:not([data-assistant-color='ink'])) {
+	--color-accent: var(--mascot-color);
+	--color-background: var(--assistant-tint);
 }

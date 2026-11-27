@@ -1,5 +1,10 @@
-import { text, number, checkbox, oneOf, failWith } from '#lib/server/form.js'
-import { BUSINESS_TYPES } from '#lib/utils/constants.js'
+import { text, number, checkbox, oneOf, failWith, failMessage } from '#lib/server/form.js'
+import {
+	ASSISTANT_COLORS,
+	ASSISTANT_NAME_MAX,
+	ASSISTANT_SHAPES,
+	BUSINESS_TYPES
+} from '#lib/utils/constants.js'
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals }) => {
@@ -43,5 +48,29 @@ export const actions = {
 			.eq('id', locals.user?.id ?? '')
 		if (error) return failWith(error)
 		return { success: 'Saved.' }
+	},
+
+	assistant: async ({ request, locals }) => {
+		const formData = await request.formData()
+		const name = text(formData, 'assistant_name')
+		const color = ASSISTANT_COLORS.find((value) => value === formData.get('assistant_color'))
+		const shape = ASSISTANT_SHAPES.find((value) => value === formData.get('assistant_shape'))
+
+		if (name && [...name].length > ASSISTANT_NAME_MAX)
+			return failMessage(`The name can be ${ASSISTANT_NAME_MAX} characters at most.`)
+		if (!color) return failMessage('Choose one of the colours.')
+		if (!shape) return failMessage('Choose one of the shapes.')
+
+		const { error } = await locals.supabase
+			.from('profiles')
+			.update({
+				assistant_name: name,
+				assistant_color: color,
+				assistant_shape: shape,
+				workspace_matches_assistant: checkbox(formData, 'workspace_matches_assistant')
+			})
+			.eq('id', locals.user?.id ?? '')
+		if (error) return failWith(error)
+		return { success: 'Assistant saved.' }
 	}
 }

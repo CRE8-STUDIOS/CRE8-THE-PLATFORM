@@ -23,6 +23,8 @@ const GUEST_ROUTES = new Set([
 	'/portal/signup'
 ])
 
+const ONBOARDING_ROUTE = '/(app)/assistant'
+
 /** @type {import('@sveltejs/kit/hooks').Handle} */
 const supabase = async ({ event, resolve }) => {
 	event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY, {
@@ -49,6 +51,7 @@ const identify = async ({ event, resolve }) => {
 	event.locals.user = null
 	event.locals.role = null
 	event.locals.timezone = 'Europe/Amsterdam'
+	event.locals.onboarded = true
 
 	const { data, error } = await supabase.auth.getClaims()
 	const claims = error ? null : data?.claims
@@ -57,13 +60,18 @@ const identify = async ({ event, resolve }) => {
 		event.locals.user = { id: claims.sub, email: claims.email ?? null }
 
 		const [{ data: profile }, { data: account }] = await Promise.all([
-			supabase.from('profiles').select('id, timezone').eq('id', claims.sub).maybeSingle(),
+			supabase
+				.from('profiles')
+				.select('id, timezone, assistant_onboarded_at')
+				.eq('id', claims.sub)
+				.maybeSingle(),
 			supabase.from('client_accounts').select('id').eq('auth_user_id', claims.sub).maybeSingle()
 		])
 
 		if (profile) {
 			event.locals.role = 'freelancer'
 			event.locals.timezone = profile.timezone
+			event.locals.onboarded = profile.assistant_onboarded_at !== null
 		} else if (account) {
 			event.locals.role = 'client'
 		}
@@ -80,6 +88,14 @@ const guard = async ({ event, resolve }) => {
 	if (!routeId) return resolve(event)
 
 	const home = role === 'client' ? '/portal' : '/overview'
+	const onboarding = role === 'freelancer' && !event.locals.onboarded
+
+	if (
+		onboarding &&
+		(routeId === '/' || routeId.startsWith('/(app)')) &&
+		routeId !== ONBOARDING_ROUTE
+	)
+		redirect(303, '/assistant')
 
 	if (role && GUEST_ROUTES.has(routeId)) redirect(303, home)
 	if (PUBLIC_ROUTES.has(routeId)) return resolve(event)

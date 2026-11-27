@@ -8,6 +8,7 @@ declare global {
 			user: { id: string; email: string | null } | null
 			role: 'freelancer' | 'client' | null
 			timezone: string
+			onboarded: boolean
 		}
 	}
 }

@@ -33,7 +33,7 @@
 	--color-status-overdue: #f9dedc;
 	--color-status-overdue-text: #b3261e;
 
-	--color-error: var(--color-accent);
+	--color-error: #891b13;
 
 	/* Typography */
 	--font-family-body: 'Unbounded Variable', system-ui, sans-serif;

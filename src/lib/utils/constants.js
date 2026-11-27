@@ -19,6 +19,12 @@ export const MOODBOARD_ITEM_TYPES = ['image', 'color', 'text', 'link']
 export const CLOCK_IN_MODES = ['ask', 'auto', 'off']
 export const CLOCK_START_SOURCES = ['manual', 'prompt', 'auto']
 export const CLOCK_STOP_REASONS = ['manual', 'switch', 'no_answer', 'inactive']
+/** @type {import('#lib/database.types.js').Enums<'assistant_color'>[]} */
+export const ASSISTANT_COLORS = ['ink', 'pink', 'blue', 'green', 'orange', 'lilac']
+/** @type {import('#lib/database.types.js').Enums<'assistant_shape'>[]} */
+export const ASSISTANT_SHAPES = ['splat', 'bubble', 'star', 'cloud', 'flower']
+export const ASSISTANT_NAME_MAX = 40
+export const ASSISTANT_DEFAULT_NAME = 'John Doe'
 
 export const EU_COUNTRIES = [
 	'AT',

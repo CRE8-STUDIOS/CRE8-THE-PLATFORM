@@ -1035,6 +1035,10 @@ export type Database = {
       }
       profiles: {
         Row: {
+          assistant_color: Database["public"]["Enums"]["assistant_color"]
+          assistant_name: string | null
+          assistant_onboarded_at: string | null
+          assistant_shape: Database["public"]["Enums"]["assistant_shape"]
           booking_days_ahead: number
           booking_notice_hours: number
           btw_number: string | null
@@ -1063,8 +1067,13 @@ export type Database = {
           timezone: string
           updated_at: string
           uses_kor: boolean
+          workspace_matches_assistant: boolean
         }
         Insert: {
+          assistant_color?: Database["public"]["Enums"]["assistant_color"]
+          assistant_name?: string | null
+          assistant_onboarded_at?: string | null
+          assistant_shape?: Database["public"]["Enums"]["assistant_shape"]
           booking_days_ahead?: number
           booking_notice_hours?: number
           btw_number?: string | null
@@ -1093,8 +1102,13 @@ export type Database = {
           timezone?: string
           updated_at?: string
           uses_kor?: boolean
+          workspace_matches_assistant?: boolean
         }
         Update: {
+          assistant_color?: Database["public"]["Enums"]["assistant_color"]
+          assistant_name?: string | null
+          assistant_onboarded_at?: string | null
+          assistant_shape?: Database["public"]["Enums"]["assistant_shape"]
           booking_days_ahead?: number
           booking_notice_hours?: number
           btw_number?: string | null
@@ -1123,6 +1137,7 @@ export type Database = {
           timezone?: string
           updated_at?: string
           uses_kor?: boolean
+          workspace_matches_assistant?: boolean
         }
         Relationships: []
       }
@@ -1967,6 +1982,8 @@ export type Database = {
         | "task"
         | "errand"
       agenda_source: "manual" | "system"
+      assistant_color: "ink" | "pink" | "blue" | "green" | "orange" | "lilac"
+      assistant_shape: "splat" | "bubble" | "star" | "cloud" | "flower"
       business_type: "eenmanszaak" | "bv" | "not_registered" | "abroad"
       clock_in_mode: "ask" | "auto" | "off"
       clock_start_source: "manual" | "prompt" | "auto"
@@ -2120,6 +2137,8 @@ export const Constants = {
         "errand",
       ],
       agenda_source: ["manual", "system"],
+      assistant_color: ["ink", "pink", "blue", "green", "orange", "lilac"],
+      assistant_shape: ["splat", "bubble", "star", "cloud", "flower"],
       business_type: ["eenmanszaak", "bv", "not_registered", "abroad"],
       clock_in_mode: ["ask", "auto", "off"],
       clock_start_source: ["manual", "prompt", "auto"],
