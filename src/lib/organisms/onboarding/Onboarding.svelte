@@ -6,6 +6,7 @@
 	import StepColor from './StepColor.svelte'
 	import StepShape from './StepShape.svelte'
 	import StepTransform from './StepTransform.svelte'
+	import StepWorkspace from './StepWorkspace.svelte'
 	import { ASSISTANT_DEFAULT_NAME } from '#lib/utils/constants.js'
 
 	/** @typedef {{ name: string | null, color: string, shape: string, matchWorkspace: boolean }} Assistant */
@@ -87,6 +88,8 @@
 					label={buddyLabel}
 					next={stepHref(6)}
 				/>
+			{:else if step === 6}
+				<StepWorkspace shape={assistant.shape} color={assistant.color} label={buddyLabel} />
 			{:else}
 				<p class="onboarding-line">{ONBOARDING_STEPS[step].label}</p>
 			{/if}

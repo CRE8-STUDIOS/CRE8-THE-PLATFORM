@@ -75,5 +75,10 @@ export const actions = {
 		const shape = ASSISTANT_SHAPES.find((option) => option === value)
 		if (!shape) return failMessage('Pick one of the shapes.')
 		return saveAndGo(locals, { assistant_shape: shape }, stepHref(5))
+	},
+
+	workspace: async ({ request, locals }) => {
+		const match = (await request.formData()).get('match') === 'yes'
+		return saveAndGo(locals, { workspace_matches_assistant: match }, stepHref(7))
 	}
 }
