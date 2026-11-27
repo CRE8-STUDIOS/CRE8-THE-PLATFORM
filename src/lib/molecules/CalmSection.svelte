@@ -32,10 +32,10 @@
 	.calm-section-heading {
 		display: flex;
 		flex-wrap: wrap;
-		align-items: baseline;
+		align-items: center;
+		min-block-size: var(--size-touch);
 		justify-content: space-between;
 		gap: var(--space-xs);
-		padding-block-end: var(--space-xs);
 		border-block-end: var(--line);
 	}
 
