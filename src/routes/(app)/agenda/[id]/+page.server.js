@@ -1,13 +1,12 @@
 import { error, redirect } from '@sveltejs/kit'
 import { id, text, failMessage, failWith } from '#lib/server/form.js'
-import { agendaItemFromForm } from '#lib/server/agenda.js'
-import { projectOptions } from '#lib/server/projects.js'
+import { todayIn } from '#lib/utils/dates.js'
 
 /** @type {import('./$types').PageServerLoad} */
-export const load = async ({ locals, params }) => {
+export const load = async ({ locals, params, url }) => {
 	const { supabase } = locals
-	const [{ data: item }, { data: checklist }, { data: people }, projects] = await Promise.all([
-		supabase.from('agenda_items').select('*').eq('id', params.id).maybeSingle(),
+	const [{ data: item }, { data: checklist }, { data: people }] = await Promise.all([
+		supabase.from('agenda_items').select('*, projects(title)').eq('id', params.id).maybeSingle(),
 		supabase
 			.from('agenda_checklist_items')
 			.select('id, label, done')
@@ -17,35 +16,48 @@ export const load = async ({ locals, params }) => {
 			.from('agenda_people')
 			.select('id, name, role, email, phone')
 			.eq('agenda_item_id', params.id)
-			.order('created_at'),
-		projectOptions(supabase)
+			.order('created_at')
 	])
 	if (!item) error(404, 'Agenda item not found')
 
+	const day = item.starts_at
+		? todayIn(locals.timezone, new Date(item.starts_at))
+		: (item.due_date ?? todayIn(locals.timezone))
+
 	return {
+		backHref: `/agenda?date=${day}`,
+		confirmDelete: url.searchParams.has('delete'),
+		occurrence: /^\d{4}-\d{2}-\d{2}$/.test(url.searchParams.get('on') ?? '')
+			? url.searchParams.get('on')
+			: null,
 		item,
 		checklist: checklist ?? [],
 		people: people ?? [],
-		projects,
-		canStart: Boolean(item.starts_at) && ['work', 'shoot', 'meeting'].includes(item.type)
+		canStart: Boolean(item.starts_at) && ['work', 'meeting'].includes(item.type)
 	}
 }
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	update: async ({ request, locals, params }) => {
-		const item = agendaItemFromForm(await request.formData(), locals.timezone)
-		if (!item.title) return failMessage('Give it a title.')
+	delete: async ({ request, locals, params, url }) => {
+		const scope = text(await request.formData(), 'scope')
+		const on = url.searchParams.get('on')
 
-		const { error: updateError } = await locals.supabase
-			.from('agenda_items')
-			.update(/** @type {any} */ (item))
-			.eq('id', params.id)
-		if (updateError) return failWith(updateError)
-		return { success: 'Saved.' }
-	},
+		if (scope === 'one' && on && /^\d{4}-\d{2}-\d{2}$/.test(on)) {
+			const { data: item } = await locals.supabase
+				.from('agenda_items')
+				.select('recurrence_exceptions')
+				.eq('id', params.id)
+				.maybeSingle()
+			const exceptions = [...new Set([...(item?.recurrence_exceptions ?? []), on])]
+			const { error: updateError } = await locals.supabase
+				.from('agenda_items')
+				.update({ recurrence_exceptions: exceptions })
+				.eq('id', params.id)
+			if (updateError) return failWith(updateError)
+			redirect(303, `/agenda?date=${on}`)
+		}
 
-	delete: async ({ locals, params }) => {
 		const { error: deleteError } = await locals.supabase
 			.from('agenda_items')
 			.delete()

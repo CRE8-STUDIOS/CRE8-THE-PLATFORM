@@ -108,6 +108,33 @@
 	--border-width-thin: 1px;
 	--border-width-thick: 2px;
 
+	/* Calm agenda: lines only, no filled backgrounds */
+	--line-color: var(--color-text);
+	--line-color-quiet: #b9b7b0;
+	--color-text-calm: #55534e;
+	--line-width: var(--border-width-thin);
+	--line-width-strong: var(--border-width-thick);
+	--line: var(--line-width) solid var(--line-color);
+	--line-strong: var(--line-width-strong) solid var(--line-color);
+	--line-quiet: var(--line-width) solid var(--line-color-quiet);
+	--line-dashed: var(--line-width) dashed var(--line-color-quiet);
+	--radius-item: 1rem;
+	--radius-item-small: 0.625rem;
+	--size-touch: 2.75rem;
+	--font-size-agenda-heading: clamp(1.75rem, 1.4rem + 1.6vw, 2.25rem);
+	--font-size-agenda-title: 1rem;
+	--font-size-agenda-meta: 0.75rem;
+	--font-size-agenda-label: 0.625rem;
+	--letter-spacing-label: 0.06em;
+	--agenda-time-column: 5rem;
+	--agenda-column-gap: 1.5rem;
+	--agenda-row-gap: 0.875rem;
+	--agenda-item-padding: 1.125rem 1.375rem;
+	--agenda-gap-padding: 0.625rem 1.375rem;
+	--agenda-max-width: 61.25rem;
+	--agenda-slot-height: 1.625rem;
+	--agenda-cell-height: 6.5rem;
+
 	--rough-edge: url('#rough');
 	--rough-edge-strong: url('#rough-strong');
 
