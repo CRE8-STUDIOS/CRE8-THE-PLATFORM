@@ -100,3 +100,15 @@ export const searchIndex = (rules) =>
 		],
 		rules
 	)
+
+/**
+ * Saves what kind of business someone is.
+ * @param {Supabase} supabase
+ * @param {string} userId
+ * @param {import('#lib/guide/compare.js').BusinessType} type
+ */
+export const saveBusinessType = async (supabase, userId, type) => {
+	const { error } = await supabase.from('profiles').update({ business_type: type }).eq('id', userId)
+	if (error) console.error('Guide: business type not saved', error.message)
+	return error
+}
