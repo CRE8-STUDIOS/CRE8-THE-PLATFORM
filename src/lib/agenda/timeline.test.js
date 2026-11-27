@@ -121,3 +121,16 @@ describe('monthCells', () => {
 		expect(cell?.more).toBe(2)
 	})
 })
+
+describe('labels', () => {
+	it('formats titles for day, week and month', async () => {
+		const { dayTitle, weekTitle, monthTitle, shiftMonth, monthParam } = await import('./labels.js')
+		expect(dayTitle('2026-11-27')).toBe('Friday 27 Nov')
+		expect(weekTitle('2026-11-23')).toBe('23 to 29 Nov')
+		expect(weekTitle('2026-11-30')).toBe('30 Nov to 6 Dec')
+		expect(monthTitle('2026-11', '2026-11-27')).toBe('November')
+		expect(monthTitle('2027-01', '2026-11-27')).toBe('January 2027')
+		expect(shiftMonth('2026-12', 1)).toBe('2027-01')
+		expect(monthParam('2026-13', '2026-11')).toBe('2026-11')
+	})
+})

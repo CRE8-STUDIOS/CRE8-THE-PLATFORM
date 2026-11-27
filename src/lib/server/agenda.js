@@ -125,3 +125,17 @@ export const loadProjectDeadlines = async (supabase, from, to) => {
 		occurrence: null
 	}))
 }
+
+/**
+ * The user's planned hours per week, from profiles.week_target_hours.
+ * @param {import('@supabase/supabase-js').SupabaseClient<import('#lib/database.types.js').Database>} supabase
+ * @param {string} userId
+ */
+export const weekTargetHours = async (supabase, userId) => {
+	const { data } = await supabase
+		.from('profiles')
+		.select('week_target_hours')
+		.eq('id', userId)
+		.maybeSingle()
+	return data?.week_target_hours ?? 30
+}
