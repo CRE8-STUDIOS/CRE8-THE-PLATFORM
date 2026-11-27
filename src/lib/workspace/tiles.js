@@ -75,3 +75,31 @@ export const iconError = (file) => {
 	if (file.size > ICON_MAX_BYTES) return 'The icon can be 1 MB at most.'
 	return null
 }
+
+/**
+ * Moves one item in a list to another index.
+ * @template T
+ * @param {T[]} list
+ * @param {number} from
+ * @param {number} to
+ */
+export const moveItem = (list, from, to) => {
+	if (from === to || from < 0 || from >= list.length) return list
+	const next = [...list]
+	const [item] = next.splice(from, 1)
+	next.splice(Math.max(0, Math.min(to, next.length)), 0, item)
+	return next
+}
+
+/**
+ * The order after a "move left" or "move right" button, sent as "id:left".
+ * @param {string[]} ids
+ * @param {string | null} move
+ */
+export const applyMove = (ids, move) => {
+	if (!move) return ids
+	const [id, direction] = move.split(':')
+	const index = ids.indexOf(id)
+	if (index === -1) return ids
+	return moveItem(ids, index, direction === 'left' ? index - 1 : index + 1)
+}

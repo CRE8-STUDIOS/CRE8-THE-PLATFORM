@@ -55,3 +55,15 @@ describe('tools', () => {
 		expect(countText(3, 'board', 'boards')).toBe('3 boards')
 	})
 })
+
+describe('order', async () => {
+	const { applyMove, moveItem } = await import('./tiles.js')
+
+	it('moves a tile left, right and by dragging', () => {
+		expect(applyMove(['a', 'b', 'c'], 'b:left')).toEqual(['b', 'a', 'c'])
+		expect(applyMove(['a', 'b', 'c'], 'b:right')).toEqual(['a', 'c', 'b'])
+		expect(applyMove(['a', 'b', 'c'], 'a:left')).toEqual(['a', 'b', 'c'])
+		expect(applyMove(['a', 'b', 'c'], 'x:left')).toEqual(['a', 'b', 'c'])
+		expect(moveItem(['a', 'b', 'c'], 0, 2)).toEqual(['b', 'c', 'a'])
+	})
+})

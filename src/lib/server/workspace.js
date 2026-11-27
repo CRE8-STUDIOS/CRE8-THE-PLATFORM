@@ -175,3 +175,37 @@ export const saveTile = async ({
 
 	redirect(303, back)
 }
+
+/**
+ * Removes an app or link and its icon file.
+ * @param {Supabase} supabase
+ * @param {string} id
+ */
+export const removeTile = async (supabase, id) => {
+	const { data, error } = await supabase
+		.from('dashboard_tiles')
+		.delete()
+		.eq('id', id)
+		.select('icon_path')
+		.maybeSingle()
+	if (error) return error
+	await removeIcons(supabase, [data?.icon_path])
+	return null
+}
+
+/**
+ * Saves the order of the apps: their position is their place in the list.
+ * Only ids that are really apps of this user are changed.
+ * @param {Supabase} supabase
+ * @param {string[]} ids
+ */
+export const savePositions = async (supabase, ids) => {
+	const { data } = await supabase.from('dashboard_tiles').select('id').eq('kind', 'app')
+	const known = new Set((data ?? []).map((row) => row.id))
+	const results = await Promise.all(
+		ids
+			.filter((id) => known.has(id))
+			.map((id, position) => supabase.from('dashboard_tiles').update({ position }).eq('id', id))
+	)
+	return results.find((result) => result.error)?.error ?? null
+}

@@ -5,11 +5,13 @@
 	import WorkspaceTileForm from '#lib/organisms/WorkspaceTileForm.svelte'
 	import CalmSection from '#lib/molecules/CalmSection.svelte'
 	import ToolCard from '#lib/molecules/ToolCard.svelte'
-	import WorkspaceTile from '#lib/molecules/WorkspaceTile.svelte'
+	import WorkspaceApps from '#lib/organisms/WorkspaceApps.svelte'
+	import MascotBar from '#lib/molecules/MascotBar.svelte'
+	import OutlineButton from '#lib/atoms/OutlineButton.svelte'
 	import WorkspaceLinks from '#lib/organisms/WorkspaceLinks.svelte'
 	import WorkspaceEmpty from '#lib/molecules/WorkspaceEmpty.svelte'
 
-	const { data } = $props()
+	const { data, form } = $props()
 
 	/** @type {HTMLElement | null} */
 	let opener = null
@@ -55,32 +57,48 @@
 <div class="workspace">
 	<div class="workspace-heading">
 		<h1>Workspace</h1>
+		{#if data.edit}<OutlineButton href="/workspace" strong>Done</OutlineButton>{/if}
 	</div>
 
-	<CalmSection id="tools-heading" heading="Tools">
-		<ul class="workspace-tools">
-			{#each data.tools as tool (tool.name)}
-				<li><ToolCard {...tool} /></li>
-			{/each}
-		</ul>
-	</CalmSection>
+	{#if data.removing}
+		{@const removing = data.removing}
+		<MascotBar message="Remove {removing.name} from your workspace?">
+			{#snippet actions()}
+				<form method="POST" action="?/remove">
+					<input type="hidden" name="id" value={removing.id} />
+					<OutlineButton strong>Remove</OutlineButton>
+				</form>
+				<OutlineButton href="/workspace?edit">Keep</OutlineButton>
+			{/snippet}
+		</MascotBar>
+	{:else if form?.message}
+		<MascotBar message={form.message} />
+	{/if}
+
+	{#if data.edit}
+		<p class="workspace-hint">
+			Drag to change the order, or use the arrows. Click an app to change its name, link or icon.
+		</p>
+	{:else}
+		<CalmSection id="tools-heading" heading="Tools">
+			<ul class="workspace-tools">
+				{#each data.tools as tool (tool.name)}
+					<li><ToolCard {...tool} /></li>
+				{/each}
+			</ul>
+		</CalmSection>
+	{/if}
 
 	<CalmSection id="apps-heading" heading="My apps">
 		{#snippet aside()}
-			{#if data.apps.length}<a href="/workspace?edit">Edit</a>{/if}
+			{#if data.edit}
+				<span>{data.apps.length} {data.apps.length === 1 ? 'app' : 'apps'}</span>
+			{:else if data.apps.length}
+				<a href="/workspace?edit">Edit</a>
+			{/if}
 		{/snippet}
 		{#if data.apps.length}
-			<ul class="workspace-apps">
-				{#each data.apps as app (app.id)}
-					<li><WorkspaceTile name={app.name} iconUrl={app.iconUrl} href={app.url} /></li>
-				{/each}
-				<li>
-					<a class="workspace-add-app" href="/workspace/apps/new" onclick={openPanel}>
-						<span class="workspace-add-app-icon" aria-hidden="true">+</span>
-						<span>Add app</span>
-					</a>
-				</li>
-			</ul>
+			<WorkspaceApps apps={data.apps} edit={data.edit} onopen={openPanel} />
 		{:else}
 			<WorkspaceEmpty href="/workspace/apps/new" onclick={openPanel} />
 		{/if}
@@ -91,7 +109,21 @@
 			<a href="/workspace/links/new" onclick={openPanel}>+ Add link</a>
 		{/snippet}
 		{#if data.links.length}
-			<WorkspaceLinks links={data.links} />
+			<WorkspaceLinks links={data.links}>
+				{#snippet row(link)}
+					{#if data.edit}
+						<a
+							class="workspace-link-remove"
+							href="/workspace?edit&remove={link.id}"
+							aria-label="Remove {link.name}"
+						>
+							<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2 2 10" /></svg>
+						</a>
+					{:else}
+						<span class="workspace-link-arrow" aria-hidden="true">↗</span>
+					{/if}
+				{/snippet}
+			</WorkspaceLinks>
 		{:else}
 			<p class="workspace-quiet">
 				No links yet. Save the pages you keep looking for, like the Belastingdienst or your price
@@ -149,42 +181,28 @@
 		display: grid;
 	}
 
-	.workspace-apps {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
-		gap: var(--space-l) var(--space-m);
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-
-	.workspace-add-app {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: var(--space-xs);
+	.workspace-hint {
 		color: var(--color-text-calm);
 		font-size: var(--font-size-agenda-meta);
-		font-weight: 700;
-		text-decoration: none;
-		text-transform: uppercase;
 	}
 
-	.workspace-add-app:hover span:last-child {
-		text-decoration: underline;
-	}
-
-	.workspace-add-app-icon {
+	.workspace-link-remove {
 		display: flex;
+		flex: none;
 		align-items: center;
 		justify-content: center;
-		box-sizing: border-box;
-		inline-size: 5.5rem;
-		block-size: 5.5rem;
-		border: var(--line-dashed);
-		border-radius: 1.375rem;
-		font-size: 1.75rem;
-		font-weight: 400;
+		inline-size: 2rem;
+		block-size: 2rem;
+		border: var(--line);
+		border-radius: var(--radius-pill);
+		color: var(--color-text);
+	}
+
+	.workspace-link-remove svg {
+		inline-size: 0.625rem;
+		block-size: 0.625rem;
+		stroke: currentColor;
+		stroke-width: 1.5;
 	}
 
 	.workspace-quiet {
