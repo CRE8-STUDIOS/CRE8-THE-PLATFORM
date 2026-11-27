@@ -26,7 +26,7 @@
 
 <div class="onboarding" data-assistant-color={assistant.color}>
 	<header class="onboarding-header">
-		<span class="onboarding-brand">CRE8</span>
+		<span class="onboarding-brand">CRE8 THE PLATFORM</span>
 		<ol class="onboarding-progress" aria-label="Setup progress">
 			{#each ONBOARDING_STEPS as { id, label }, index (id)}
 				<li
@@ -112,19 +112,46 @@
 		flex-direction: column;
 		inline-size: 100%;
 		min-block-size: 100dvh;
-		padding: var(--space-l) var(--space-m) var(--space-xl);
+		padding: var(--space-m) var(--space-m) var(--space-xl);
 		text-align: center;
 	}
 
+	/* Brand left, progress always in the middle, skip right */
 	.onboarding-header {
-		display: flex;
-		flex-wrap: wrap;
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
 		align-items: center;
-		justify-content: space-between;
 		gap: var(--space-s);
 	}
 
+	.onboarding-progress {
+		grid-column: 2;
+	}
+
+	.onboarding-skip {
+		grid-column: 3;
+		justify-self: end;
+	}
+
+	@media (width < 40rem) {
+		.onboarding-header {
+			grid-template-columns: 1fr auto;
+		}
+
+		.onboarding-progress {
+			grid-row: 2;
+			grid-column: 1 / -1;
+			justify-self: center;
+		}
+
+		.onboarding-skip {
+			grid-column: 2;
+		}
+	}
+
 	.onboarding-brand {
+		grid-column: 1;
+		justify-self: start;
 		font-family: var(--font-family-display);
 		font-size: var(--font-size-label);
 		font-weight: var(--font-weight-heading);
@@ -170,12 +197,12 @@
 		flex: 1;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
-		gap: var(--space-l);
+		justify-content: flex-start;
+		gap: var(--space-m);
 		inline-size: 100%;
 		max-inline-size: 41.25rem;
 		margin-inline: auto;
-		padding-block-start: var(--space-l);
+		padding-block-start: var(--space-m);
 	}
 
 	/* Shared layout and text styles for the steps */
@@ -183,7 +210,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: var(--space-l);
+		gap: var(--space-m);
 		inline-size: 100%;
 	}
 

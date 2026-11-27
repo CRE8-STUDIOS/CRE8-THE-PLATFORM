@@ -9,7 +9,7 @@
 </script>
 
 <div class="step" data-assistant-color={color}>
-	<MascotStage size="150px" {shape} {label} />
+	<MascotStage size="min(220px, 55vw)" {shape} {label} />
 
 	<h1 class="onboarding-title">Looking good. Us, I mean.</h1>
 	<p class="onboarding-text">

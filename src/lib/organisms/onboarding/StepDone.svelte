@@ -14,7 +14,7 @@
 </script>
 
 <div class="step" data-assistant-color={color}>
-	<MascotStage size="150px" {shape} {label} />
+	<MascotStage size="min(220px, 55vw)" {shape} {label} />
 
 	<p class="onboarding-line">let's get to work</p>
 	<h1 class="onboarding-shout">All set, {who}.</h1>

@@ -45,7 +45,7 @@
 	<div class="hello-stage">
 		{#if phase === 'wash' || phase === 'scream'}<Mirror {shape} />{/if}
 		<MascotStage
-			size="min(240px, 50vw)"
+			size="min(300px, 55vw)"
 			{shape}
 			eyes={EYES[phase]}
 			motion={MOTION[phase]}
@@ -84,7 +84,7 @@
 		align-items: flex-end;
 		justify-content: center;
 		gap: var(--space-2xl);
-		block-size: 280px;
+		block-size: 330px;
 	}
 
 	@media (width < 30rem) {

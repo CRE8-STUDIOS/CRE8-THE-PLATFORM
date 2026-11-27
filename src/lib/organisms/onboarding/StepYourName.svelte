@@ -106,7 +106,7 @@
 <div class="step" data-started={started}>
 	<div class="speaker" style:--mascot-color={COSTUME_FILL[costume]}>
 		<MascotStage
-			size="150px"
+			size="min(220px, 55vw)"
 			{shape}
 			motion={phase === 'tape' ? 'scrub' : 'bob'}
 			label="{assistantName || 'The CRE8 assistant'}, {color} {shape}"

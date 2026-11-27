@@ -13,7 +13,7 @@
 </script>
 
 <div class="step" data-assistant-color={color}>
-	<MascotStage size="150px" {shape} label="{name}, {color} {shape}" />
+	<MascotStage size="min(220px, 55vw)" {shape} label="{name}, {color} {shape}" />
 
 	<h1 class="onboarding-title">Pick my shape.</h1>
 	<p class="onboarding-text">
