@@ -1,4 +1,7 @@
 import { fillAll } from '#lib/guide/rules.js'
+import { appTour, moneyLessons } from '#lib/guide/content.js'
+import { words } from '#lib/guide/words.js'
+import { wordId } from '#lib/guide/progress.js'
 
 /**
  * @typedef {import('@supabase/supabase-js').SupabaseClient<import('#lib/database.types.js').Database>} Supabase
@@ -35,3 +38,65 @@ export const withRules = (content, rules) => {
 	if (missing.size) console.warn(`Guide: no tax rule for ${[...missing].join(', ')}`)
 	return filled
 }
+
+/**
+ * The saved progress of one track.
+ * @param {Supabase} supabase
+ * @param {'app' | 'money'} track
+ */
+export const loadProgress = async (supabase, track) => {
+	const { data } = await supabase
+		.from('guide_progress')
+		.select('item_slug, step, completed_at')
+		.eq('track', track)
+	return data ?? []
+}
+
+/**
+ * Saves the step someone is on, and optionally that the item is done.
+ * @param {Supabase} supabase
+ * @param {{ track: 'app' | 'money', slug: string, step: number, completed?: boolean }} input
+ */
+export const saveProgress = async (supabase, { track, slug, step, completed = false }) => {
+	const { error } = await supabase.from('guide_progress').upsert(
+		{
+			track,
+			item_slug: slug,
+			step,
+			...(completed ? { completed_at: new Date().toISOString() } : {})
+		},
+		{ onConflict: 'user_id,track,item_slug' }
+	)
+	if (error) console.error('Guide: progress not saved', error.message)
+	return error
+}
+
+/**
+ * Everything the guide search looks through: lessons, tour chapters and words.
+ * @param {import('#lib/guide/rules.js').Rules} rules
+ * @returns {import('#lib/guide/progress.js').SearchEntry[]}
+ */
+export const searchIndex = (rules) =>
+	withRules(
+		[
+			...moneyLessons.map((lesson) => ({
+				kind: /** @type {const} */ ('lesson'),
+				title: lesson.title,
+				text: lesson.summary,
+				href: `/guide/money/${lesson.slug}`
+			})),
+			...appTour.map((chapter) => ({
+				kind: /** @type {const} */ ('tour'),
+				title: chapter.title,
+				text: chapter.steps.map((step) => step.text).join(' '),
+				href: `/guide/app/${chapter.slug}`
+			})),
+			...words.map((entry) => ({
+				kind: /** @type {const} */ ('word'),
+				title: entry.word,
+				text: entry.meaning,
+				href: `/guide/words#${wordId(entry.word)}`
+			}))
+		],
+		rules
+	)
