@@ -72,6 +72,7 @@ export type Database = {
           client_review_status:
             | Database["public"]["Enums"]["client_review_status"]
             | null
+          clock_in_prompt: boolean
           closes_at: string | null
           color: string | null
           completed_at: string | null
@@ -90,6 +91,7 @@ export type Database = {
           opens_at: string | null
           priority: Database["public"]["Enums"]["task_priority"] | null
           project_id: string | null
+          recurrence_exceptions: string[]
           recurrence_rule: string | null
           recurrence_until: string | null
           reminder_minutes: number[]
@@ -117,6 +119,7 @@ export type Database = {
           client_review_status?:
             | Database["public"]["Enums"]["client_review_status"]
             | null
+          clock_in_prompt?: boolean
           closes_at?: string | null
           color?: string | null
           completed_at?: string | null
@@ -135,6 +138,7 @@ export type Database = {
           opens_at?: string | null
           priority?: Database["public"]["Enums"]["task_priority"] | null
           project_id?: string | null
+          recurrence_exceptions?: string[]
           recurrence_rule?: string | null
           recurrence_until?: string | null
           reminder_minutes?: number[]
@@ -162,6 +166,7 @@ export type Database = {
           client_review_status?:
             | Database["public"]["Enums"]["client_review_status"]
             | null
+          clock_in_prompt?: boolean
           closes_at?: string | null
           color?: string | null
           completed_at?: string | null
@@ -180,6 +185,7 @@ export type Database = {
           opens_at?: string | null
           priority?: Database["public"]["Enums"]["task_priority"] | null
           project_id?: string | null
+          recurrence_exceptions?: string[]
           recurrence_rule?: string | null
           recurrence_until?: string | null
           reminder_minutes?: number[]
