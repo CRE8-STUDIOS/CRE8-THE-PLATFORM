@@ -81,6 +81,9 @@
 	}
 
 	.board-empty {
+		display: flex;
+		align-items: center;
+		min-block-size: 4.5rem;
 		padding: var(--space-s);
 		border: var(--line-dashed);
 		border-radius: var(--radius-item-small);

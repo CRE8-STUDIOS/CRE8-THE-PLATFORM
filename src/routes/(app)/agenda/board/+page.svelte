@@ -8,12 +8,12 @@
 
 <svelte:head><title>Project board · CRE8</title></svelte:head>
 
-{#if data.project}
-	<div class="board-heading">
-		<div>
-			<h1>{data.project.title}</h1>
-			{#if data.project.meta}<span>{data.project.meta}</span>{/if}
-		</div>
+<div class="board-heading">
+	<div>
+		<h1>{data.project?.title ?? 'Project board'}</h1>
+		{#if data.project?.meta}<span>{data.project.meta}</span>{/if}
+	</div>
+	{#if data.project}
 		<form class="board-select" method="GET">
 			<label for="board-project">Project</label>
 			<select
@@ -29,19 +29,25 @@
 			</select>
 			<noscript><OutlineButton>Show</OutlineButton></noscript>
 		</form>
-	</div>
-	<MascotBar />
+	{/if}
+</div>
 
-	<div class="board">
-		{#each data.columns as column (column.heading)}
-			<BoardColumn heading={column.heading} cards={column.cards} />
-		{/each}
-	</div>
-	<p class="board-note">Cards in review are visible to your client in the portal.</p>
+{#if data.project}
+	<MascotBar />
 {:else}
-	<h1>Project board</h1>
-	<p class="board-note">No active projects yet. Start a project and its cards show here.</p>
+	<MascotBar message="No active project yet. Start one and its cards land here.">
+		{#snippet actions()}
+			<OutlineButton href="/projects" strong>Projects</OutlineButton>
+		{/snippet}
+	</MascotBar>
 {/if}
+
+<div class="board">
+	{#each data.columns as column (column.heading)}
+		<BoardColumn heading={column.heading} cards={column.cards} />
+	{/each}
+</div>
+<p class="board-note">Cards in review are visible to your client in the portal.</p>
 
 <style>
 	.board-heading {
