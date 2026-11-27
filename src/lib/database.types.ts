@@ -476,6 +476,7 @@ export type Database = {
           group_name: string | null
           icon_path: string | null
           id: string
+          kind: Database["public"]["Enums"]["tile_kind"]
           name: string
           position: number
           updated_at: string
@@ -487,6 +488,7 @@ export type Database = {
           group_name?: string | null
           icon_path?: string | null
           id?: string
+          kind?: Database["public"]["Enums"]["tile_kind"]
           name: string
           position?: number
           updated_at?: string
@@ -498,6 +500,7 @@ export type Database = {
           group_name?: string | null
           icon_path?: string | null
           id?: string
+          kind?: Database["public"]["Enums"]["tile_kind"]
           name?: string
           position?: number
           updated_at?: string
@@ -2056,6 +2059,7 @@ export type Database = {
       project_status: "draft" | "active" | "done" | "archived"
       request_status: "requested" | "draft" | "sent" | "approved" | "declined"
       task_priority: "must" | "should" | "could" | "wont"
+      tile_kind: "app" | "link"
       time_category: "client_work" | "admin" | "acquisition" | "training"
       vat_treatment: "standard" | "kor" | "reverse_charge" | "outside_eu"
       working_hours_kind: "work" | "creative" | "meetings"
@@ -2214,6 +2218,7 @@ export const Constants = {
       project_status: ["draft", "active", "done", "archived"],
       request_status: ["requested", "draft", "sent", "approved", "declined"],
       task_priority: ["must", "should", "could", "wont"],
+      tile_kind: ["app", "link"],
       time_category: ["client_work", "admin", "acquisition", "training"],
       vat_treatment: ["standard", "kor", "reverse_charge", "outside_eu"],
       working_hours_kind: ["work", "creative", "meetings"],

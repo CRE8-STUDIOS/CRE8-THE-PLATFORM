@@ -9,7 +9,6 @@
 		{ href: '/settings/clock', text: 'Clock & meetings' },
 		{ href: '/settings/hours', text: 'Working hours' },
 		{ href: '/settings/theme', text: 'Theme' },
-		{ href: '/settings/tiles', text: 'App buttons' },
 		{ href: '/settings/templates', text: 'Contract templates' },
 		...(data.profile?.is_admin ? [{ href: '/settings/tax', text: 'Tax rules (admin)' }] : [])
 	])

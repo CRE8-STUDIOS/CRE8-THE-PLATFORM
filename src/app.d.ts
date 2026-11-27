@@ -13,6 +13,8 @@ declare global {
 		interface PageState {
 			/** The add panel, opened over the current page */
 			add?: { href: string; depth: number; data: Record<string, any> }
+			/** A workspace panel to add or change an app or link */
+			tile?: { href: string; data: Record<string, any> }
 		}
 	}
 }
