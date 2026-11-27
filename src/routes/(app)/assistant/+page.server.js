@@ -1,5 +1,7 @@
 import { redirect } from '@sveltejs/kit'
 import { text, failMessage, failWith } from '#lib/server/form.js'
+import { setForToday, INTRO_SEEN } from '#lib/server/daily.js'
+import { todayIn } from '#lib/utils/dates.js'
 import { ASSISTANT_COLORS, ASSISTANT_NAME_MAX, ASSISTANT_SHAPES } from '#lib/utils/constants.js'
 import { stepHref, stepIndex } from '#lib/utils/onboarding.js'
 
@@ -80,5 +82,16 @@ export const actions = {
 	workspace: async ({ request, locals }) => {
 		const match = (await request.formData()).get('match') === 'yes'
 		return saveAndGo(locals, { workspace_matches_assistant: match }, stepHref(7))
+	},
+
+	finish: async ({ locals, cookies }) => {
+		const { error } = await locals.supabase
+			.from('profiles')
+			.update({ assistant_onboarded_at: new Date().toISOString() })
+			.eq('id', locals.user?.id ?? '')
+		if (error) return failWith(error)
+
+		setForToday(cookies, INTRO_SEEN, todayIn(locals.timezone))
+		redirect(303, '/overview')
 	}
 }

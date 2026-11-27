@@ -7,6 +7,7 @@
 	import StepShape from './StepShape.svelte'
 	import StepTransform from './StepTransform.svelte'
 	import StepWorkspace from './StepWorkspace.svelte'
+	import StepDone from './StepDone.svelte'
 	import { ASSISTANT_DEFAULT_NAME } from '#lib/utils/constants.js'
 
 	/** @typedef {{ name: string | null, color: string, shape: string, matchWorkspace: boolean }} Assistant */
@@ -91,7 +92,15 @@
 			{:else if step === 6}
 				<StepWorkspace shape={assistant.shape} color={assistant.color} label={buddyLabel} />
 			{:else}
-				<p class="onboarding-line">{ONBOARDING_STEPS[step].label}</p>
+				<StepDone
+					shape={assistant.shape}
+					color={assistant.color}
+					label={buddyLabel}
+					{userName}
+					assistantName={assistant.name}
+					matched={assistant.matchWorkspace}
+					restart={stepHref(0)}
+				/>
 			{/if}
 		{/key}
 	</main>
