@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$app/forms'
 	import MascotStage from '#lib/molecules/MascotStage.svelte'
+	import TypedLine from '#lib/molecules/TypedLine.svelte'
 	import { stepAction } from '#lib/utils/onboarding.js'
 	import { ASSISTANT_DEFAULT_NAME, ASSISTANT_NAME_MAX } from '#lib/utils/constants.js'
 
@@ -39,9 +40,10 @@
 			/>
 		</label>
 		{#if plea}
-			<p class="onboarding-line rise" role="status">
-				please give me a name. I don't want to be {ASSISTANT_DEFAULT_NAME}.
-			</p>
+			<TypedLine
+				class="onboarding-line"
+				text="please give me a name. I don't want to be {ASSISTANT_DEFAULT_NAME}."
+			/>
 		{/if}
 		<input type="hidden" name="plea" value={plea ? 'yes' : ''} />
 		<div class="onboarding-actions">
