@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms'
 	import Mascot from '#lib/atoms/Mascot.svelte'
 	import MascotStage from '#lib/molecules/MascotStage.svelte'
+	import { stepAction } from '#lib/utils/onboarding.js'
 
 	/** @type {{ shape: string, color: string, label: string }} */
 	const { shape, color, label } = $props()
@@ -33,7 +34,7 @@
 		</div>
 	</div>
 
-	<form method="POST" action="?/workspace" use:enhance>
+	<form method="POST" action={stepAction('workspace', 'workspace')} use:enhance>
 		<div class="onboarding-actions">
 			<button class="button button-secondary" name="match" value="no">Keep it classic</button>
 			<button class="button button-primary" name="match" value="yes">Yes, match me</button>

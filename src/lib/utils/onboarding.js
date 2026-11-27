@@ -84,3 +84,11 @@ export const SHOW = [
 	['drum', 2200],
 	['boom', 5200]
 ]
+
+/**
+ * Form action address that keeps the step, so a failed or repeated answer
+ * stays on the same step instead of falling back to the first one.
+ * @param {string} step
+ * @param {string} action
+ */
+export const stepAction = (step, action) => `/assistant?step=${step}&/${action}`

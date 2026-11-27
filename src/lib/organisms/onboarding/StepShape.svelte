@@ -4,7 +4,7 @@
 	import Mascot from '#lib/atoms/Mascot.svelte'
 	import MascotStage from '#lib/molecules/MascotStage.svelte'
 	import { ASSISTANT_SHAPES } from '#lib/utils/constants.js'
-	import { SHAPE_LINES } from '#lib/utils/onboarding.js'
+	import { SHAPE_LINES, stepAction } from '#lib/utils/onboarding.js'
 
 	/** @type {{ shape: string, name: string, color: string, back: string }} */
 	const { shape: saved, name, color, back } = $props()
@@ -21,7 +21,7 @@
 		squish myself into it.
 	</p>
 
-	<form class="step-form" method="POST" action="?/shape" use:enhance>
+	<form class="step-form" method="POST" action={stepAction('shape', 'shape')} use:enhance>
 		<fieldset class="shapes">
 			<legend class="visually-hidden">Assistant shape</legend>
 			{#each ASSISTANT_SHAPES as option (option)}

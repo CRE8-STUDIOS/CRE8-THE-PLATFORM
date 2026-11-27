@@ -3,7 +3,7 @@
 	import { enhance } from '$app/forms'
 	import MascotStage from '#lib/molecules/MascotStage.svelte'
 	import { ASSISTANT_COLORS } from '#lib/utils/constants.js'
-	import { COLOR_LINES } from '#lib/utils/onboarding.js'
+	import { COLOR_LINES, stepAction } from '#lib/utils/onboarding.js'
 
 	/** @type {{ shape: string, name: string, color: string, back: string }} */
 	const { shape, name, color: saved, back } = $props()
@@ -19,7 +19,7 @@
 		Choose wisely. The last time I picked my own color I looked like a leaking printer cartridge.
 	</p>
 
-	<form class="step-form" method="POST" action="?/color" use:enhance>
+	<form class="step-form" method="POST" action={stepAction('color', 'color')} use:enhance>
 		<fieldset class="swatches">
 			<legend class="visually-hidden">Assistant color</legend>
 			{#each ASSISTANT_COLORS as option (option)}

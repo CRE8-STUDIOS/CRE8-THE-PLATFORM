@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$app/forms'
 	import MascotStage from '#lib/molecules/MascotStage.svelte'
+	import { stepAction } from '#lib/utils/onboarding.js'
 	import { ASSISTANT_DEFAULT_NAME, ASSISTANT_NAME_MAX } from '#lib/utils/constants.js'
 
 	/** @type {{ shape: string, label: string, userName: string | null, assistantName: string | null, plea: boolean }} */
@@ -22,7 +23,7 @@
 		name?
 	</p>
 
-	<form class="step-form" method="POST" action="?/myName" use:enhance>
+	<form class="step-form" method="POST" action={stepAction('my-name', 'myName')} use:enhance>
 		<!-- Pressing Enter in the field means "Name me" -->
 		<button class="visually-hidden" name="intent" value="name" tabindex="-1" aria-hidden="true"
 		></button>

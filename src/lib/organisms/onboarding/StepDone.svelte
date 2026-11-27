@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$app/forms'
 	import MascotStage from '#lib/molecules/MascotStage.svelte'
+	import { stepAction } from '#lib/utils/onboarding.js'
 	import { ASSISTANT_DEFAULT_NAME } from '#lib/utils/constants.js'
 
 	/** @type {{ shape: string, color: string, label: string, userName: string | null, assistantName: string | null, matched: boolean, restart: string }} */
@@ -23,7 +24,7 @@
 			: ''}
 	</p>
 
-	<form method="POST" action="?/finish" use:enhance>
+	<form method="POST" action={stepAction('done', 'finish')} use:enhance>
 		<div class="onboarding-actions">
 			<a class="button button-secondary" href={restart}>Start over</a>
 			<button class="button button-primary">Go to my overview</button>

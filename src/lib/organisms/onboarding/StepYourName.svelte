@@ -13,7 +13,14 @@
 	import Tape from '#lib/atoms/mascot-props/Tape.svelte'
 	import { ASSISTANT_NAME_MAX } from '#lib/utils/constants.js'
 	import { prefersCalm } from '#lib/utils/timeline.svelte.js'
-	import { COSTUMES, COSTUME_FILL, RAMBLE, REAL, typingPause } from '#lib/utils/onboarding.js'
+	import {
+		COSTUMES,
+		COSTUME_FILL,
+		RAMBLE,
+		REAL,
+		typingPause,
+		stepAction
+	} from '#lib/utils/onboarding.js'
 
 	/** @type {{ shape: string, color: string, assistantName: string | null, userName: string | null, back: string }} */
 	const { shape, color, assistantName, userName, back } = $props()
@@ -129,7 +136,12 @@
 	</div>
 
 	{#if phase === 'done'}
-		<form class="step-form rise" method="POST" action="?/yourName" use:enhance>
+		<form
+			class="step-form rise"
+			method="POST"
+			action={stepAction('your-name', 'yourName')}
+			use:enhance
+		>
 			<label class="onboarding-field">
 				So, what do I call you?
 				<input
