@@ -31,7 +31,7 @@
 {:else}
 	<div class="app-shell">
 		<Sidebar current={page.url.pathname} clock={clockStatus} />
-		<main id="content" class="app-main">
+		<main id="content" class="app-main" class:wide={page.route.id === '/(app)/overview'}>
 			{#if data.tour?.inApp}{#key data.tour.inApp.here}<TourCallout
 						tour={data.tour}
 						inApp={data.tour.inApp}
@@ -68,6 +68,11 @@
 		max-inline-size: var(--size-content);
 		padding: var(--space-xl);
 		padding-inline: var(--space-m);
+	}
+
+	/* The overview uses the whole width of the screen */
+	.app-main.wide {
+		max-inline-size: none;
 	}
 
 	.bare-main {

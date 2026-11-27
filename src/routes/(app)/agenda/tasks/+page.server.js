@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit'
-import { id, text, failWith } from '#lib/server/form.js'
+import { id, text, failWith, safeRedirect } from '#lib/server/form.js'
 import { minutesText, taskColumns } from '#lib/agenda/lists.js'
 import { freeMinutes } from '#lib/agenda/fit.js'
 import { loadFitContext } from '#lib/server/agenda-forms.js'
@@ -43,6 +43,6 @@ export const actions = {
 			.eq('id', id(formData))
 			.eq('type', 'task')
 		if (error) return failWith(error)
-		redirect(303, '/agenda/tasks')
+		redirect(303, safeRedirect(text(formData, 'redirectTo'), '/agenda/tasks'))
 	}
 }

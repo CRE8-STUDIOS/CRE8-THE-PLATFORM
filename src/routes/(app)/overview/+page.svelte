@@ -1,71 +1,120 @@
 <script>
-	import PageHeader from '#lib/molecules/PageHeader.svelte'
-	import ProjectCard from '#lib/molecules/ProjectCard.svelte'
-	import CurrentWork from '#lib/organisms/CurrentWork.svelte'
-	import TodayAgenda from '#lib/organisms/TodayAgenda.svelte'
-	import LinkList from '#lib/organisms/LinkList.svelte'
 	import ClockInPrompt from '#lib/organisms/ClockInPrompt.svelte'
+	import ClockControl from '#lib/organisms/overview/ClockControl.svelte'
+	import RightNow from '#lib/organisms/overview/RightNow.svelte'
+	import UpNext from '#lib/organisms/overview/UpNext.svelte'
+	import MeetingsCard from '#lib/organisms/overview/MeetingsCard.svelte'
+	import TasksCard from '#lib/organisms/overview/TasksCard.svelte'
+	import DeadlinesCard from '#lib/organisms/overview/DeadlinesCard.svelte'
+	import ActiveProjects from '#lib/organisms/overview/ActiveProjects.svelte'
+	import FirstDay from '#lib/organisms/overview/FirstDay.svelte'
+	import { DEADLINE_DAYS } from '#lib/overview/helpers.js'
 
 	const { data } = $props()
-	const {
-		today,
-		clock,
-		agenda,
-		dueTasks,
-		toDo,
-		projectLinks,
-		timezone,
-		clockInLater,
-		choosingProject,
-		clockProjects
-	} = $derived(data)
+
+	const showPrompt = $derived(
+		(!data.clock && (!data.clockInLater || data.choosingProject)) ||
+			(Boolean(data.clock) && data.switchingProject)
+	)
 </script>
 
-<div data-tour="greeting">
-	<PageHeader title="Overview" label={today}>
-		{#snippet actions()}
-			{#if !clock}<a class="button button-primary" href="/overview?clock=choose">Clock in</a>{/if}
-		{/snippet}
-	</PageHeader>
-</div>
+<svelte:head><title>Overview · CRE8</title></svelte:head>
 
-<div data-tour="clock-in">
-	{#if !clock && (!clockInLater || choosingProject)}
-		<ClockInPrompt projects={clockProjects} choosing={choosingProject} />
-	{/if}
-	<CurrentWork {clock} />
-</div>
+<div class="overview">
+	<header class="overview-header" data-tour="greeting">
+		<div>
+			<span class="overview-date">{data.dateLabel}</span>
+			<h1>Overview</h1>
+		</div>
+		<div data-tour="clock-in">
+			<ClockControl
+				clock={data.clock && {
+					started_at: data.clock.started_at,
+					project: data.clock.projects?.title ?? null
+				}}
+				closedMinutes={data.closedMinutes}
+				now={data.now}
+				canSwitch={data.clockProjects.length > 0}
+			/>
+		</div>
+	</header>
 
-<div class="card-grid">
-	<div data-tour="planning"><TodayAgenda items={agenda} {dueTasks} timeZone={timezone} /></div>
-	<LinkList title="To send or answer" links={toDo} empty="Nothing waiting." />
-</div>
-
-<section class="active-projects" aria-labelledby="active-projects-title">
-	<h2 id="active-projects-title">Active projects</h2>
-	{#if projectLinks.length}
-		<ul class="card-grid active-projects-grid">
-			{#each projectLinks as { id, text, href } (id)}
-				{@const [title, ...meta] = text.split(' · ')}
-				<li><ProjectCard {href} {title} status="active" {meta} /></li>
-			{/each}
-		</ul>
+	{#if data.empty}
+		<FirstDay newProjectHref="/projects#new-project" />
 	{:else}
-		<p class="empty-state">No active projects.</p>
+		<div class="overview-now">
+			<RightNow now={data.rightNow} />
+			<div data-tour="planning"><UpNext suggestions={data.upNext} /></div>
+		</div>
+
+		<div class="overview-cards">
+			<MeetingsCard meetings={data.meetings} toSend={data.toSend} />
+			<TasksCard tasks={data.tasks} today={data.today} />
+			<DeadlinesCard deadlines={data.deadlines} days={DEADLINE_DAYS} />
+		</div>
+
+		<ActiveProjects projects={data.projects} />
 	{/if}
-</section>
+</div>
+
+{#if showPrompt}
+	<ClockInPrompt
+		projects={data.clockProjects}
+		choosing={data.choosingProject}
+		switching={Boolean(data.clock) && data.switchingProject}
+	/>
+{/if}
 
 <style>
-	.active-projects {
-		display: grid;
+	.overview {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xl);
+		min-inline-size: 0;
+	}
+
+	.overview-header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		justify-content: space-between;
 		gap: var(--space-m);
 	}
 
-	.active-projects-grid {
-		--grid-min: var(--size-grid-m);
-		grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--grid-min)), 1fr));
+	.overview-header > div:first-child {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+	}
+
+	.overview-date {
+		color: var(--color-text-calm);
+		font-size: var(--font-size-agenda-meta);
+	}
+
+	.overview-now {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
+		gap: var(--space-m);
 		align-items: stretch;
-		padding: 0;
-		list-style: none;
+	}
+
+	@media (width >= 60rem) {
+		.overview-now {
+			grid-template-columns: 1.4fr 1fr;
+		}
+	}
+
+	.overview-cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+		gap: var(--space-m);
+		align-items: start;
+	}
+
+	h1 {
+		font-size: var(--font-size-agenda-heading);
+		line-height: 1;
+		text-transform: uppercase;
 	}
 </style>
