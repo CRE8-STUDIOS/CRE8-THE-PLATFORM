@@ -7,7 +7,7 @@
 	const tour = $derived(data.tour)
 </script>
 
-<svelte:head><title>{tour.chapter.title} · How the platform works · CRE8</title></svelte:head>
+<svelte:head><title>{tour.chapter.title} · How CRE8 THE PLATFORM works · CRE8</title></svelte:head>
 
 <div class="tour">
 	<aside class="tour-chapters" aria-labelledby="tour-chapters-heading">
