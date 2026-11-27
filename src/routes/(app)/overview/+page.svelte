@@ -6,6 +6,7 @@
 	import MeetingsCard from '#lib/organisms/overview/MeetingsCard.svelte'
 	import TasksCard from '#lib/organisms/overview/TasksCard.svelte'
 	import DeadlinesCard from '#lib/organisms/overview/DeadlinesCard.svelte'
+	import ActiveProjects from '#lib/organisms/overview/ActiveProjects.svelte'
 	import { DEADLINE_DAYS } from '#lib/overview/helpers.js'
 
 	const { data } = $props()
@@ -47,6 +48,8 @@
 		<TasksCard tasks={data.tasks} today={data.today} />
 		<DeadlinesCard deadlines={data.deadlines} days={DEADLINE_DAYS} />
 	</div>
+
+	<ActiveProjects projects={data.projects} />
 </div>
 
 {#if showPrompt}
