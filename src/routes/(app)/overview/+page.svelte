@@ -7,6 +7,7 @@
 	import TasksCard from '#lib/organisms/overview/TasksCard.svelte'
 	import DeadlinesCard from '#lib/organisms/overview/DeadlinesCard.svelte'
 	import ActiveProjects from '#lib/organisms/overview/ActiveProjects.svelte'
+	import FirstDay from '#lib/organisms/overview/FirstDay.svelte'
 	import { DEADLINE_DAYS } from '#lib/overview/helpers.js'
 
 	const { data } = $props()
@@ -38,18 +39,22 @@
 		</div>
 	</header>
 
-	<div class="overview-now">
-		<RightNow now={data.rightNow} />
-		<div data-tour="planning"><UpNext suggestions={data.upNext} /></div>
-	</div>
+	{#if data.empty}
+		<FirstDay newProjectHref="/projects#new-project" />
+	{:else}
+		<div class="overview-now">
+			<RightNow now={data.rightNow} />
+			<div data-tour="planning"><UpNext suggestions={data.upNext} /></div>
+		</div>
 
-	<div class="overview-cards">
-		<MeetingsCard meetings={data.meetings} toSend={data.toSend} />
-		<TasksCard tasks={data.tasks} today={data.today} />
-		<DeadlinesCard deadlines={data.deadlines} days={DEADLINE_DAYS} />
-	</div>
+		<div class="overview-cards">
+			<MeetingsCard meetings={data.meetings} toSend={data.toSend} />
+			<TasksCard tasks={data.tasks} today={data.today} />
+			<DeadlinesCard deadlines={data.deadlines} days={DEADLINE_DAYS} />
+		</div>
 
-	<ActiveProjects projects={data.projects} />
+		<ActiveProjects projects={data.projects} />
+	{/if}
 </div>
 
 {#if showPrompt}
