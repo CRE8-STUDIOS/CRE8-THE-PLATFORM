@@ -5,7 +5,12 @@
 	import Mascot from '#lib/atoms/Mascot.svelte'
 	import TextField from '#lib/molecules/TextField.svelte'
 	import CheckboxField from '#lib/molecules/CheckboxField.svelte'
-	import { ASSISTANT_COLORS, ASSISTANT_NAME_MAX, ASSISTANT_SHAPES } from '#lib/utils/constants.js'
+	import {
+		ASSISTANT_COLORS,
+		ASSISTANT_DEFAULT_NAME,
+		ASSISTANT_NAME_MAX,
+		ASSISTANT_SHAPES
+	} from '#lib/utils/constants.js'
 
 	/** @type {{ assistant: { name: string | null, color: string, shape: string, matchWorkspace: boolean } }} */
 	const { assistant } = $props()
@@ -20,7 +25,7 @@
 	<form method="POST" action="?/assistant">
 		<div class="assistant-preview" data-assistant-color={color} aria-hidden="true">
 			<Mascot size="8rem" {shape} />
-			<p class="assistant-preview-name">{name.trim() || 'CRE8'}</p>
+			<p class="assistant-preview-name">{name.trim() || ASSISTANT_DEFAULT_NAME}</p>
 		</div>
 
 		<TextField
@@ -29,7 +34,8 @@
 			value={assistant.name ?? ''}
 			maxlength={ASSISTANT_NAME_MAX}
 			autocomplete="off"
-			hint="Leave empty to keep it unnamed"
+			placeholder={ASSISTANT_DEFAULT_NAME}
+			hint="Leave empty and it stays {ASSISTANT_DEFAULT_NAME}"
 			oninput={(/** @type {Event & { currentTarget: HTMLInputElement }} */ event) =>
 				(name = event.currentTarget.value)}
 		/>

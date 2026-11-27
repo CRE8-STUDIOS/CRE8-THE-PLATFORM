@@ -1,6 +1,7 @@
 <script>
 	import { page } from '$app/state'
 	import { mascotShapes } from '#lib/utils/mascot-shapes.js'
+	import { ASSISTANT_DEFAULT_NAME } from '#lib/utils/constants.js'
 
 	/** @type {{ size?: string, shape?: string, face?: boolean, animate?: boolean, follow?: boolean, gaze?: { x: number, y: number } | null, label?: string }} */
 	const { size, shape, face = true, animate = true, follow = false, gaze = null, label } = $props()
@@ -10,7 +11,8 @@
 		mascotShapes[/** @type {keyof typeof mascotShapes} */ (shape ?? assistant?.shape)] ??
 			mascotShapes.splat
 	)
-	const name = $derived(label ?? (assistant?.name || 'CRE8'))
+	const fallback = $derived(page.data.role === 'freelancer' ? ASSISTANT_DEFAULT_NAME : 'CRE8')
+	const name = $derived(label ?? (assistant?.name || fallback))
 
 	/** @type {SVGSVGElement | undefined} */
 	let svg = $state()

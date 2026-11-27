@@ -24,6 +24,7 @@ export const ASSISTANT_COLORS = ['ink', 'pink', 'blue', 'green', 'orange', 'lila
 /** @type {import('#lib/database.types.js').Enums<'assistant_shape'>[]} */
 export const ASSISTANT_SHAPES = ['splat', 'bubble', 'star', 'cloud', 'flower']
 export const ASSISTANT_NAME_MAX = 40
+export const ASSISTANT_DEFAULT_NAME = 'John Doe'
 
 export const EU_COUNTRIES = [
 	'AT',
