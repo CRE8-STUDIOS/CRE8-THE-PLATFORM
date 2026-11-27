@@ -580,6 +580,39 @@ export type Database = {
           },
         ]
       }
+      guide_progress: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          id: string
+          item_slug: string
+          step: number
+          track: Database["public"]["Enums"]["guide_track"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          item_slug: string
+          step?: number
+          track: Database["public"]["Enums"]["guide_track"]
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          item_slug?: string
+          step?: number
+          track?: Database["public"]["Enums"]["guide_track"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       invoice_lines: {
         Row: {
           created_at: string
@@ -2052,6 +2085,7 @@ export type Database = {
       clock_stop_reason: "manual" | "switch" | "no_answer" | "inactive"
       contract_status: "draft" | "sent" | "signed"
       energy_type: "creative" | "admin" | "other"
+      guide_track: "app" | "money"
       invoice_status: "draft" | "sent" | "paid"
       meeting_request_status: "pending" | "accepted" | "declined" | "cancelled"
       moodboard_item_type: "image" | "color" | "text" | "link"
@@ -2211,6 +2245,7 @@ export const Constants = {
       clock_stop_reason: ["manual", "switch", "no_answer", "inactive"],
       contract_status: ["draft", "sent", "signed"],
       energy_type: ["creative", "admin", "other"],
+      guide_track: ["app", "money"],
       invoice_status: ["draft", "sent", "paid"],
       meeting_request_status: ["pending", "accepted", "declined", "cancelled"],
       moodboard_item_type: ["image", "color", "text", "link"],
