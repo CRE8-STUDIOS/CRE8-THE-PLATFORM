@@ -126,9 +126,9 @@
 	--duration-fast: 150ms;
 	--duration-normal: 250ms;
 	--duration-pencil: 800ms;
-	--duration-auth-shock: 220ms;
 	--duration-auth-duck: 300ms;
 	--duration-auth-look: 380ms;
+	--duration-auth-hide: 350ms;
 	--duration-auth-shake: 500ms;
 	--duration-auth-erase: 750ms;
 	--duration-auth-naked: 1100ms;

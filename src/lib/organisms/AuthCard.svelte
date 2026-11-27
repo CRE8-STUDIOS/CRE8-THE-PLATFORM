@@ -6,11 +6,12 @@
 	import { onNavigate } from '$app/navigation'
 	import Mascot from '#lib/atoms/Mascot.svelte'
 	import EraserWipe from '#lib/atoms/EraserWipe.svelte'
+	import ShockMarks from '#lib/atoms/ShockMarks.svelte'
 
 	/** @type {{ title: string, intro?: string, alarm?: number, compact?: boolean, children: import('svelte').Snippet, bottom?: import('svelte').Snippet, after?: import('svelte').Snippet }} */
 	const { title, intro, alarm = 0, compact = false, children, bottom, after } = $props()
 
-	/** @typedef {'idle' | 'look-right' | 'look-left' | 'shock' | 'duck' | 'erase' | 'naked' | 'draw' | 'jump'} Phase */
+	/** @typedef {'idle' | 'duck' | 'erase' | 'naked' | 'draw' | 'jump'} Phase */
 	/** @type {Phase} */
 	let phase = $state(arriving ? 'naked' : 'idle')
 	/** @type {{ x: number, y: number } | null} */
@@ -27,19 +28,16 @@
 		stage.classList.add('is-shaking')
 	})
 
-	const shocked = $derived(['shock', 'duck', 'erase', 'naked', 'draw'].includes(phase))
-	const naked = $derived(['naked', 'draw', 'jump'].includes(phase))
-
 	const duration = (/** @type {string} */ name) =>
 		parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0
 	const wait = (/** @type {number} */ ms) => new Promise((done) => setTimeout(done, ms))
 
 	const startSearching = () => {
 		let side = 1
-		gaze = { x: side * 0.55, y: -0.2 }
+		gaze = { x: side * 0.6, y: -0.2 }
 		searching = setInterval(() => {
 			side *= -1
-			gaze = { x: side * 0.55, y: -0.2 }
+			gaze = { x: side * 0.6, y: -0.2 }
 		}, duration('--duration-auth-look'))
 	}
 
@@ -52,15 +50,13 @@
 		if (!arriving) return
 		arriving = false
 		startSearching()
-		wait(duration('--duration-auth-naked') * 0.4)
+		wait(duration('--duration-auth-naked') * 0.5)
 			.then(() => {
+				stopSearching()
 				phase = 'draw'
 				return wait(duration('--duration-auth-draw'))
 			})
-			.then(() => {
-				stopSearching()
-				phase = 'jump'
-			})
+			.then(() => (phase = 'jump'))
 		return stopSearching
 	})
 
@@ -69,18 +65,12 @@
 			navigation.from?.route.id === '/login' && navigation.to?.route.id === '/login/form'
 		if (!fromChoice || matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-		/** @param {Phase} next @param {string} name @param {{ x: number, y: number } | null} [look] */
-		const step = (next, name, look = gaze) => {
-			phase = next
-			gaze = look
-			return wait(duration(name))
-		}
-
-		return step('look-right', '--duration-auth-look', { x: 1, y: 0 })
-			.then(() => step('look-left', '--duration-auth-look', { x: -1, y: 0 }))
-			.then(() => step('shock', '--duration-auth-shock', null))
-			.then(() => step('duck', '--duration-auth-duck'))
-			.then(() => step('erase', '--duration-auth-erase'))
+		phase = 'duck'
+		return wait(duration('--duration-auth-duck'))
+			.then(() => {
+				phase = 'erase'
+				return wait(duration('--duration-auth-erase'))
+			})
 			.then(() => {
 				phase = 'naked'
 				startSearching()
@@ -93,25 +83,19 @@
 	})
 </script>
 
-<main
-	id="content"
-	class="auth-page"
-	class:auth-page-compact={compact}
-	class:auth-page-naked={naked}
->
+<main id="content" class="auth-page" class:auth-page-compact={compact}>
 	<div class="auth-top">
 		<h1 class="auth-heading">Welcome to<br />CRE8 the platform</h1>
 		<div class="auth-peek">
 			<div
 				class="auth-mascot is-{phase}"
-				class:is-shocked={shocked}
 				class:is-alarmed={alarm > 0}
 				aria-hidden="true"
 				onanimationend={(event) => {
 					if (event.target === event.currentTarget) phase = 'idle'
 				}}
 			>
-				<Mascot size="var(--auth-mascot-size)" follow {gaze} />
+				<Mascot size="var(--auth-mascot-size)" follow />
 			</div>
 		</div>
 	</div>
@@ -126,6 +110,14 @@
 			</div>
 			{#if bottom}<div class="auth-card-half auth-card-half-bottom">{@render bottom()}</div>{/if}
 		</section>
+		{#if phase === 'naked' || phase === 'draw'}
+			<div class="auth-caught is-{phase}" aria-hidden="true">
+				<div class="auth-caught-actor">
+					<Mascot size="var(--auth-caught-size)" {gaze} />
+					{#if phase === 'naked'}<ShockMarks />{/if}
+				</div>
+			</div>
+		{/if}
 		{#if phase === 'erase'}<EraserWipe contained />{/if}
 		{#if phase === 'draw'}<EraserWipe mode="draw" contained />{/if}
 	</div>
@@ -204,10 +196,6 @@
 		transition: translate var(--duration-auth-duck) ease-in;
 	}
 
-	.auth-mascot :global(.eyes) {
-		transition: scale var(--duration-auth-shock) ease-out;
-	}
-
 	.auth-mascot :global(.body) {
 		transition: fill var(--duration-normal) var(--easing-standard);
 	}
@@ -216,51 +204,33 @@
 		--mascot-color: var(--color-error);
 	}
 
-	.auth-mascot.is-shocked :global(.eyes) {
+	.auth-mascot :global(.eyes) {
+		transition: scale var(--duration-auth-duck) ease-out;
+	}
+
+	.auth-mascot.is-duck :global(.eyes) {
 		scale: 1.35;
 	}
 
 	.auth-mascot.is-duck,
-	.auth-mascot.is-erase {
+	.auth-mascot.is-erase,
+	.auth-mascot.is-naked,
+	.auth-mascot.is-draw {
 		translate: 0 calc(var(--auth-mascot-size) * 0.55);
 	}
 
-	.auth-mascot.is-naked {
-		transition-timing-function: cubic-bezier(0.3, 1.6, 0.5, 1);
+	.auth-mascot.is-naked,
+	.auth-mascot.is-draw {
+		transition: none;
 	}
 
-	.auth-page-naked .auth-peek {
-		clip-path: none;
+	.auth-mascot.is-jump {
+		animation: auth-jump var(--duration-auth-jump) ease-out;
 	}
 
 	.auth-stage {
 		--eraser-duration: var(--duration-auth-erase);
-	}
-
-	.auth-stage:global(.is-shaking) {
-		animation: auth-shake var(--duration-auth-shake) ease-in-out;
-	}
-
-	@keyframes auth-shake {
-		0%,
-		100% {
-			transform: none;
-		}
-		15% {
-			transform: translateX(-0.75rem) rotate(-1.5deg);
-		}
-		30% {
-			transform: translateX(0.75rem) rotate(1.5deg);
-		}
-		45% {
-			transform: translateX(-0.5rem) rotate(-1deg);
-		}
-		60% {
-			transform: translateX(0.5rem) rotate(1deg);
-		}
-		80% {
-			transform: translateX(-0.2rem);
-		}
+		--auth-caught-size: min(22rem, 80%);
 	}
 
 	.auth-stage.is-draw {
@@ -271,15 +241,85 @@
 		visibility: hidden;
 	}
 
-	.auth-mascot.is-jump {
-		animation: auth-jump var(--duration-auth-jump) ease-out;
+	.auth-caught {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		display: grid;
+		place-items: center;
+		pointer-events: none;
+	}
+
+	.auth-caught.is-naked {
+		z-index: 2;
+	}
+
+	.auth-caught-actor {
+		position: relative;
+		display: flex;
+	}
+
+	.auth-caught :global(.mascot) {
+		max-inline-size: none;
+		animation: none;
+	}
+
+	.auth-caught :global(.eyes) {
+		scale: 1.45;
+	}
+
+	.auth-caught.is-naked .auth-caught-actor {
+		animation:
+			auth-caught-in calc(var(--duration-auth-look) * 0.6) cubic-bezier(0.3, 1.6, 0.5, 1),
+			auth-search calc(var(--duration-auth-look) * 2) ease-in-out
+				calc(var(--duration-auth-look) * 0.6) infinite;
+	}
+
+	.auth-caught.is-draw .auth-caught-actor {
+		animation: auth-dive var(--duration-auth-hide) cubic-bezier(0.6, 0, 0.9, 0.4) forwards;
+	}
+
+	@keyframes auth-caught-in {
+		from {
+			scale: 0.7;
+		}
+		to {
+			scale: 1;
+		}
+	}
+
+	@keyframes auth-search {
+		0%,
+		100% {
+			rotate: 0deg;
+			translate: 0 0;
+		}
+		25% {
+			rotate: -9deg;
+			translate: -6% -3%;
+		}
+		50% {
+			rotate: 0deg;
+			translate: 0 0;
+		}
+		75% {
+			rotate: 9deg;
+			translate: 6% -3%;
+		}
+	}
+
+	@keyframes auth-dive {
+		to {
+			scale: 0.6;
+			translate: 0 -45%;
+		}
 	}
 
 	@keyframes auth-jump {
 		0% {
-			translate: 0 0;
+			translate: 0 calc(var(--auth-mascot-size) * 0.55);
 		}
-		35% {
+		45% {
 			translate: 0 calc(var(--auth-mascot-size) * -0.12);
 		}
 		60% {
