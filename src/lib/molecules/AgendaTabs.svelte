@@ -3,7 +3,7 @@
 	const { current } = $props()
 
 	const TABS = [
-		{ href: '/agenda', text: 'Agenda', match: /^\/agenda(\/(week|month|new|[0-9a-f-]{36}.*))?$/ },
+		{ href: '/agenda', text: 'Agenda', match: /^\/agenda(\/(week|month|add.*|[0-9a-f-]{36}.*))?$/ },
 		{ href: '/agenda/tasks', text: 'Tasks', match: /^\/agenda\/tasks/ },
 		{ href: '/agenda/appointments', text: 'Appointments', match: /^\/agenda\/appointments/ },
 		{ href: '/agenda/board', text: 'Project board', match: /^\/agenda\/board/ }
