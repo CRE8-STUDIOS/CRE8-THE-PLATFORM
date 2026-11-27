@@ -13,6 +13,7 @@
 	import Tape from '#lib/atoms/mascot-props/Tape.svelte'
 	import { ASSISTANT_NAME_MAX } from '#lib/utils/constants.js'
 	import { prefersCalm } from '#lib/utils/timeline.svelte.js'
+	import { sounds } from '#lib/utils/sound.js'
 	import {
 		COSTUMES,
 		COSTUME_FILL,
@@ -45,6 +46,7 @@
 	/** @param {string} text @param {number} count @param {number} ms @param {() => void} done */
 	const typeOut = (text, count, ms, done) => {
 		typed = text.slice(0, count)
+		if (count > 0 && text[count - 1] !== ' ') sounds.tick()
 		if (count < text.length)
 			later(() => typeOut(text, count + 1, ms, done), ms + typingPause(text, count))
 		else done()
@@ -65,8 +67,11 @@
 			() =>
 				typeOut(RAMBLE, 0, 62, () => {
 					phase = 'tape'
+					sounds.tape()
+					later(sounds.mmph, 500)
 					later(() => {
 						phase = 'delete'
+						sounds.swoosh()
 						erase(RAMBLE.length, () => {
 							phase = 'real'
 							later(() => typeOut(REAL, 0, 50, () => (phase = 'done')), 500)

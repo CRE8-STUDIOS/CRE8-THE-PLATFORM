@@ -3,6 +3,9 @@
 	import MascotStage from '#lib/molecules/MascotStage.svelte'
 	import { stepAction } from '#lib/utils/onboarding.js'
 	import { ASSISTANT_DEFAULT_NAME } from '#lib/utils/constants.js'
+	import { sounds } from '#lib/utils/sound.js'
+
+	$effect(() => sounds.sparkle())
 
 	/** @type {{ shape: string, color: string, label: string, userName: string | null, assistantName: string | null, matched: boolean, restart: string }} */
 	const { shape, color, label, userName, assistantName, matched, restart } = $props()

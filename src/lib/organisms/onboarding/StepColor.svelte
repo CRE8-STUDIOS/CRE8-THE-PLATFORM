@@ -3,6 +3,7 @@
 	import { enhance } from '$app/forms'
 	import MascotStage from '#lib/molecules/MascotStage.svelte'
 	import { ASSISTANT_COLORS } from '#lib/utils/constants.js'
+	import { sounds } from '#lib/utils/sound.js'
 	import { COLOR_LINES, stepAction } from '#lib/utils/onboarding.js'
 
 	/** @type {{ shape: string, name: string, color: string, back: string }} */
@@ -30,6 +31,7 @@
 						name="assistant_color"
 						value={option}
 						bind:group={color}
+						onchange={sounds.pick}
 					/>
 					<span class="visually-hidden">{COLOR_LINES[option].name}</span>
 				</label>

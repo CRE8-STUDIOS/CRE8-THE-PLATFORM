@@ -5,6 +5,7 @@
 	import Sparkles from '#lib/atoms/mascot-props/Sparkles.svelte'
 	import { SHOW } from '#lib/utils/onboarding.js'
 	import { Timeline } from '#lib/utils/timeline.svelte.js'
+	import { sounds } from '#lib/utils/sound.js'
 
 	/** @type {{ shape: string, color: string, label: string, next: string }} */
 	const { shape, color, label, next } = $props()
@@ -15,6 +16,18 @@
 	$effect(() => {
 		untrack(() => show.play())
 		return () => show.stop()
+	})
+
+	$effect(() => {
+		if (!show.started) return
+		if (phase === 'drum') {
+			sounds.swoosh()
+			sounds.drumroll(2.9)
+		}
+		if (phase === 'boom') {
+			sounds.swoosh()
+			sounds.boom()
+		}
 	})
 
 	const replay = (/** @type {MouseEvent} */ event) => {

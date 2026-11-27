@@ -9,12 +9,24 @@
 	import StepWorkspace from './StepWorkspace.svelte'
 	import StepDone from './StepDone.svelte'
 	import { ASSISTANT_DEFAULT_NAME } from '#lib/utils/constants.js'
+	import { setSoundEnabled, soundEnabled, unlockSound } from '#lib/utils/sound.js'
 
 	/** @typedef {{ name: string | null, color: string, shape: string, matchWorkspace: boolean }} Assistant */
 	/** @type {{ step: number, userName: string | null, assistant: Assistant, form?: unknown }} */
 	const { step, userName, assistant, form } = $props()
 
 	const canSkip = $derived(step > 0 && step < 6)
+
+	/** @type {boolean | null} null until the page runs JavaScript */
+	let soundOn = $state(null)
+	$effect(() => {
+		soundOn = soundEnabled()
+	})
+	const toggleSound = () => {
+		soundOn = !soundOn
+		setSoundEnabled(soundOn)
+		unlockSound()
+	}
 	const buddyName = $derived(
 		assistant.name || (step > 2 ? ASSISTANT_DEFAULT_NAME : 'The CRE8 assistant')
 	)
@@ -23,6 +35,8 @@
 		/** @type {{ message?: string, plea?: boolean } | null | undefined} */ (form)
 	)
 </script>
+
+<svelte:window onpointerdown={unlockSound} onkeydown={unlockSound} />
 
 <div class="onboarding" data-assistant-color={assistant.color}>
 	<header class="onboarding-header">
@@ -42,9 +56,16 @@
 				</li>
 			{/each}
 		</ol>
-		{#if canSkip}
-			<a class="onboarding-skip" href={stepHref(6)}>Skip the small talk</a>
-		{/if}
+		<div class="onboarding-tools">
+			{#if soundOn !== null}
+				<button type="button" class="onboarding-link" aria-pressed={soundOn} onclick={toggleSound}>
+					Sound {soundOn ? 'on' : 'off'}
+				</button>
+			{/if}
+			{#if canSkip}
+				<a class="onboarding-skip" href={stepHref(6)}>Skip the small talk</a>
+			{/if}
+		</div>
 	</header>
 
 	<main id="content" class="onboarding-main">
@@ -128,9 +149,12 @@
 		grid-column: 2;
 	}
 
-	.onboarding-skip {
+	.onboarding-tools {
+		display: flex;
+		flex-wrap: wrap;
 		grid-column: 3;
 		justify-self: end;
+		gap: var(--space-s);
 	}
 
 	@media (width < 40rem) {
@@ -144,7 +168,7 @@
 			justify-self: center;
 		}
 
-		.onboarding-skip {
+		.onboarding-tools {
 			grid-column: 2;
 		}
 	}

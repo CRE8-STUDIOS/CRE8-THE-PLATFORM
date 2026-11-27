@@ -4,6 +4,7 @@
 	import Mascot from '#lib/atoms/Mascot.svelte'
 	import MascotStage from '#lib/molecules/MascotStage.svelte'
 	import { ASSISTANT_SHAPES } from '#lib/utils/constants.js'
+	import { sounds } from '#lib/utils/sound.js'
 	import { SHAPE_LINES, stepAction } from '#lib/utils/onboarding.js'
 
 	/** @type {{ shape: string, name: string, color: string, back: string }} */
@@ -32,6 +33,7 @@
 						name="assistant_shape"
 						value={option}
 						bind:group={shape}
+						onchange={sounds.squish}
 					/>
 					<span aria-hidden="true">
 						<Mascot size="44px" shape={option} face={false} animate={false} />

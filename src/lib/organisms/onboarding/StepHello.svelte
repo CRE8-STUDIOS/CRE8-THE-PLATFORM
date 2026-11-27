@@ -6,6 +6,7 @@
 	import Sparkles from '#lib/atoms/mascot-props/Sparkles.svelte'
 	import { INTRO } from '#lib/utils/onboarding.js'
 	import { Timeline } from '#lib/utils/timeline.svelte.js'
+	import { sounds } from '#lib/utils/sound.js'
 
 	/** @type {{ shape: string, next: string }} */
 	const { shape, next } = $props()
@@ -33,6 +34,17 @@
 	$effect(() => {
 		untrack(() => intro.play())
 		return () => intro.stop()
+	})
+
+	$effect(() => {
+		if (!intro.started) return
+		if (phase === 'wash') {
+			const lather = setInterval(sounds.bubble, 450)
+			return () => clearInterval(lather)
+		}
+		if (phase === 'scream') sounds.scream()
+		if (phase === 'poof') sounds.poof()
+		if (phase === 'ready') sounds.sparkle()
 	})
 
 	const replay = (/** @type {MouseEvent} */ event) => {
