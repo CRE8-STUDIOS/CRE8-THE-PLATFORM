@@ -4,8 +4,14 @@
 	import Input from '#lib/atoms/Input.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 
-	/** @type {{ projects: { id: string, title: string, client: string | null }[], choosing?: boolean }} */
-	const { projects, choosing = false } = $props()
+	/**
+	 * The once a day clock in question and its project choice. In switch
+	 * mode it is the same choice, to move the running clock to another
+	 * project, with a way to cancel.
+	 * @type {{ projects: { id: string, title: string, client: string | null }[], choosing?: boolean, switching?: boolean }}
+	 */
+	const { projects, choosing = false, switching = false } = $props()
+	const action = $derived(switching ? '/clock?/switch' : '/clock?/in')
 
 	/** @type {HTMLDialogElement | undefined} */
 	let dialog = $state()
@@ -48,12 +54,14 @@
 	<div class="clock-in-prompt-panel card rough-edge">
 		<Mascot size="6rem" />
 
-		{#if choosing && projects.length}
-			<p id="clock-in-prompt-title" class="card-title">Which project are you working on?</p>
+		{#if (choosing || switching) && projects.length}
+			<p id="clock-in-prompt-title" class="card-title">
+				{switching ? 'Switch to which project?' : 'Which project are you working on?'}
+			</p>
 			<ul class="clock-in-prompt-projects">
 				{#each projects as project (project.id)}
 					<li>
-						<form method="POST" action="/clock?/in">
+						<form method="POST" {action}>
 							<Input type="hidden" name="project_id" value={project.id} />
 							<Input type="hidden" name="redirectTo" value="/overview" />
 							<Button variant="secondary" class="clock-in-prompt-project">
@@ -65,11 +73,12 @@
 				{/each}
 			</ul>
 			<ActionButton
-				action="/clock?/in"
+				{action}
 				label="Not on a project"
 				variant="text"
 				fields={{ redirectTo: '/overview' }}
 			/>
+			{#if switching}<a class="button button-muted" href="/overview">Cancel</a>{/if}
 		{:else}
 			<p id="clock-in-prompt-title" class="card-title">Do you want to clock in now?</p>
 			<div class="button-group">

@@ -22,6 +22,23 @@ export const actions = {
 		redirect(303, safeRedirect(text(formData, 'redirectTo'), '/overview'))
 	},
 
+	/** Stops the running entry as a switch and starts one on the new project */
+	switch: async ({ request, locals }) => {
+		const formData = await request.formData()
+
+		const stopped = await locals.supabase.rpc('clock_out', { p_reason: 'switch' })
+		if (stopped.error) return failWith(stopped.error)
+
+		const { error } = await locals.supabase.rpc('clock_in', {
+			p_project_id: text(formData, 'project_id') ?? undefined,
+			p_category: oneOf(text(formData, 'category'), TIME_CATEGORIES, 'client_work'),
+			p_started_by: 'manual'
+		})
+		if (error) return failWith(error)
+
+		redirect(303, safeRedirect(text(formData, 'redirectTo'), '/overview'))
+	},
+
 	out: async ({ request, locals }) => {
 		const formData = await request.formData()
 

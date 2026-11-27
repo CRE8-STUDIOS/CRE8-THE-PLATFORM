@@ -1,71 +1,76 @@
 <script>
-	import PageHeader from '#lib/molecules/PageHeader.svelte'
-	import ProjectCard from '#lib/molecules/ProjectCard.svelte'
-	import CurrentWork from '#lib/organisms/CurrentWork.svelte'
-	import TodayAgenda from '#lib/organisms/TodayAgenda.svelte'
-	import LinkList from '#lib/organisms/LinkList.svelte'
 	import ClockInPrompt from '#lib/organisms/ClockInPrompt.svelte'
+	import ClockControl from '#lib/organisms/overview/ClockControl.svelte'
 
 	const { data } = $props()
-	const {
-		today,
-		clock,
-		agenda,
-		dueTasks,
-		toDo,
-		projectLinks,
-		timezone,
-		clockInLater,
-		choosingProject,
-		clockProjects
-	} = $derived(data)
+
+	const showPrompt = $derived(
+		(!data.clock && (!data.clockInLater || data.choosingProject)) ||
+			(Boolean(data.clock) && data.switchingProject)
+	)
 </script>
 
-<div data-tour="greeting">
-	<PageHeader title="Overview" label={today}>
-		{#snippet actions()}
-			{#if !clock}<a class="button button-primary" href="/overview?clock=choose">Clock in</a>{/if}
-		{/snippet}
-	</PageHeader>
+<svelte:head><title>Overview · CRE8</title></svelte:head>
+
+<div class="overview">
+	<header class="overview-header" data-tour="greeting">
+		<div>
+			<span class="overview-date">{data.dateLabel}</span>
+			<h1>Overview</h1>
+		</div>
+		<div data-tour="clock-in">
+			<ClockControl
+				clock={data.clock && {
+					started_at: data.clock.started_at,
+					project: data.clock.projects?.title ?? null
+				}}
+				closedMinutes={data.closedMinutes}
+				now={data.now}
+				canSwitch={data.clockProjects.length > 0}
+			/>
+		</div>
+	</header>
 </div>
 
-<div data-tour="clock-in">
-	{#if !clock && (!clockInLater || choosingProject)}
-		<ClockInPrompt projects={clockProjects} choosing={choosingProject} />
-	{/if}
-	<CurrentWork {clock} />
-</div>
-
-<div class="card-grid">
-	<div data-tour="planning"><TodayAgenda items={agenda} {dueTasks} timeZone={timezone} /></div>
-	<LinkList title="To send or answer" links={toDo} empty="Nothing waiting." />
-</div>
-
-<section class="active-projects" aria-labelledby="active-projects-title">
-	<h2 id="active-projects-title">Active projects</h2>
-	{#if projectLinks.length}
-		<ul class="card-grid active-projects-grid">
-			{#each projectLinks as { id, text, href } (id)}
-				{@const [title, ...meta] = text.split(' · ')}
-				<li><ProjectCard {href} {title} status="active" {meta} /></li>
-			{/each}
-		</ul>
-	{:else}
-		<p class="empty-state">No active projects.</p>
-	{/if}
-</section>
+{#if showPrompt}
+	<ClockInPrompt
+		projects={data.clockProjects}
+		choosing={data.choosingProject}
+		switching={Boolean(data.clock) && data.switchingProject}
+	/>
+{/if}
 
 <style>
-	.active-projects {
-		display: grid;
+	.overview {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xl);
+		min-inline-size: 0;
+		max-inline-size: var(--agenda-max-width);
+	}
+
+	.overview-header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		justify-content: space-between;
 		gap: var(--space-m);
 	}
 
-	.active-projects-grid {
-		--grid-min: var(--size-grid-m);
-		grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--grid-min)), 1fr));
-		align-items: stretch;
-		padding: 0;
-		list-style: none;
+	.overview-header > div:first-child {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+	}
+
+	.overview-date {
+		color: var(--color-text-calm);
+		font-size: var(--font-size-agenda-meta);
+	}
+
+	h1 {
+		font-size: var(--font-size-agenda-heading);
+		line-height: 1;
+		text-transform: uppercase;
 	}
 </style>
