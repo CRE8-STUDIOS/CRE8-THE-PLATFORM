@@ -4,15 +4,16 @@
 	import FormNotice from '#lib/molecules/FormNotice.svelte'
 	import ActionButton from '#lib/molecules/ActionButton.svelte'
 	import AgendaItemForm from '#lib/organisms/AgendaItemForm.svelte'
+	import AgendaDetails from '#lib/organisms/AgendaDetails.svelte'
 	import Checklist from '#lib/organisms/Checklist.svelte'
 	import PeopleList from '#lib/organisms/PeopleList.svelte'
 	import ArchiveOrDelete from '#lib/organisms/ArchiveOrDelete.svelte'
 
 	const { data, form } = $props()
-	const { item, checklist, people, projects, canStart, timezone } = $derived(data)
+	const { item, checklist, people, projects, canStart, timezone, backHref } = $derived(data)
 </script>
 
-<PageHeader title={item.title} back={{ href: '/agenda', text: 'Agenda' }}>
+<PageHeader title={item.title} back={{ href: backHref, text: 'Agenda' }}>
 	{#snippet actions()}
 		{#if canStart}
 			<ActionButton
@@ -29,6 +30,8 @@
 		{/if}
 	{/snippet}
 </PageHeader>
+
+<AgendaDetails {item} timeZone={timezone} />
 
 <div class="card-grid">
 	<FormNotice {form} />

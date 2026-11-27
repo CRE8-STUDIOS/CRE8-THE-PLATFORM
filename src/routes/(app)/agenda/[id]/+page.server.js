@@ -2,12 +2,13 @@ import { error, redirect } from '@sveltejs/kit'
 import { id, text, failMessage, failWith } from '#lib/server/form.js'
 import { agendaItemFromForm } from '#lib/server/agenda.js'
 import { projectOptions } from '#lib/server/projects.js'
+import { todayIn } from '#lib/utils/dates.js'
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ locals, params }) => {
 	const { supabase } = locals
 	const [{ data: item }, { data: checklist }, { data: people }, projects] = await Promise.all([
-		supabase.from('agenda_items').select('*').eq('id', params.id).maybeSingle(),
+		supabase.from('agenda_items').select('*, projects(title)').eq('id', params.id).maybeSingle(),
 		supabase
 			.from('agenda_checklist_items')
 			.select('id, label, done')
@@ -22,7 +23,12 @@ export const load = async ({ locals, params }) => {
 	])
 	if (!item) error(404, 'Agenda item not found')
 
+	const day = item.starts_at
+		? todayIn(locals.timezone, new Date(item.starts_at))
+		: (item.due_date ?? todayIn(locals.timezone))
+
 	return {
+		backHref: `/agenda?date=${day}`,
 		item,
 		checklist: checklist ?? [],
 		people: people ?? [],
