@@ -57,7 +57,9 @@
 						the tour{/if}
 				</OutlineButton>
 			</form>
-			<a class="tour-show" href={tour.inApp.here}>Show me in the app</a>
+			{#if tour.inApp}
+				<a class="tour-show" href={tour.inApp.here}>Show me in the app</a>
+			{/if}
 		</div>
 	</section>
 </div>

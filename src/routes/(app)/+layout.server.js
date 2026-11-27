@@ -1,4 +1,4 @@
-import { findChapter, tourStep } from '#lib/guide/tour.js'
+import { findChapter, showsInApp, tourStep } from '#lib/guide/tour.js'
 import { loadRules, withRules } from '#lib/server/guide.js'
 
 /**
@@ -9,7 +9,7 @@ import { loadRules, withRules } from '#lib/server/guide.js'
  */
 const loadTour = async (supabase, url) => {
 	const chapter = findChapter(url.searchParams.get('tour'))
-	if (!chapter) return null
+	if (!chapter || !showsInApp(chapter)) return null
 	const { rules } = await loadRules(supabase)
 	return withRules(tourStep(chapter, Number(url.searchParams.get('step') ?? 0)), rules)
 }

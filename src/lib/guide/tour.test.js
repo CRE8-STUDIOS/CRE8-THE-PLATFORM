@@ -18,7 +18,13 @@ describe('tour', () => {
 		const last = tourStep(agenda, agenda.steps.length - 1)
 		expect(last.last).toBe(true)
 		expect(last.nextChapter?.slug).toBe('tasks')
-		expect(last.inApp.next).toBe('/agenda/tasks?tour=tasks&step=0')
+		expect(last.inApp?.next).toBe('/agenda/tasks?tour=tasks&step=0')
+	})
+
+	it('does not show the morning in the app, from the agenda on it does', () => {
+		const morning = /** @type {import('./tour.js').Chapter} */ (findChapter('morning'))
+		expect(tourStep(morning, 0).inApp).toBeNull()
+		expect(tourStep(agenda, 0).inApp).not.toBeNull()
 	})
 
 	it('starts at the top for a step that does not exist', () => {

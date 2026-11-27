@@ -8,9 +8,12 @@
 	 * to the element with the matching data-tour attribute. Without
 	 * JavaScript, or when that element is not on the page, it stays at the
 	 * top of the page.
-	 * @type {{ tour: ReturnType<typeof import('#lib/guide/tour.js').tourStep> }}
+	 * @type {{
+	 *   tour: ReturnType<typeof import('#lib/guide/tour.js').tourStep>,
+	 *   inApp: NonNullable<ReturnType<typeof import('#lib/guide/tour.js').tourStep>['inApp']>
+	 * }}
 	 */
-	const { tour } = $props()
+	const { tour, inApp } = $props()
 
 	/** @type {HTMLElement | undefined} */
 	let callout = $state()
@@ -80,9 +83,9 @@
 	</div>
 	<p>{tour.current.text}</p>
 	<div class="tour-callout-actions">
-		{#if tour.inApp.back}<a href={tour.inApp.back}>‹ Back</a>{/if}
-		{#if tour.inApp.next}
-			<a class="is-strong" href={tour.inApp.next}>
+		{#if inApp.back}<a href={inApp.back}>‹ Back</a>{/if}
+		{#if inApp.next}
+			<a class="is-strong" href={inApp.next}>
 				{tour.last && tour.nextChapter ? `Next: ${tour.nextChapter.title}` : 'Next'}
 			</a>
 		{:else}

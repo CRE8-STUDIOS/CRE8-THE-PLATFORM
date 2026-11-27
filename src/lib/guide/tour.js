@@ -9,6 +9,14 @@ import { appTour } from './content.js'
 export const findChapter = (/** @type {string | null} */ slug) =>
 	/** @type {Chapter | undefined} */ (appTour.find((chapter) => chapter.slug === slug)) ?? null
 
+/** The first chapter that can be shown on the real page; the morning only happens in the morning */
+const FIRST_IN_APP = 'agenda'
+
+/** True when a chapter can be shown on the real page */
+export const showsInApp = (/** @type {Chapter} */ chapter) =>
+	appTour.findIndex((item) => item.slug === chapter.slug) >=
+	appTour.findIndex((item) => item.slug === FIRST_IN_APP)
+
 /** The link that shows a tour step on the real page */
 export const inAppHref = (/** @type {Chapter} */ chapter, /** @type {number} */ step) =>
 	`${chapter.page}?tour=${chapter.slug}&step=${step}`
@@ -43,10 +51,16 @@ export const tourStep = (chapter, wanted) => {
 		/** The next chapter, after the last step of this one */
 		nextChapter: last && nextChapter ? { slug: nextChapter.slug, title: nextChapter.title } : null,
 		/** The same step, and its neighbours, on the real page */
-		inApp: {
-			here: inAppHref(chapter, step),
-			back: step > 0 ? inAppHref(chapter, step - 1) : null,
-			next: !last ? inAppHref(chapter, step + 1) : nextChapter ? inAppHref(nextChapter, 0) : null
-		}
+		inApp: !showsInApp(chapter)
+			? null
+			: {
+					here: inAppHref(chapter, step),
+					back: step > 0 ? inAppHref(chapter, step - 1) : null,
+					next: !last
+						? inAppHref(chapter, step + 1)
+						: nextChapter
+							? inAppHref(nextChapter, 0)
+							: null
+				}
 	}
 }

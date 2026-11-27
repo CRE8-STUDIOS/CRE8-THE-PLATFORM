@@ -32,7 +32,10 @@
 	<div class="app-shell">
 		<Sidebar current={page.url.pathname} clock={clockStatus} />
 		<main id="content" class="app-main">
-			{#if data.tour}{#key data.tour.inApp.here}<TourCallout tour={data.tour} />{/key}{/if}
+			{#if data.tour?.inApp}{#key data.tour.inApp.here}<TourCallout
+						tour={data.tour}
+						inApp={data.tour.inApp}
+					/>{/key}{/if}
 			{@render children()}
 		</main>
 	</div>
