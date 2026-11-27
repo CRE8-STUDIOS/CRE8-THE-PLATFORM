@@ -366,3 +366,25 @@ export const itemToAnswers = (item, { today, timeZone }) => {
 	}
 	return answers
 }
+
+/**
+ * Starting answers for a new item of a type. A day and title from the
+ * address are filled in, so other pages can open the form prefilled.
+ * @param {string} type
+ * @param {{ today: string, date?: string | null, title?: string | null }} context
+ * @returns {Answers}
+ */
+export const defaultAnswers = (type, { today, date, title }) => {
+	const day =
+		date && DATE.test(date) && date !== today ? { day: 'pick', date } : { day: 'today', date: '' }
+	/** @type {Record<string, Answers>} */
+	const defaults = {
+		task: { priority: 'must', duration: '30' },
+		meeting: { from: '12:00', to: '13:00', where: 'in_person', travel: '0' },
+		work: { from: '09:00', to: '11:30', kind: 'creative', protect: 'on', clock_in: 'on' },
+		errand: { opens: '09:00', closes: '17:00', duration: '30', timing: 'find' },
+		deadline: { due: date ? 'pick' : 'this_friday', heads_up: '3' },
+		rest: { kind: 'lunch', from: '13:15', to: '14:00', lock: 'on' }
+	}
+	return { title: title ?? '', ...day, ...(defaults[type] ?? {}) }
+}
