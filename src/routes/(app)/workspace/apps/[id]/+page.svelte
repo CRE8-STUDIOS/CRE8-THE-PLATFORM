@@ -7,7 +7,11 @@
 <svelte:head><title>{data.form.heading} · CRE8</title></svelte:head>
 
 <div class="tile-page">
-	<WorkspaceTileForm {...data.form} answers={form?.answers} errors={form?.errors} />
+	<WorkspaceTileForm
+		{...data.form}
+		answers={form?.answers ?? data.form.answers}
+		errors={form?.errors}
+	/>
 </div>
 
 <style>
