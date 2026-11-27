@@ -1,7 +1,7 @@
 <svelte:head><title>Appointments · CRE8</title></svelte:head>
 
 <h1 class="visually-hidden">Appointments</h1>
-<p class="agenda-empty">Meetings, errands, deadlines and shoots come here.</p>
+<p class="agenda-empty">Meetings, errands and deadlines come here.</p>
 
 <style>
 	.agenda-empty {

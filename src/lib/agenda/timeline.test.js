@@ -66,7 +66,7 @@ describe('labels', () => {
 })
 
 describe('plannedHours', () => {
-	it('counts work, meetings, shoots, errands and tasks', () => {
+	it('counts work, meetings, errands and tasks', () => {
 		expect(
 			plannedHours([
 				item({ starts_at: '2026-11-27T08:00:00Z', ends_at: '2026-11-27T10:30:00Z' }),

@@ -4,7 +4,7 @@ const MINUTE = 60_000
 /** Gaps shorter than this are not worth a row */
 export const MIN_FREE_MINUTES = 15
 /** Types that count towards the planned hours of a week */
-const PLANNED_TYPES = new Set(['work', 'meeting', 'shoot', 'errand', 'task'])
+const PLANNED_TYPES = new Set(['work', 'meeting', 'errand', 'task'])
 
 /**
  * @typedef {{
@@ -54,7 +54,6 @@ export const subLine = (item, timeZone) => {
 		case 'work':
 			return [until, item.is_protected ? 'protected' : null].filter(Boolean).join(' · ')
 		case 'meeting':
-		case 'shoot':
 			return item.location_name ?? until ?? ''
 		case 'errand':
 			return item.closes_at ? `open until ${clock(item.closes_at)}` : (item.location_name ?? '')

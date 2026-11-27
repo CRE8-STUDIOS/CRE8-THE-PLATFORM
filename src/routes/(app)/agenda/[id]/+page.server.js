@@ -30,7 +30,7 @@ export const load = async ({ locals, params, url }) => {
 		item,
 		checklist: checklist ?? [],
 		people: people ?? [],
-		canStart: Boolean(item.starts_at) && ['work', 'shoot', 'meeting'].includes(item.type)
+		canStart: Boolean(item.starts_at) && ['work', 'meeting'].includes(item.type)
 	}
 }
 

@@ -6,7 +6,7 @@
 	import TextareaField from '#lib/molecules/TextareaField.svelte'
 	import CheckboxField from '#lib/molecules/CheckboxField.svelte'
 	import { toLocalInput } from '#lib/utils/dates.js'
-	import { AGENDA_TYPES, ENERGY_TYPES, toOptions } from '#lib/utils/constants.js'
+	import { OFFERED_AGENDA_TYPES, ENERGY_TYPES, toOptions } from '#lib/utils/constants.js'
 
 	/**
 	 * @type {{
@@ -25,7 +25,7 @@
 		<SelectField
 			label="Type"
 			name="type"
-			options={toOptions(AGENDA_TYPES)}
+			options={toOptions(OFFERED_AGENDA_TYPES)}
 			value={item?.type ?? 'task'}
 		/>
 		<TextField label="Title" name="title" value={item?.title ?? ''} required />
