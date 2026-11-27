@@ -7,7 +7,6 @@
 	import Mascot from '#lib/atoms/Mascot.svelte'
 	import EraserWipe from '#lib/atoms/EraserWipe.svelte'
 	import ShockMarks from '#lib/atoms/ShockMarks.svelte'
-	import MascotBack from '#lib/atoms/MascotBack.svelte'
 
 	/** @type {{ title: string, intro?: string, alarm?: number, compact?: boolean, children: import('svelte').Snippet, bottom?: import('svelte').Snippet, after?: import('svelte').Snippet }} */
 	const { title, intro, alarm = 0, compact = false, children, bottom, after } = $props()
@@ -131,7 +130,6 @@
 						{#if phase === 'shock'}<ShockMarks />{/if}
 					{:else}
 						<Mascot size="var(--auth-caught-size)" face={false} />
-						<MascotBack />
 					{/if}
 				</div>
 			</div>
