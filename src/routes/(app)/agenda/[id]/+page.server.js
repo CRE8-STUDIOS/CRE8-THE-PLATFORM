@@ -1,13 +1,11 @@
 import { error, redirect } from '@sveltejs/kit'
 import { id, text, failMessage, failWith } from '#lib/server/form.js'
-import { agendaItemFromForm } from '#lib/server/agenda.js'
-import { projectOptions } from '#lib/server/projects.js'
 import { todayIn } from '#lib/utils/dates.js'
 
 /** @type {import('./$types').PageServerLoad} */
-export const load = async ({ locals, params }) => {
+export const load = async ({ locals, params, url }) => {
 	const { supabase } = locals
-	const [{ data: item }, { data: checklist }, { data: people }, projects] = await Promise.all([
+	const [{ data: item }, { data: checklist }, { data: people }] = await Promise.all([
 		supabase.from('agenda_items').select('*, projects(title)').eq('id', params.id).maybeSingle(),
 		supabase
 			.from('agenda_checklist_items')
@@ -18,8 +16,7 @@ export const load = async ({ locals, params }) => {
 			.from('agenda_people')
 			.select('id, name, role, email, phone')
 			.eq('agenda_item_id', params.id)
-			.order('created_at'),
-		projectOptions(supabase)
+			.order('created_at')
 	])
 	if (!item) error(404, 'Agenda item not found')
 
@@ -29,28 +26,16 @@ export const load = async ({ locals, params }) => {
 
 	return {
 		backHref: `/agenda?date=${day}`,
+		confirmDelete: url.searchParams.has('delete'),
 		item,
 		checklist: checklist ?? [],
 		people: people ?? [],
-		projects,
 		canStart: Boolean(item.starts_at) && ['work', 'shoot', 'meeting'].includes(item.type)
 	}
 }
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	update: async ({ request, locals, params }) => {
-		const item = agendaItemFromForm(await request.formData(), locals.timezone)
-		if (!item.title) return failMessage('Give it a title.')
-
-		const { error: updateError } = await locals.supabase
-			.from('agenda_items')
-			.update(/** @type {any} */ (item))
-			.eq('id', params.id)
-		if (updateError) return failWith(updateError)
-		return { success: 'Saved.' }
-	},
-
 	delete: async ({ locals, params }) => {
 		const { error: deleteError } = await locals.supabase
 			.from('agenda_items')
