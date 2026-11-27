@@ -131,7 +131,10 @@
 	--duration-auth-hide: 350ms;
 	--duration-auth-shake: 500ms;
 	--duration-auth-erase: 750ms;
-	--duration-auth-naked: 1100ms;
+	--duration-auth-back: 900ms;
+	--duration-auth-turn: 220ms;
+	--duration-auth-startle: 650ms;
+	--duration-auth-naked: 1000ms;
 	--duration-auth-draw: 850ms;
 	--duration-auth-jump: 700ms;
 	--duration-eraser: 1000ms;

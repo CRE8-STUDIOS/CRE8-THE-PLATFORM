@@ -7,13 +7,15 @@
 	import Mascot from '#lib/atoms/Mascot.svelte'
 	import EraserWipe from '#lib/atoms/EraserWipe.svelte'
 	import ShockMarks from '#lib/atoms/ShockMarks.svelte'
+	import MascotBack from '#lib/atoms/MascotBack.svelte'
 
 	/** @type {{ title: string, intro?: string, alarm?: number, compact?: boolean, children: import('svelte').Snippet, bottom?: import('svelte').Snippet, after?: import('svelte').Snippet }} */
 	const { title, intro, alarm = 0, compact = false, children, bottom, after } = $props()
 
-	/** @typedef {'idle' | 'duck' | 'erase' | 'naked' | 'draw' | 'jump'} Phase */
-	/** @type {Phase} */
-	let phase = $state(arriving ? 'naked' : 'idle')
+	/** @typedef {'idle' | 'duck' | 'erase' | 'back' | 'turn' | 'shock' | 'draw' | 'jump'} Phase */
+	let phase = $state(/** @type {Phase} */ (arriving ? 'shock' : 'idle'))
+	const caught = $derived(['back', 'turn', 'shock', 'draw'].includes(phase))
+	const facing = $derived(phase === 'shock' || phase === 'draw')
 	/** @type {{ x: number, y: number } | null} */
 	let gaze = $state(null)
 	/** @type {ReturnType<typeof setInterval> | undefined} */
@@ -72,7 +74,18 @@
 				return wait(duration('--duration-auth-erase'))
 			})
 			.then(() => {
-				phase = 'naked'
+				phase = 'back'
+				return wait(duration('--duration-auth-back'))
+			})
+			.then(() => {
+				phase = 'turn'
+				return wait(duration('--duration-auth-turn'))
+			})
+			.then(() => {
+				phase = 'shock'
+				return wait(duration('--duration-auth-startle'))
+			})
+			.then(() => {
 				startSearching()
 				return wait(duration('--duration-auth-naked'))
 			})
@@ -110,11 +123,16 @@
 			</div>
 			{#if bottom}<div class="auth-card-half auth-card-half-bottom">{@render bottom()}</div>{/if}
 		</section>
-		{#if phase === 'naked' || phase === 'draw'}
+		{#if caught}
 			<div class="auth-caught is-{phase}" aria-hidden="true">
 				<div class="auth-caught-actor">
-					<Mascot size="var(--auth-caught-size)" {gaze} />
-					{#if phase === 'naked'}<ShockMarks />{/if}
+					{#if facing}
+						<Mascot size="var(--auth-caught-size)" {gaze} />
+						{#if phase === 'shock'}<ShockMarks />{/if}
+					{:else}
+						<Mascot size="var(--auth-caught-size)" face={false} />
+						<MascotBack />
+					{/if}
 				</div>
 			</div>
 		{/if}
@@ -214,12 +232,16 @@
 
 	.auth-mascot.is-duck,
 	.auth-mascot.is-erase,
-	.auth-mascot.is-naked,
+	.auth-mascot.is-back,
+	.auth-mascot.is-turn,
+	.auth-mascot.is-shock,
 	.auth-mascot.is-draw {
 		translate: 0 calc(var(--auth-mascot-size) * 0.55);
 	}
 
-	.auth-mascot.is-naked,
+	.auth-mascot.is-back,
+	.auth-mascot.is-turn,
+	.auth-mascot.is-shock,
 	.auth-mascot.is-draw {
 		transition: none;
 	}
@@ -230,14 +252,16 @@
 
 	.auth-stage {
 		--eraser-duration: var(--duration-auth-erase);
-		--auth-caught-size: min(22rem, 80%);
+		--auth-caught-size: min(22rem, 70vw, 55dvh);
 	}
 
 	.auth-stage.is-draw {
 		--eraser-duration: var(--duration-auth-draw);
 	}
 
-	.auth-stage.is-naked .auth-card {
+	.auth-stage.is-back .auth-card,
+	.auth-stage.is-turn .auth-card,
+	.auth-stage.is-shock .auth-card {
 		visibility: hidden;
 	}
 
@@ -250,7 +274,9 @@
 		pointer-events: none;
 	}
 
-	.auth-caught.is-naked {
+	.auth-caught.is-back,
+	.auth-caught.is-turn,
+	.auth-caught.is-shock {
 		z-index: 2;
 	}
 
@@ -268,24 +294,60 @@
 		scale: 1.45;
 	}
 
-	.auth-caught.is-naked .auth-caught-actor {
+	.auth-caught.is-back .auth-caught-actor {
+		animation: auth-wiggle calc(var(--duration-auth-back) / 3) ease-in-out infinite alternate;
+	}
+
+	.auth-caught.is-turn .auth-caught-actor {
+		animation: auth-turn-away var(--duration-auth-turn) ease-in forwards;
+	}
+
+	.auth-caught.is-shock .auth-caught-actor {
 		animation:
-			auth-caught-in calc(var(--duration-auth-look) * 0.6) cubic-bezier(0.3, 1.6, 0.5, 1),
-			auth-search calc(var(--duration-auth-look) * 2) ease-in-out
-				calc(var(--duration-auth-look) * 0.6) infinite;
+			auth-startle var(--duration-auth-startle) cubic-bezier(0.3, 1.4, 0.5, 1),
+			auth-search calc(var(--duration-auth-look) * 2) ease-in-out var(--duration-auth-startle)
+				infinite;
+	}
+
+	@keyframes auth-wiggle {
+		from {
+			rotate: -5deg;
+		}
+		to {
+			rotate: 5deg;
+		}
+	}
+
+	@keyframes auth-turn-away {
+		to {
+			scale: 0 1;
+		}
+	}
+
+	@keyframes auth-startle {
+		0% {
+			scale: 0 1;
+		}
+		30% {
+			scale: 1.15 0.85;
+			translate: 0 0;
+		}
+		55% {
+			scale: 0.95 1.12;
+			translate: 0 -14%;
+		}
+		80% {
+			scale: 1.04 0.96;
+			translate: 0 0;
+		}
+		100% {
+			scale: 1;
+			translate: 0 0;
+		}
 	}
 
 	.auth-caught.is-draw .auth-caught-actor {
 		animation: auth-dive var(--duration-auth-hide) cubic-bezier(0.6, 0, 0.9, 0.4) forwards;
-	}
-
-	@keyframes auth-caught-in {
-		from {
-			scale: 0.7;
-		}
-		to {
-			scale: 1;
-		}
 	}
 
 	@keyframes auth-search {
