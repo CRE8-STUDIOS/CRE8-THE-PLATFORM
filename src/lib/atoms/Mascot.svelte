@@ -84,6 +84,8 @@
 
 	.eyes {
 		fill: var(--mascot-eye);
+		stroke: var(--mascot-color);
+		stroke-width: var(--mascot-eye-border);
 		transform-origin: 100px 106px;
 		transform-box: view-box;
 	}
