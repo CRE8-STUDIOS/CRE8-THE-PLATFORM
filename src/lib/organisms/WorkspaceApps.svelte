@@ -48,6 +48,15 @@
 	}
 </script>
 
+{#snippet addApp()}
+	<li class="workspace-app">
+		<a class="workspace-add-app" href="/workspace/apps/new" onclick={onopen}>
+			<span class="workspace-add-app-icon" aria-hidden="true">+</span>
+			<span>Add app</span>
+		</a>
+	</li>
+{/snippet}
+
 {#if edit}
 	<form
 		bind:this={form}
@@ -104,6 +113,7 @@
 					</div>
 				</li>
 			{/each}
+			{@render addApp()}
 		</ul>
 	</form>
 {:else}
@@ -113,12 +123,7 @@
 				<WorkspaceTile name={app.name} iconUrl={app.iconUrl} href={app.url} />
 			</li>
 		{/each}
-		<li class="workspace-app">
-			<a class="workspace-add-app" href="/workspace/apps/new" onclick={onopen}>
-				<span class="workspace-add-app-icon" aria-hidden="true">+</span>
-				<span>Add app</span>
-			</a>
-		</li>
+		{@render addApp()}
 	</ul>
 {/if}
 
@@ -179,6 +184,18 @@
 	.workspace-app-moves {
 		display: flex;
 		gap: var(--space-2xs);
+	}
+
+	/* With a mouse the arrows show on hover or focus, touch screens always see them */
+	@media (hover: hover) {
+		.workspace-app-moves {
+			opacity: 0;
+		}
+
+		.is-editing:hover .workspace-app-moves,
+		.is-editing:focus-within .workspace-app-moves {
+			opacity: 1;
+		}
 	}
 
 	.workspace-app-moves button {

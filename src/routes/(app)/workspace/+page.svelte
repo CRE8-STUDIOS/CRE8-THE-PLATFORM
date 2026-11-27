@@ -77,7 +77,8 @@
 
 	{#if data.edit}
 		<p class="workspace-hint">
-			Drag to change the order, or use the arrows. Click an app to change its name, link or icon.
+			Drag an app to change the order, or use its arrows to move it left or right. Click an app to
+			change its name, link or icon.
 		</p>
 	{:else}
 		<CalmSection id="tools-heading" heading="Tools">
