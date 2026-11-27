@@ -10,6 +10,7 @@
  *   changeTypeHref?: string | null,
  *   closeHref: string,
  *   onclose?: (event: MouseEvent) => void,
+ *   onchangetype?: (event: MouseEvent) => void,
  *   heading?: string,
  *   submitLabel?: string,
  *   before?: import('svelte').Snippet

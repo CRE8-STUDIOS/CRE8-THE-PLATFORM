@@ -22,6 +22,7 @@
 	 *   changeTypeHref?: string | null,
 	 *   closeHref: string,
 	 *   onclose?: (event: MouseEvent) => void,
+	 *   onchangetype?: (event: MouseEvent) => void,
 	 *   questions: import('svelte').Snippet<[{ answers: Record<string, string>, errors: Record<string, string> }]>,
 	 *   more?: import('svelte').Snippet<[{ answers: Record<string, string> }]>,
 	 *   moreHint?: string,
@@ -40,6 +41,7 @@
 		changeTypeHref,
 		closeHref,
 		onclose,
+		onchangetype,
 		questions,
 		more,
 		moreHint = '',
@@ -104,7 +106,7 @@
 <div class="add-form">
 	<div class="add-form-top">
 		{#if changeTypeHref}
-			<a class="add-form-change" href={changeTypeHref}>‹ Change type</a>
+			<a class="add-form-change" href={changeTypeHref} onclick={onchangetype}>‹ Change type</a>
 		{:else}
 			<span></span>
 		{/if}

@@ -10,6 +10,10 @@ declare global {
 			timezone: string
 			onboarded: boolean
 		}
+		interface PageState {
+			/** The add panel, opened over the current page */
+			add?: { href: string; depth: number; data: Record<string, any> }
+		}
 	}
 }
 
