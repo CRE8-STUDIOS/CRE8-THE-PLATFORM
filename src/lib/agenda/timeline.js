@@ -24,6 +24,11 @@ const PLANNED_TYPES = new Set(['work', 'meeting', 'errand', 'task'])
  *   travel_before_minutes?: number | null,
  *   travel_after_minutes?: number | null,
  *   occurrence?: string | null,
+ *   address?: string | null,
+ *   meeting_url?: string | null,
+ *   project_id?: string | null,
+ *   priority?: string | null,
+ *   estimated_minutes?: number | null,
  *   projects?: { title: string } | null
  * }} AgendaItem
  *
