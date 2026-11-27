@@ -8,6 +8,7 @@ const PUBLIC_ROUTES = new Set([
 	'/login',
 	'/login/form',
 	'/login/forgot',
+	'/login/reset',
 	'/signup',
 	'/portal/signup',
 	'/auth/callback',
