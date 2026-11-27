@@ -77,3 +77,10 @@ export const SHAPE_LINES = {
 	cloud: { name: 'Cloud', line: 'fluffy, with a 90% chance of deadlines.' },
 	flower: { name: 'Flower', line: 'blooming under pressure. literally.' }
 }
+
+/** @type {['before' | 'drum' | 'boom', number][]} */
+export const SHOW = [
+	['before', 0],
+	['drum', 2200],
+	['boom', 5200]
+]
